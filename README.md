@@ -5,7 +5,7 @@
 - Cпособ установки PostgreSQL: с помощью Docker-контейнера (c помощью приложения Docker Desktop)
 
 ## Cхема базы данных проекта 
-<img width="1592" height="511" alt="image" src="https://github.com/user-attachments/assets/e630d148-c4c1-4a47-a5ec-a7c60f4b3570" />
+<img width="1642" height="734" alt="image" src="https://github.com/user-attachments/assets/bdadfb33-5406-4128-a377-3f479216fb36" />
 
 > файл draw.io загрузила в папку docs
 
