@@ -3,6 +3,9 @@ import {ConfigModule, ConfigService} from '@nestjs/config'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm'
+import { OrganizationModule } from './organization/organization.module';
+import { PositionModule } from './position/position.module';
+import { DepartmentModule } from './department/department.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -29,7 +32,10 @@ import {TypeOrmModule} from '@nestjs/typeorm'
         autoLoadEntities: true,
       }
     }
-  })
+  }),
+  OrganizationModule,
+  PositionModule,
+  DepartmentModule
   ],
   controllers: [AppController],
   providers: [AppService],
