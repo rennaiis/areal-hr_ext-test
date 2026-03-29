@@ -5,7 +5,10 @@
 
 <template>
     <Header></Header>
-    <router-view />
+    <main>
+        <RouterView></RouterView>
+    </main>
+
 </template>
 
 <style scoped>
