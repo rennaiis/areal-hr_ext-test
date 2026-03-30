@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePositionDto } from './dto/create-position.dto';
 import { UpdatePositionDto } from './dto/update-position.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Position } from './entities/position.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PositionService {
-  create(createPositionDto: CreatePositionDto) {
-    return 'This action adds a new position';
+  constructor(
+      @InjectRepository(Position)
+      private readonly positionRepository:Repository<Position>
+    ){}
+  
+  async create(createPositionDto: CreatePositionDto) {
+    const pos = this.positionRepository.create(createPositionDto)
+    return await this.positionRepository.save(pos) 
   }
 
-  findAll() {
-    return `This action returns all position`;
+  async findAll() {
+    return await this.positionRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} position`;
+ async findOne(id: number) {
+    const pos = await this.positionRepository.findOne({
+      where: {position_id: id}
+    })
+    if (!pos)throw new NotFoundException(`Position ${id} not found`)
+    return await this.positionRepository.save(pos);
   }
 
-  update(id: number, updatePositionDto: UpdatePositionDto) {
-    return `This action updates a #${id} position`;
+  async update(id: number, updatePositionDto: UpdatePositionDto) {
+    const pos = await this.findOne(id)
+    const updated = Object.assign(pos, updatePositionDto)
+    return await this.positionRepository.save(updated)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} position`;
+  async remove(id: number) {
+    const pos = await this.findOne(id)
+    return await this.positionRepository.softRemove(pos)
   }
 }
