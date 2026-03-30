@@ -1,15 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { OrganizationService } from './organization.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-
+import { CreateOrganisationScheme, UpdateOrganisationScheme } from './dto/organisation-scheme'; 
 @Controller('organization')
 export class OrganizationController {
   constructor(private readonly organizationService: OrganizationService) {}
 
   @Post()
   create(@Body() createOrganizationDto: CreateOrganizationDto) {
-    return this.organizationService.create(createOrganizationDto);
+    const {error, value} = CreateOrganisationScheme.validate(CreateOrganizationDto);
+        if (error){
+          throw new BadRequestException(`Data mistake: ${error.message}`)
+        }
+    return this.organizationService.create(value);
   }
 
   @Get()
@@ -24,7 +28,11 @@ export class OrganizationController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrganizationDto: UpdateOrganizationDto) {
-    return this.organizationService.update(+id, updateOrganizationDto);
+    const {error, value} = UpdateOrganisationScheme.validate(UpdateOrganizationDto);
+        if (error){
+          throw new BadRequestException(`Data mistake: ${error.message}`)
+        }
+    return this.organizationService.update(+id, value);
   }
 
   @Delete(':id')
