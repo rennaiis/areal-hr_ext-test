@@ -12,7 +12,7 @@ import {
 @Entity('organisations')
 export class Organization {
     @PrimaryGeneratedColumn()
-    organisation_id: number;
+    organization_id: number;
 
     @Column({
         type: 'varchar',
@@ -28,7 +28,7 @@ export class Organization {
     comment: string
 
     @CreateDateColumn()
-    creared_at: Date;
+    created_at: Date;
     @UpdateDateColumn()
     updated_at: Date;
     @DeleteDateColumn()

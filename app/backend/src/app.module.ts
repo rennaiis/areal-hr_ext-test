@@ -6,7 +6,9 @@ import {TypeOrmModule} from '@nestjs/typeorm'
 import { OrganizationModule } from './organization/organization.module';
 import { PositionModule } from './position/position.module';
 import { DepartmentModule } from './department/department.module';
-
+import { Organization } from './organization/entities/organization.entity';
+import { Department } from './department/entities/department.entity';
+import { Position } from './position/entities/position.entity'
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: '../../.env', 
@@ -16,11 +18,6 @@ import { DepartmentModule } from './department/department.module';
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory:(configService: ConfigService)=>{
-      console.log('ХОСТ',  configService.get('DB_HOST'));
-      console.log('ПОРТ',  +(configService.get('DB_PORT')));
-      console.log('ЮЗЕР',  configService.get('DB_USER'));
-      console.log('ПАРОЛЬ', configService.get('DB_PASSWORD'));
-      console.log('ИМЯ БД', configService.get('DB_NAME'));
       return{
         type: 'postgres',
         host: configService.get('DB_HOST'),
@@ -30,6 +27,7 @@ import { DepartmentModule } from './department/department.module';
         database: configService.get('DB_NAME'),
         synchronize: true,
         autoLoadEntities: true,
+        entities:[Organization, Position, Department]
       }
     }
   }),
