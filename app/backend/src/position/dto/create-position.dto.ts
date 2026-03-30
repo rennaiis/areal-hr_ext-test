@@ -1,4 +1,3 @@
 export class CreatePositionDto {
-    
-    name: string
+    name: string;
 }
