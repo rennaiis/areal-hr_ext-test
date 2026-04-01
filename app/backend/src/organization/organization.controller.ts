@@ -9,7 +9,7 @@ export class OrganizationController {
 
   @Post()
   create(@Body() createOrganizationDto: CreateOrganizationDto) {
-    const {error, value} = CreateOrganisationScheme.validate(CreateOrganizationDto);
+    const {error, value} = CreateOrganisationScheme.validate(createOrganizationDto);
         if (error){
           throw new BadRequestException(`Data mistake: ${error.message}`)
         }
@@ -28,7 +28,7 @@ export class OrganizationController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrganizationDto: UpdateOrganizationDto) {
-    const {error, value} = UpdateOrganisationScheme.validate(UpdateOrganizationDto);
+    const {error, value} = UpdateOrganisationScheme.validate(updateOrganizationDto);
         if (error){
           throw new BadRequestException(`Data mistake: ${error.message}`)
         }

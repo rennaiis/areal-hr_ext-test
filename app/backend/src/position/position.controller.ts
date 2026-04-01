@@ -9,7 +9,7 @@ export class PositionController {
 
   @Post()
   create(@Body() createPositionDto: CreatePositionDto) {
-    const {error, value} = CreatePositionScheme.validate(CreatePositionDto);
+    const {error, value} = CreatePositionScheme.validate(createPositionDto);
       if (error){
         throw new BadRequestException(`Data mistake: ${error.message}`)
       }
@@ -28,7 +28,7 @@ export class PositionController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePositionDto: UpdatePositionDto) {
-    const {error, value} = UpdatePositionScheme.validate(UpdatePositionDto);
+    const {error, value} = UpdatePositionScheme.validate(updatePositionDto);
       if (error){
         throw new BadRequestException(`Data mistake: ${error.message}`)
     }
