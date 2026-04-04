@@ -9,6 +9,7 @@ import { DepartmentModule } from './department/department.module';
 import { Organization } from './organization/entities/organization.entity';
 import { Department } from './department/entities/department.entity';
 import { Position } from './position/entities/position.entity'
+
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: '../../.env', 
@@ -27,7 +28,6 @@ import { Position } from './position/entities/position.entity'
         database: configService.get('DB_NAME'),
         synchronize: true,
         autoLoadEntities: true,
-        entities:[Organization, Position, Department]
       }
     }
   }),
