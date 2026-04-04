@@ -1,18 +1,26 @@
 import {
     Entity, 
+    Tree, 
     PrimaryGeneratedColumn, 
     CreateDateColumn, 
     UpdateDateColumn,
     DeleteDateColumn,
     Column,
     ManyToOne,
-    JoinColumn
+    JoinColumn,
+    TreeParent,
+    TreeChildren
 }from 'typeorm'
 import { Organization } from '../../organization/entities/organization.entity';
+
 @Entity('departments')
+@Tree('materialized-path')
 export class Department {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({
+        name: 'department_id'
+    })
     department_id: number;
+
     @Column({
         type: 'varchar', 
         length: 150 })
@@ -38,7 +46,10 @@ export class Department {
     @JoinColumn({ name: 'organization_id' }) 
     organization: Organization;
 
-    @ManyToOne(() => Department)
+    @TreeParent()
     @JoinColumn({ name: 'parent_department_id' })
         parent_department: Department;
+
+    @TreeChildren()
+        children: Department[]
 }
