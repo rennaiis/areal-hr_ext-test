@@ -1,4 +1,4 @@
-import { Department } from 'src/department/entities/department.entity';
+import { Department } from '../../department/entities/department.entity';
 import {
     Entity, 
     PrimaryGeneratedColumn, 
