@@ -26,7 +26,7 @@ export class PositionService {
       where: {position_id: id}
     })
     if (!pos)throw new NotFoundException(`Position ${id} not found`)
-    return await this.positionRepository.save(pos);
+    return await  pos;
   }
 
   async update(id: number, updatePositionDto: UpdatePositionDto) {
