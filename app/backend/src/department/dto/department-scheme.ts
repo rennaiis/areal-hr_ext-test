@@ -1,5 +1,4 @@
-import Joi from 'joi'
-
+import * as Joi from 'joi'
 export const CreateDepartmentScheme = Joi.object({
     organization_id: Joi.number().integer().positive().required(),
     parent_department_id: Joi.number().integer().positive().optional(),
