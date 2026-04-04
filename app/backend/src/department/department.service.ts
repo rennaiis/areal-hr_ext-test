@@ -4,16 +4,28 @@ import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Department } from './entities/department.entity';
 import { Repository } from 'typeorm';
+import { Organization } from '../organization/entities/organization.entity';
 
 @Injectable()
 export class DepartmentService {
   constructor(
     @InjectRepository(Department)
-    private readonly departmentRepository:Repository<Department>
+    private readonly departmentRepository:Repository<Department>,
+
+    @InjectRepository(Organization)
+    private readonly organizationRepository:Repository<Organization>
   ){}
 
   async create(createDepartmentDto: CreateDepartmentDto) {
-    const department = this.departmentRepository.create(createDepartmentDto)
+    const organization = await this.organizationRepository.findOneBy({organization_id: createDepartmentDto.organization_id});
+    if (!organization){
+      throw new NotFoundException()
+    }
+    const department = this.departmentRepository.create({
+      ...createDepartmentDto,
+      organization
+    })
+
     return await this.departmentRepository.save(department)
   }
 
