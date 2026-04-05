@@ -12,6 +12,9 @@ import { Position } from './position/entities/position.entity'
 import { EmployeeModule } from './employee/employee.module';
 import { PassportModule } from './passport/passport.module';
 import { AdressModule } from './adress/adress.module';
+import { FileModule } from './file/file.module';
+import { OperationsHistoryModule } from './operations_history/operations_history.module';
+import { HrOperationModule } from './hr_operation/hr_operation.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -39,7 +42,10 @@ import { AdressModule } from './adress/adress.module';
   DepartmentModule,
   EmployeeModule,
   PassportModule,
-  AdressModule
+  AdressModule,
+  FileModule,
+  OperationsHistoryModule,
+  HrOperationModule
   ],
   controllers: [AppController],
   providers: [AppService],

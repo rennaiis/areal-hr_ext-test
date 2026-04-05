@@ -1,1 +1,3 @@
-export class Passport {}
+export class Passport {
+    
+}
