@@ -6,10 +6,12 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn, 
     UpdateDateColumn,
-    DeleteDateColumn
+    DeleteDateColumn,
+    OneToMany
 } from "typeorm";
 import { Passport } from "../../passport/entities/passport.entity";
 import { Adress } from "../../adress/entities/adress.entity";
+import { HrOperation } from "../../hr_operation/entities/hr_operation.entity";
 
 @Entity()
 export class Employee {
@@ -22,6 +24,9 @@ export class Employee {
     @OneToOne(()=>Adress, (adress)=>adress.employee)
     @JoinColumn({name: 'adress_id'})
     adress: Adress
+
+    @OneToMany(()=>HrOperation, (opetation)=>opetation.employee)
+    hr_operations: HrOperation[]
 
     @Column({
         type: 'varchar',

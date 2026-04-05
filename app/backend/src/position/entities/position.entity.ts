@@ -4,14 +4,19 @@ import {
     CreateDateColumn, 
     UpdateDateColumn,
     DeleteDateColumn,
-    Column
+    Column,
+    OneToMany
 }from 'typeorm'
+import { HrOperation } from '../../hr_operation/entities/hr_operation.entity';
 
 @Entity('positions')
 export class Position {
     @PrimaryGeneratedColumn()
     position_id: number;
-
+    
+    @OneToMany(()=>HrOperation, (opetation)=>opetation.position)
+    hr_operations: HrOperation[]
+    
     @Column({
         type: 'varchar', 
         length: 300

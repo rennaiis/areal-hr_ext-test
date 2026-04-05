@@ -9,9 +9,11 @@ import {
     ManyToOne,
     JoinColumn,
     TreeParent,
-    TreeChildren
+    TreeChildren,
+    OneToMany
 }from 'typeorm'
 import { Organization } from '../../organization/entities/organization.entity';
+import { HrOperation } from '../../hr_operation/entities/hr_operation.entity';
 
 @Entity('departments')
 @Tree('materialized-path')
@@ -45,6 +47,9 @@ export class Department {
     @ManyToOne(() => Organization, (organization) => organization.departments)
     @JoinColumn({ name: 'organization_id' }) 
     organization: Organization;
+
+    @OneToMany(()=>HrOperation, (opetation)=>opetation.department)
+    hr_operations: HrOperation[]
 
     @TreeParent()
     @JoinColumn({ name: 'parent_department_id' })
