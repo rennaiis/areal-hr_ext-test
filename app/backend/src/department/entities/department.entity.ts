@@ -42,7 +42,7 @@ export class Department {
     @DeleteDateColumn()
     deleted_at: Date;
 
-    @ManyToOne(() => Organization, (org) => org.departments)
+    @ManyToOne(() => Organization, (organization) => organization.departments)
     @JoinColumn({ name: 'organization_id' }) 
     organization: Organization;
 

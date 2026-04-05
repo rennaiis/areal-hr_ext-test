@@ -5,12 +5,19 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
+    OneToOne,
+    JoinColumn,
+    PrimaryColumn,
  } from "typeorm";
+import { Employee } from "../../employee/entities/employee.entity";
 
 @Entity()
 export class Adress {
-    @PrimaryGeneratedColumn()
-    employee_id: number
+
+    @OneToOne(()=>Employee, (employee)=>employee.adress)
+    @JoinColumn({name: 'employee_id'})
+    @PrimaryColumn()
+    employee: Employee
 
     @Column({
         type: 'varchar',
