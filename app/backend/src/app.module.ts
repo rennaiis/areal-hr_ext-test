@@ -9,6 +9,9 @@ import { DepartmentModule } from './department/department.module';
 import { Organization } from './organization/entities/organization.entity';
 import { Department } from './department/entities/department.entity';
 import { Position } from './position/entities/position.entity'
+import { EmployeeModule } from './employee/employee.module';
+import { PassportModule } from './passport/passport.module';
+import { AdressModule } from './adress/adress.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -33,7 +36,10 @@ import { Position } from './position/entities/position.entity'
   }),
   OrganizationModule,
   PositionModule,
-  DepartmentModule
+  DepartmentModule,
+  EmployeeModule,
+  PassportModule,
+  AdressModule
   ],
   controllers: [AppController],
   providers: [AppService],
