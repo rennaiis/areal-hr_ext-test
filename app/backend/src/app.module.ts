@@ -9,7 +9,6 @@ import { DepartmentModule } from './department/department.module';
 import { Organization } from './organization/entities/organization.entity';
 import { Department } from './department/entities/department.entity';
 import { Position } from './position/entities/position.entity'
-import { EmployeesModule } from './employees/employees.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -34,8 +33,7 @@ import { EmployeesModule } from './employees/employees.module';
   }),
   OrganizationModule,
   PositionModule,
-  DepartmentModule,
-  EmployeesModule
+  DepartmentModule
   ],
   controllers: [AppController],
   providers: [AppService],
