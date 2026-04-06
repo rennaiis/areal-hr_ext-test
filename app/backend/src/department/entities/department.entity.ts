@@ -18,9 +18,7 @@ import { HrOperation } from '../../hr_operation/entities/hr_operation.entity';
 @Entity('departments')
 @Tree('materialized-path')
 export class Department {
-    @PrimaryGeneratedColumn({
-        name: 'department_id'
-    })
+    @PrimaryGeneratedColumn()
     department_id: number;
 
     @Column({
@@ -53,8 +51,8 @@ export class Department {
 
     @TreeParent()
     @JoinColumn({ name: 'parent_department_id' })
-        parent_department: Department;
+    parent_department: Department;
 
     @TreeChildren()
-        children: Department[]
+    children: Department[]
 }

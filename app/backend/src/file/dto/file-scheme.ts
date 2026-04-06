@@ -7,5 +7,5 @@ export const createFileSchema = Joi.object({
 
 export const updateFileSchema = createFileSchema.fork(
     ['name', 'file_path', 'passport_id'], 
-    (schema) => schema.optional()
+    (s) => s.optional()
 );

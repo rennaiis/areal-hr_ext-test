@@ -6,6 +6,6 @@ export const CreateOrganisationScheme = Joi.object({
 })
 
 export const UpdateDepartmentScheme = CreateOrganisationScheme.fork(
-    ['name', 'comment'],
+    ['name'],
     (s)=>s.optional()
 )

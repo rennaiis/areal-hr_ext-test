@@ -1,6 +1,5 @@
 import { 
     Entity, 
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
     UpdateDateColumn,
@@ -13,7 +12,6 @@ import { Employee } from "../../employee/entities/employee.entity";
 
 @Entity()
 export class Adress {
-
     @OneToOne(()=>Employee, (employee)=>employee.adress)
     @JoinColumn({name: 'employee_id'})
     @PrimaryColumn()

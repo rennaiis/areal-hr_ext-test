@@ -14,6 +14,9 @@ export class Organization {
     @PrimaryGeneratedColumn()
     organization_id: number;
 
+    @OneToMany(()=>Department, (department)=>department.organization)
+    departments: Department[];
+
     @Column({
         type: 'varchar',
         length: 300
@@ -29,11 +32,10 @@ export class Organization {
 
     @CreateDateColumn()
     created_at: Date;
+
     @UpdateDateColumn()
     updated_at: Date;
+    
     @DeleteDateColumn()
     deleted_at: Date;
-
-    @OneToMany(()=>Department, (department)=>department.organization)
-    departments: Department[];
 }

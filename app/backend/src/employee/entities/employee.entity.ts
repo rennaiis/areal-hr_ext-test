@@ -16,9 +16,10 @@ import { HrOperation } from "../../hr_operation/entities/hr_operation.entity";
 @Entity()
 export class Employee {
     @PrimaryGeneratedColumn()
-    employee_id
+    employee_id: number
 
     @OneToOne(()=>Passport, (passport)=>passport.employee)
+    @JoinColumn({name: 'passport_id'})
     passport: Passport
 
     @OneToOne(()=>Adress, (adress)=>adress.employee)

@@ -28,7 +28,6 @@ export class HistoryItem {
         type: 'varchar',
         length: 50
     })
-
     field_name: string
 
     @Column({
