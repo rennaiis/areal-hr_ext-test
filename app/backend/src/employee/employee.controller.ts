@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { CreateEmployeeSchema, UpdateEmployeeSchema } from './dto/employee-scheme';
 
 @Controller('employee')
 export class EmployeeController {
@@ -9,7 +10,11 @@ export class EmployeeController {
 
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeService.create(createEmployeeDto);
+    const {error, value} = CreateEmployeeSchema.validate(createEmployeeDto);
+    if (error){
+      throw new BadRequestException(`Data mistake: ${error.message}`)
+    }
+    return this.employeeService.create(value);
   }
 
   @Get()
@@ -24,6 +29,10 @@ export class EmployeeController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+    const {error, value} = UpdateEmployeeSchema.validate(updateEmployeeDto);
+    if (error){
+      throw new BadRequestException(`Data mistake: ${error.message}`)
+    }
     return this.employeeService.update(+id, updateEmployeeDto);
   }
 
