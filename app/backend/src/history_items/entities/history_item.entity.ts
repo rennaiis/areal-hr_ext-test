@@ -2,33 +2,33 @@ import {
     Column,
     CreateDateColumn,
     Entity, 
-    OneToOne, 
     PrimaryGeneratedColumn
 } from "typeorm";
-import { operationObjectType } from "./operationObjectType";
-import { HrOperation } from "../../hr_operation/entities/hr_operation.entity";
-
+import { ChangedTable } from "../../../../enums/ChangedTableType";
 @Entity()
-export class OperationsHistory {
+export class HistoryItem {
     @PrimaryGeneratedColumn()
-    operation_id: number
+    history_item_id: number
     
     @CreateDateColumn()
     operation_time: Date
 
-    @OneToOne(()=>HrOperation, (operation)=>operation.operation_id)
-    hr_operation: HrOperation
+    @Column({
+        type: 'number'
+    })
+    target_id: number
 
     @Column({
         type: 'enum',
-        enum: operationObjectType,
+        enum: ChangedTable,
     })
-    operation_object: operationObjectType
+    operation_object: ChangedTable
 
     @Column({
         type: 'varchar',
         length: 50
     })
+
     field_name: string
 
     @Column({
@@ -42,6 +42,4 @@ export class OperationsHistory {
         length: 300
     })
     new_value: string
-
-
 }
