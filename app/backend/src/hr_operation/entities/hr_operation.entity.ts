@@ -43,7 +43,7 @@ export class HrOperation {
 
     @ManyToOne(()=>Position, (position)=>position.position_id)
     @JoinColumn({name: 'position_id'})
-    position: Department
+    position: Position
 
     @ManyToOne(()=>Employee, (employee)=>employee.employee_id)
 
