@@ -47,12 +47,17 @@ export class DepartmentService {
 
   async update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
     const dep = await this.findOne(id)
+    if (updateDepartmentDto.organization_id){
+      const organization = await this.organizationRepository.findOneBy({
+        organization_id: updateDepartmentDto.organization_id
+      })
+      if(!organization) throw new NotFoundException();
+      dep.organization = organization
+    }
     const updated = Object.assign(dep, updateDepartmentDto)
     return await this.departmentRepository.save(updated)
   }
   
-
-
   async remove(id: number) {
     const dep = await this.findOne(id);
     return await this.departmentRepository.softRemove(dep);
