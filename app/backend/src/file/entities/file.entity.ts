@@ -16,7 +16,6 @@ export class File {
     file_id: number
 
     @ManyToOne(()=>Passport, (passport)=>passport.files)
-    @JoinColumn({name: 'passport_id'})
     passport: Passport
 
     @Column({

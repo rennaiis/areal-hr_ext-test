@@ -34,15 +34,12 @@ export class HrOperation {
     operation_type: HrOperationType
 
     @ManyToOne(()=>Department, (department)=>department.department_id)
-    @JoinColumn({name: 'department_id'})
     department: Department
 
     @ManyToOne(()=>Position, (position)=>position.position_id)
-    @JoinColumn({name: 'position_id'})
     position: Position
 
     @ManyToOne(()=>Employee, (employee)=>employee.employee_id)
-    @JoinColumn({name: 'employee_id'})
     employee: Employee
 
     @CreateDateColumn()

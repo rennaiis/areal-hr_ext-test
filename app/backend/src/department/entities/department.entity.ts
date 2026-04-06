@@ -43,14 +43,12 @@ export class Department {
     deleted_at: Date;
 
     @ManyToOne(() => Organization, (organization) => organization.departments)
-    @JoinColumn({ name: 'organization_id' }) 
     organization: Organization;
 
     @OneToMany(()=>HrOperation, (opetation)=>opetation.department)
     hr_operations: HrOperation[]
 
     @TreeParent()
-    @JoinColumn({ name: 'parent_department_id' })
     parent_department: Department;
 
     @TreeChildren()

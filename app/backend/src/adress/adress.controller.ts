@@ -16,7 +16,7 @@ export class AdressController {
     if (error){
       throw new BadRequestException(`Data mistake: ${error.message}`)
     }
-     return this.adressService.create(+employee_id, createAdressDto);
+     return this.adressService.create(+employee_id, value);
   }
 
   @Get()
