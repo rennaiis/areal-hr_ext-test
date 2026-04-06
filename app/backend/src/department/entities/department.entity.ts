@@ -45,11 +45,11 @@ export class Department {
     @ManyToOne(() => Organization, (organization) => organization.departments)
     organization: Organization;
 
-    @OneToMany(()=>HrOperation, (opetation)=>opetation.department)
+    @OneToMany(()=>HrOperation, (operation)=>operation.department)
     hr_operations: HrOperation[]
 
     @TreeParent()
-    parent_department: Department;
+    parent_department: Department | null;
 
     @TreeChildren()
     children: Department[]
