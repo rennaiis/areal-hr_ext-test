@@ -4,6 +4,7 @@ export const CreatePositionScheme = Joi.object({
     name: Joi.string().max(300).required()
 })
 
-export const UpdatePositionScheme = Joi.object({
-    name: Joi.string().max(300).optional()
-})
+export const UpdatePassportSchemt = CreatePositionScheme.fork(
+    ['name'],
+    (s)=>s.optional()
+)

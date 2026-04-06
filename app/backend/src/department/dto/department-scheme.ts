@@ -6,9 +6,7 @@ export const CreateDepartmentScheme = Joi.object({
     comment: Joi.string().max(1000).optional()
 })
 
-export const UpdateDepartmentScheme = Joi.object({
-    organization_id: Joi.number().integer().positive().optional(),
-    parent_department_id: Joi.number().integer().positive().optional(),
-    name: Joi.string().max(150).optional(),
-    comment: Joi.string().max(1000).optional()
-})
+export const UpdateDepartmentScheme = CreateDepartmentScheme.fork(
+    ['organization_id', 'parent_department_id', 'name','comment'],
+    (s)=>s.optional()
+)
