@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
+import { createFileSchema, updateFileSchema } from './dto/file-scheme';
 
 @Controller('file')
 export class FileController {
@@ -9,7 +10,11 @@ export class FileController {
 
   @Post()
   create(@Body() createFileDto: CreateFileDto) {
-    return this.fileService.create(createFileDto);
+    const {error, value} = createFileSchema.validate(createFileDto)
+    if (error){
+      throw new BadRequestException(`Data mistake: ${error.message}`)
+    }
+    return this.fileService.create(value);
   }
 
   @Get()
@@ -24,7 +29,11 @@ export class FileController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
-    return this.fileService.update(+id, updateFileDto);
+    const {error, value} = updateFileSchema.validate(updateFileDto)
+    if (error){
+      throw new BadRequestException(`Data mistake: ${error.message}`)
+    }
+    return this.fileService.update(+id, value);
   }
 
   @Delete(':id')
