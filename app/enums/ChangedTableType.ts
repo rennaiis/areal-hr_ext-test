@@ -1,4 +1,4 @@
-export enum operationObjectType{
+export enum ChangedTable{
     ORGANIZATION = "organization",
     DEPARTMENT = "department",
     POSITION = "position",

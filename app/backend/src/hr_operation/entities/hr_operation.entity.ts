@@ -10,10 +10,9 @@ import {
     OneToOne
 } from "typeorm";
 import { Employee } from "../../employee/entities/employee.entity";
-import { OperationType } from "./operationType";
 import { Department } from "../../department/entities/department.entity";
 import { Position } from "../../position/entities/position.entity";
-import { OperationsHistory } from "../../operations_history/entities/operation_history";
+import { HrOperationType } from "../../../../enums/HrOperationType";
 
 @Entity()
 export class HrOperation {
@@ -29,13 +28,10 @@ export class HrOperation {
 
     @Column({
         type: 'enum',
-        enum: OperationType,
-        default: OperationType.HIRE
+        enum: HrOperationType,
+        default: HrOperationType.HIRE
     })
-    operation_type: OperationType
-
-    @OneToOne(()=>OperationsHistory, (operation)=>operation.hr_operation)
-    hist_operation: OperationsHistory
+    operation_type: HrOperationType
 
     @ManyToOne(()=>Department, (department)=>department.department_id)
     @JoinColumn({name: 'department_id'})
@@ -46,16 +42,15 @@ export class HrOperation {
     position: Position
 
     @ManyToOne(()=>Employee, (employee)=>employee.employee_id)
-
     @JoinColumn({name: 'employee_id'})
-
     employee: Employee
-    @CreateDateColumn()
 
+    @CreateDateColumn()
     created_at: Date;
+
     @UpdateDateColumn()
-    
     updated_at: Date;
+    
     @DeleteDateColumn()
     deleted_at: Date;
 }

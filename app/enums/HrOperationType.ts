@@ -1,4 +1,4 @@
-export enum OperationType{
+export enum HrOperationType{
     HIRE = 'hire', 
     FIRE = 'fire',
     CHANGE_SALARY = 'change_salary',
