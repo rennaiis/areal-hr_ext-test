@@ -33,7 +33,7 @@ export class EmployeeController {
     if (error){
       throw new BadRequestException(`Data mistake: ${error.message}`)
     }
-    return this.employeeService.update(+id, updateEmployeeDto);
+    return this.employeeService.update(+id, value);
   }
 
   @Delete(':id')

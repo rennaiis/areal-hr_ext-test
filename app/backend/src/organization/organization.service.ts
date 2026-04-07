@@ -27,7 +27,7 @@ export class OrganizationService {
       where:{organization_id: id},
       relations: ['departments']
      })
-    if (!org) throw new NotFoundException(`Department ${id} not found`)
+    if (!org) throw new NotFoundException(`Organization ${id} not found`)
     return org
   }
 

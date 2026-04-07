@@ -19,7 +19,7 @@ export class FileService {
       passport_id: createFileDto.passport_id
     })
     if (!passport){
-      throw new NotFoundException()
+      throw new NotFoundException(`passport ${createFileDto.passport_id} not found`)
     }
     const file = this.fileRepository.create(createFileDto)
     file.passport = passport
@@ -48,7 +48,7 @@ export class FileService {
       const passport = await this.passportRepository.findOneBy({ 
         passport_id: updateFileDto.passport_id 
       });
-      if (!passport) throw new NotFoundException();
+      if (!passport) throw new NotFoundException(`passport ${updateFileDto.passport_id} not found`);
       file.passport = passport;
     }
     const updated = Object.assign(file, updateFileDto)

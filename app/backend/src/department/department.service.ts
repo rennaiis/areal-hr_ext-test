@@ -59,7 +59,7 @@ export class DepartmentService {
       const organization = await this.organizationRepository.findOneBy({
         organization_id: updateDepartmentDto.organization_id
       })
-      if(!organization) throw new NotFoundException();
+      if(!organization) throw new NotFoundException(`organization ${id} not found`);
       dep.organization = organization
     }
 

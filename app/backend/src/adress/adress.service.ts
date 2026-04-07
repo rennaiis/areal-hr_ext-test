@@ -17,7 +17,7 @@ export class AdressService {
 
   async create(employeeId: number, createAdressDto: CreateAdressDto) {
     const employee = await this.employeeRepository.findOneBy({employee_id: employeeId});
-    if (!employee) throw new NotFoundException('no such employee');
+    if (!employee) throw new NotFoundException(`employee №${employeeId} not found`);
     const adress = this.adressRepository.create({
       ...createAdressDto,
       employee: employee
