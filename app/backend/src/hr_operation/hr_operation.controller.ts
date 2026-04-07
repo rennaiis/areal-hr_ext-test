@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { HrOperationService } from './hr_operation.service';
 import { CreateHrOperationDto } from './dto/create-hr_operation.dto';
 import { UpdateHrOperationDto } from './dto/update-hr_operation.dto';
+import { createHrOperationSchema, updateHrOperationSchema } from './dto/hr_operation-scheme';
 
 @Controller('hr-operation')
 export class HrOperationController {
@@ -9,7 +10,11 @@ export class HrOperationController {
 
   @Post()
   create(@Body() createHrOperationDto: CreateHrOperationDto) {
-    return this.hrOperationService.create(createHrOperationDto);
+    const {error, value} = createHrOperationSchema.validate(createHrOperationDto)
+      if (error){
+        throw new BadRequestException(`Data mistake: ${error.message}`)
+      }
+    return this.hrOperationService.create(value);
   }
 
   @Get()
@@ -24,7 +29,11 @@ export class HrOperationController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateHrOperationDto: UpdateHrOperationDto) {
-    return this.hrOperationService.update(+id, updateHrOperationDto);
+    const {error, value} = updateHrOperationSchema.validate(updateHrOperationDto)
+      if (error){
+        throw new BadRequestException(`Data mistake: ${error.message}`)
+      }
+    return this.hrOperationService.update(+id, value);
   }
 
   @Delete(':id')

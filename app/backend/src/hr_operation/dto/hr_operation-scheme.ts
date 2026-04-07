@@ -8,3 +8,8 @@ export const createHrOperationSchema = Joi.object({
     salary: Joi.number().precision(2).positive().required(),
     operation_type: Joi.string().valid(...Object.values(HrOperationType)).required(),
 });
+
+export const updateHrOperationSchema = createHrOperationSchema.fork(
+    ['employee_id', 'department_id', 'position_id', 'salary', 'operation_type'], 
+    (s) => s.optional()
+);
