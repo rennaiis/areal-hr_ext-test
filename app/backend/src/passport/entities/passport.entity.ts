@@ -17,6 +17,7 @@ export class Passport {
     passport_id: number
 
     @OneToOne(()=>Employee, (emp)=>emp.passport)
+    @JoinColumn({name: 'employee_id'})
     employee: Employee
 
     @OneToMany(()=>File, (file)=>file.passport, {

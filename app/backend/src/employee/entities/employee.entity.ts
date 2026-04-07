@@ -19,11 +19,9 @@ export class Employee {
     employee_id: number
 
     @OneToOne(()=>Passport, (passport)=>passport.employee)
-    @JoinColumn({name: 'passport_id'})
     passport: Passport
 
     @OneToOne(()=>Adress, (adress)=>adress.employee)
-    @JoinColumn({name: 'adress_id'})
     adress: Adress
 
     @OneToMany(()=>HrOperation, (opetation)=>opetation.employee)

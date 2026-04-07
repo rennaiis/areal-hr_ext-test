@@ -14,6 +14,7 @@ import { Employee } from "../../employee/entities/employee.entity";
 export class Adress {
     @OneToOne(()=>Employee, (employee)=>employee.adress)
     @PrimaryColumn()
+    @JoinColumn({name: 'employee_id'})
     employee: Employee
 
     @Column({
