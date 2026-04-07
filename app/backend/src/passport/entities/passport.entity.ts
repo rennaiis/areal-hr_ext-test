@@ -19,7 +19,9 @@ export class Passport {
     @OneToOne(()=>Employee, (emp)=>emp.passport)
     employee: Employee
 
-    @OneToMany(()=>File, (file)=>file.passport)
+    @OneToMany(()=>File, (file)=>file.passport, {
+        onDelete: 'CASCADE'
+    })
     files: File[]
 
     @Column({

@@ -42,7 +42,9 @@ export class Department {
     @DeleteDateColumn()
     deleted_at: Date;
 
-    @ManyToOne(() => Organization, (organization) => organization.departments)
+    @ManyToOne(() => Organization, (organization) => organization.departments, {
+        onDelete: 'CASCADE'
+    })
     organization: Organization;
 
     @OneToMany(()=>HrOperation, (operation)=>operation.department)
