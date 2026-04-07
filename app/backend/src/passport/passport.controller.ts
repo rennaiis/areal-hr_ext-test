@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { PassportService } from './passport.service';
 import { CreatePassportDto } from './dto/create-passport.dto';
 import { UpdatePassportDto } from './dto/update-passport.dto';
+import { CreatePassportScheme } from './dto/passport-scheme';
+import { UpdatePassportScheme } from '../position/dto/position-scheme';
 
 @Controller('passport')
 export class PassportController {
@@ -9,7 +11,11 @@ export class PassportController {
 
   @Post()
   create(@Body() createPassportDto: CreatePassportDto) {
-    return this.passportService.create(createPassportDto);
+    const {error, value} = CreatePassportScheme.validate(createPassportDto);
+        if (error){
+          throw new BadRequestException(`Data mistake: ${error.message}`)
+        }
+    return this.passportService.create(value);
   }
 
   @Get()
@@ -24,7 +30,11 @@ export class PassportController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePassportDto: UpdatePassportDto) {
-    return this.passportService.update(+id, updatePassportDto);
+    const {error, value} = UpdatePassportScheme.validate(updatePassportDto);
+      if (error){
+        throw new BadRequestException(`Data mistake: ${error.message}`)
+      }
+    return this.passportService.update(+id, value);
   }
 
   @Delete(':id')

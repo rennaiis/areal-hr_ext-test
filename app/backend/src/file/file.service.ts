@@ -21,10 +21,8 @@ export class FileService {
     if (!passport){
       throw new NotFoundException()
     }
-    const file = this.fileRepository.create({
-      ...createFileDto,
-      passport
-    })
+    const file = this.fileRepository.create(createFileDto)
+    file.passport = passport
     return await this.fileRepository.save(file);
   }
 
