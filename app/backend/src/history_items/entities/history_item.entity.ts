@@ -32,13 +32,15 @@ export class HistoryItem {
 
     @Column({
         type: 'varchar',
-        length: 300
+        length: 300, 
+        nullable: true
     })
     old_value: string
 
     @Column({
         type: 'varchar',
-        length: 300
+        length: 300, 
+        nullable: true
     })
     new_value: string
 }

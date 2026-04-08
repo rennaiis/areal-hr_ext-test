@@ -26,18 +26,4 @@ export class HistoryItemsController {
   findOne(@Param('id') id: string) {
     return this.historyItemsService.findOne(+id);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoryItemDto: UpdateHistoryItemDto) {
-    const {error, value} = updateHistoryItemScheme.validate(updateHistoryItemDto);
-        if (error){
-          throw new BadRequestException(`Data mistake: ${error.message}`)
-        }
-    return this.historyItemsService.update(+id, value);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.historyItemsService.remove(+id);
-  }
 }
