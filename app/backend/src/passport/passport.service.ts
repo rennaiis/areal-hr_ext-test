@@ -4,12 +4,15 @@ import { UpdatePassportDto } from './dto/update-passport.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Passport } from './entities/passport.entity';
 import { Repository } from 'typeorm';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class PassportService {
   constructor(
     @InjectRepository(Passport)
-    private readonly passportRepository: Repository<Passport>
+    private readonly passportRepository: Repository<Passport>,
+    private readonly historyService: HistoryItemsService
   ){}
   async create(createPassportDto: CreatePassportDto) {
     const passport = this.passportRepository.create(createPassportDto)
@@ -33,6 +36,9 @@ export class PassportService {
 
   async update(id: number, updatePassportDto: UpdatePassportDto) {
     const passport = await this.findOne(id)
+    await this.historyService.logUpdates(
+      id, ChangedTable.EMPLOYEE, passport, updatePassportDto
+    )
     const updated = Object.assign(passport, updatePassportDto)
     return await this.passportRepository.save(updated);
   }

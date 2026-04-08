@@ -4,12 +4,15 @@ import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class OrganizationService {
   constructor(
       @InjectRepository(Organization)
-      private readonly organizationRepository: Repository<Organization>
+      private readonly organizationRepository: Repository<Organization>,
+      private readonly historyService: HistoryItemsService
     ){}
   async create(createOrganizationDto: CreateOrganizationDto) {
     const org = this.organizationRepository.create(createOrganizationDto)
@@ -33,6 +36,9 @@ export class OrganizationService {
 
   async update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
     const org = await this.findOne(id)
+    await this.historyService.logUpdates(
+      id, ChangedTable.ORGANIZATION, org, updateOrganizationDto
+    )
     const updated = Object.assign(org, updateOrganizationDto)
     return await this.organizationRepository.save(updated);
   }

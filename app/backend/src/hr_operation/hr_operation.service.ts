@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { Employee } from '../employee/entities/employee.entity';
 import { Department } from '../department/entities/department.entity';
 import { Position } from '../position/entities/position.entity';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class HrOperationService {
@@ -21,7 +23,9 @@ export class HrOperationService {
     private readonly departmentRepository:Repository<Department>,
 
     @InjectRepository(Position)
-    private readonly positionRepository:Repository<Position>
+    private readonly positionRepository:Repository<Position>,
+
+    private readonly historyService: HistoryItemsService
   ){}
 
   async create(createHrOperationDto: CreateHrOperationDto) {
@@ -82,6 +86,7 @@ export class HrOperationService {
       }
       hr_operation.department = department
     }
+    
     if (updateHrOperationDto.position_id){
       const position = await this.positionRepository.findOneBy({
       position_id: updateHrOperationDto.position_id
@@ -101,6 +106,9 @@ export class HrOperationService {
       }
       hr_operation.department = employee
     }
+    await this.historyService.logUpdates(
+      id, ChangedTable.OPERATION, hr_operation, updateHrOperationDto
+    )
     const updated = Object.assign(hr_operation, updateHrOperationDto)
     return await this.HrOperationRepository.save(updated)
   }

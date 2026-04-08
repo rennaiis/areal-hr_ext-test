@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateHistoryItemDto } from './dto/create-history_item.dto';
-import { UpdateHistoryItemDto } from './dto/update-history_item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HistoryItem } from './entities/history_item.entity';
 import { Repository } from 'typeorm';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class HistoryItemsService {
@@ -28,14 +28,22 @@ export class HistoryItemsService {
     return hist
   }
 
-  async update(id: number, updateHistoryItemDto: UpdateHistoryItemDto) {
-    const hist = await this.findOne(id)
-    const updated = Object.assign(hist, updateHistoryItemDto)
-    return await this.historyRepository.save(updated);
-  }
-
-  async remove(id: number) {
-    const hist = await this.findOne(id)
-    return await this.historyRepository.softRemove(hist);
-  }
+  async logUpdates(
+    targetId: number, operation_object: ChangedTable, oldObject: any, updateDto: any){
+      const keys = Object.keys(updateDto)
+      for (const key of keys){
+      const oldValue = oldObject[key]
+      const newValue = updateDto[key]
+      if (String(oldValue) !== String(newValue)){
+        await this.create({
+          target_id: targetId, 
+          operation_object: operation_object,
+          field_name: key, 
+          old_value: oldValue ? String(oldValue) : '',
+          new_value: newValue ? String(newValue) : ''
+        })
+      }
+     }
+    }
+    
 }

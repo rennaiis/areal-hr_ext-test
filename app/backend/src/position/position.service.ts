@@ -4,12 +4,15 @@ import { UpdatePositionDto } from './dto/update-position.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Position } from './entities/position.entity';
 import { Repository } from 'typeorm';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class PositionService {
   constructor(
       @InjectRepository(Position)
-      private readonly positionRepository:Repository<Position>
+      private readonly positionRepository:Repository<Position>,
+      private readonly historyService: HistoryItemsService
     ){}
   
   async create(createPositionDto: CreatePositionDto) {
@@ -31,6 +34,9 @@ export class PositionService {
 
   async update(id: number, updatePositionDto: UpdatePositionDto) {
     const pos = await this.findOne(id)
+    await this.historyService.logUpdates(
+      id, ChangedTable.POSITION, pos, updatePositionDto
+    )
     const updated = Object.assign(pos, updatePositionDto)
     return await this.positionRepository.save(updated)
   }

@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Adress } from './entities/adress.entity';
 import { Repository } from 'typeorm';
 import { Employee } from '../employee/entities/employee.entity';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class AdressService {
@@ -12,7 +14,8 @@ export class AdressService {
     @InjectRepository(Adress)
     private readonly adressRepository:Repository<Adress>, 
     @InjectRepository(Employee)
-    private readonly employeeRepository:Repository<Employee>
+    private readonly employeeRepository:Repository<Employee>,
+    private readonly historyService: HistoryItemsService
   ){}
 
   async create(employeeId: number, createAdressDto: CreateAdressDto) {
@@ -40,6 +43,9 @@ export class AdressService {
 
   async update(id: number, updateAdressDto: UpdateAdressDto) {
     const adress = await this.findOne(id)
+    await this.historyService.logUpdates(
+      id, ChangedTable.EMPLOYEE, adress, updateAdressDto
+    )
     const updated = Object.assign(adress, updateAdressDto)
     return this.adressRepository.save(updated);
   }

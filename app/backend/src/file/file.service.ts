@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { File } from './entities/file.entity';
 import { Repository } from 'typeorm';
 import { Passport } from '../passport/entities/passport.entity';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class FileService {
@@ -12,7 +14,8 @@ export class FileService {
     @InjectRepository(File)
     private readonly fileRepository:Repository<File>,
     @InjectRepository(Passport)
-    private readonly passportRepository:Repository<Passport>
+    private readonly passportRepository:Repository<Passport>,
+    private readonly historyService: HistoryItemsService
   ){}
   async create(createFileDto: CreateFileDto) {
     const passport = await this.passportRepository.findOneBy({
@@ -51,6 +54,9 @@ export class FileService {
       if (!passport) throw new NotFoundException(`passport ${updateFileDto.passport_id} not found`);
       file.passport = passport;
     }
+    await this.historyService.logUpdates(
+      id, ChangedTable.EMPLOYEE, file, updateFileDto
+    )
     const updated = Object.assign(file, updateFileDto)
     return await this.fileRepository.save(updated)
   }
