@@ -16,7 +16,9 @@ export class PassportService {
   ){}
   async create(createPassportDto: CreatePassportDto) {
     const passport = this.passportRepository.create(createPassportDto)
-    return await this.passportRepository.save(passport)
+    const savedPassport = this.passportRepository.save(passport)
+    await this.historyService.logCreates((await savedPassport).passport_id, ChangedTable.EMPLOYEE)
+    return savedPassport
   }
 
   async findAll() {

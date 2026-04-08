@@ -15,8 +15,10 @@ export class EmployeeService {
     private readonly historyService: HistoryItemsService
   ){}
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const employee = await this.employeeRepository.create(createEmployeeDto)
-    return this.employeeRepository.save(employee)
+    const employee = this.employeeRepository.create(createEmployeeDto)
+    const savedEmployee = this.employeeRepository.save(employee)
+    await this.historyService.logCreates((await savedEmployee).employee_id, ChangedTable.EMPLOYEE)
+    return savedEmployee
   }
 
   async findAll() {

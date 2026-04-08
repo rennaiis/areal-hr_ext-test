@@ -54,7 +54,9 @@ export class HrOperationService {
     hr_operation.employee = employee
     hr_operation.department = department
     hr_operation.position = position
-    return await this.HrOperationRepository.save(hr_operation);
+    const saved_operation = this.HrOperationRepository.save(hr_operation);
+    await this.historyService.logCreates((await saved_operation).operation_id, ChangedTable.OPERATION)
+    return saved_operation
    
   }
 

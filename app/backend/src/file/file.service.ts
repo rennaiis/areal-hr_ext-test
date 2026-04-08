@@ -26,7 +26,9 @@ export class FileService {
     }
     const file = this.fileRepository.create(createFileDto)
     file.passport = passport
-    return await this.fileRepository.save(file);
+    const savedFile = this.fileRepository.save(file);
+    await this.historyService.logCreates((await savedFile).file_id, ChangedTable.EMPLOYEE)
+    return savedFile
   }
 
   async findAll() {

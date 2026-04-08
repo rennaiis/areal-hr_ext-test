@@ -16,7 +16,9 @@ export class OrganizationService {
     ){}
   async create(createOrganizationDto: CreateOrganizationDto) {
     const org = this.organizationRepository.create(createOrganizationDto)
-    return await this.organizationRepository.save(org)
+    const savedOrg = this.organizationRepository.save(org)
+    await this.historyService.logCreates((await savedOrg).organization_id, ChangedTable.ORGANIZATION)
+    return savedOrg
   }
 
   async findAll() {

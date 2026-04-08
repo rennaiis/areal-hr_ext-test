@@ -25,7 +25,11 @@ export class AdressService {
       ...createAdressDto,
       employee: employee
   });
-    return this.adressRepository.save(adress)
+
+  const savedAdress = this.adressRepository.save(adress)
+  await this.historyService.logCreates((await savedAdress).employee.employee_id, ChangedTable.EMPLOYEE)
+  return savedAdress
+
   }
 
   async findAll() {

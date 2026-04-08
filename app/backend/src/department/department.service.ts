@@ -3,8 +3,10 @@ import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Department } from './entities/department.entity';
-import { Repository, TreeRepository } from 'typeorm';
+import { ChangeStream, Repository, TreeRepository } from 'typeorm';
 import { Organization } from '../organization/entities/organization.entity';
+import { HistoryItemsService } from '../history_items/history_items.service';
+import { ChangedTable } from '../../../enums/ChangedTableType';
 
 @Injectable()
 export class DepartmentService {
@@ -13,7 +15,9 @@ export class DepartmentService {
     private readonly departmentRepository:TreeRepository<Department>,
 
     @InjectRepository(Organization)
-    private readonly organizationRepository:Repository<Organization>
+    private readonly organizationRepository:Repository<Organization>,
+
+    private readonly historyService: HistoryItemsService
   ){}
 
   async create(createDepartmentDto: CreateDepartmentDto) {
@@ -31,7 +35,9 @@ export class DepartmentService {
       })
       if (parent) department.parent_department = parent
     }
-    return await this.departmentRepository.save(department)
+    const savedDepartment = await this.departmentRepository.save(department)
+    await this.historyService.logCreates((await savedDepartment).department_id, ChangedTable.DEPARTMENT)
+    return savedDepartment
   }
   async findAllTree() {
     return await this.departmentRepository.findTrees();
@@ -74,6 +80,9 @@ export class DepartmentService {
         dep.parent_department = parent;
       }
     }
+    await this.historyService.logUpdates(
+      id, ChangedTable.DEPARTMENT, dep, updateDepartmentDto
+    )
     const updated = Object.assign(dep, updateDepartmentDto)
     return await this.departmentRepository.save(updated)
   }

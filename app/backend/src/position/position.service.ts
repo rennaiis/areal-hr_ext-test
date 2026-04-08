@@ -17,7 +17,9 @@ export class PositionService {
   
   async create(createPositionDto: CreatePositionDto) {
     const pos = this.positionRepository.create(createPositionDto)
-    return await this.positionRepository.save(pos) 
+    const savedPos = this.positionRepository.save(pos) 
+    await this.historyService.logCreates((await savedPos).position_id, ChangedTable.POSITION)
+    return savedPos
   }
 
   async findAll() {

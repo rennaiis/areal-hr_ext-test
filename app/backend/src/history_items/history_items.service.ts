@@ -45,5 +45,16 @@ export class HistoryItemsService {
       }
      }
     }
-    
+
+  async logCreates(
+    targetId: number, operation_object: ChangedTable){
+      await this.create({
+        target_id: targetId, 
+        operation_object: operation_object,
+        field_name: 'all', 
+        old_value: '', 
+        new_value: 'created'
+      })
+    }
+
 }
