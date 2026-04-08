@@ -56,6 +56,7 @@ export class AdressService {
 
   async remove(id: number) {
     const adress = await this.findOne(id);
+    this.historyService.logDeletes(id, ChangedTable.ADRESS)
     return this.adressRepository.softRemove(adress)
   }
 }

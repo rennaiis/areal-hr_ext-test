@@ -117,6 +117,7 @@ export class HrOperationService {
 
   async remove(id: number) {
     const hr_operation = await this.findOne(id);
+    this.historyService.logDeletes(id, ChangedTable.OPERATION)
     return await this.HrOperationRepository.softRemove(hr_operation);
   }
 }

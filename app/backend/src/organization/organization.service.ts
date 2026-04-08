@@ -47,6 +47,7 @@ export class OrganizationService {
 
   async remove(id: number) {
     const org = await this.findOne(id)
+    this.historyService.logDeletes(id, ChangedTable.ORGANIZATION)
     return await this.organizationRepository.softRemove(org);
   }
 }

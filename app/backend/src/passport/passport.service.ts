@@ -47,6 +47,7 @@ export class PassportService {
 
   async remove(id: number) {
     const passport = await this.findOne(id)
+    this.historyService.logDeletes(id, ChangedTable.PASSPORT)
     return await this.passportRepository.softRemove(passport);
   }
 }

@@ -45,6 +45,7 @@ export class PositionService {
 
   async remove(id: number) {
     const pos = await this.findOne(id)
+    this.historyService.logDeletes(id, ChangedTable.POSITION)
     return await this.positionRepository.softRemove(pos)
   }
 }

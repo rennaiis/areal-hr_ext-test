@@ -89,6 +89,7 @@ export class DepartmentService {
   
   async remove(id: number) {
     const dep = await this.findOne(id);
+    this.historyService.logDeletes(id, ChangedTable.DEPARTMENT)
     return await this.departmentRepository.softRemove(dep);
 
   }
