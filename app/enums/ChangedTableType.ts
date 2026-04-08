@@ -3,5 +3,8 @@ export enum ChangedTable{
     DEPARTMENT = "department",
     POSITION = "position",
     EMPLOYEE = "employee",
-    OPERATION = "operation"
+    OPERATION = "operation", 
+    FILE = "file", 
+    PASSPORT = "passport", 
+    ADRESS = "adress"
 }

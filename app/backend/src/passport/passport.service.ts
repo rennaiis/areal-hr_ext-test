@@ -17,7 +17,7 @@ export class PassportService {
   async create(createPassportDto: CreatePassportDto) {
     const passport = this.passportRepository.create(createPassportDto)
     const savedPassport = this.passportRepository.save(passport)
-    await this.historyService.logCreates((await savedPassport).passport_id, ChangedTable.EMPLOYEE)
+    await this.historyService.logCreates((await savedPassport).passport_id, ChangedTable.PASSPORT)
     return savedPassport
   }
 
@@ -39,7 +39,7 @@ export class PassportService {
   async update(id: number, updatePassportDto: UpdatePassportDto) {
     const passport = await this.findOne(id)
     await this.historyService.logUpdates(
-      id, ChangedTable.EMPLOYEE, passport, updatePassportDto
+      id, ChangedTable.PASSPORT, passport, updatePassportDto
     )
     const updated = Object.assign(passport, updatePassportDto)
     return await this.passportRepository.save(updated);

@@ -27,7 +27,7 @@ export class FileService {
     const file = this.fileRepository.create(createFileDto)
     file.passport = passport
     const savedFile = this.fileRepository.save(file);
-    await this.historyService.logCreates((await savedFile).file_id, ChangedTable.EMPLOYEE)
+    await this.historyService.logCreates((await savedFile).file_id, ChangedTable.FILE)
     return savedFile
   }
 
@@ -57,7 +57,7 @@ export class FileService {
       file.passport = passport;
     }
     await this.historyService.logUpdates(
-      id, ChangedTable.EMPLOYEE, file, updateFileDto
+      id, ChangedTable.FILE, file, updateFileDto
     )
     const updated = Object.assign(file, updateFileDto)
     return await this.fileRepository.save(updated)

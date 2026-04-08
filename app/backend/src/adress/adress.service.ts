@@ -27,7 +27,7 @@ export class AdressService {
   });
 
   const savedAdress = this.adressRepository.save(adress)
-  await this.historyService.logCreates((await savedAdress).employee.employee_id, ChangedTable.EMPLOYEE)
+  await this.historyService.logCreates((await savedAdress).employee.employee_id, ChangedTable.ADRESS)
   return savedAdress
 
   }
@@ -48,7 +48,7 @@ export class AdressService {
   async update(id: number, updateAdressDto: UpdateAdressDto) {
     const adress = await this.findOne(id)
     await this.historyService.logUpdates(
-      id, ChangedTable.EMPLOYEE, adress, updateAdressDto
+      id, ChangedTable.ADRESS, adress, updateAdressDto
     )
     const updated = Object.assign(adress, updateAdressDto)
     return this.adressRepository.save(updated);
