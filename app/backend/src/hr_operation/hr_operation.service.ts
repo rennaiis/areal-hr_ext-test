@@ -94,7 +94,7 @@ export class HrOperationService {
         position_id: updateHrOperationDto.position_id
       })
       if (!position){
-        throw new NotFoundException(`position ${updateHrOperationDto.department_id} not found`)
+        throw new NotFoundException(`position ${updateHrOperationDto.position_id} not found`)
       }
       hr_operation.position = position
     }
@@ -104,7 +104,7 @@ export class HrOperationService {
       employee_id: updateHrOperationDto.employee_id
       })
       if (!employee){
-        throw new NotFoundException(`employee ${updateHrOperationDto.department_id} not found`)
+        throw new NotFoundException(`employee ${updateHrOperationDto.employee_id} not found`)
       }
       hr_operation.employee = employee
     }
