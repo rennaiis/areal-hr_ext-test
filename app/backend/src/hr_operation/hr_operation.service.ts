@@ -91,7 +91,7 @@ export class HrOperationService {
     
     if (updateHrOperationDto.position_id){
       const position = await this.positionRepository.findOneBy({
-      position_id: updateHrOperationDto.position_id
+        position_id: updateHrOperationDto.position_id
       })
       if (!position){
         throw new NotFoundException(`position ${updateHrOperationDto.department_id} not found`)
@@ -100,13 +100,13 @@ export class HrOperationService {
     }
 
     if (updateHrOperationDto.employee_id){
-      const employee = await this.departmentRepository.findOneBy({
-      department_id: updateHrOperationDto.employee_id
+      const employee = await this.employeeRepository.findOneBy({
+      employee_id: updateHrOperationDto.employee_id
       })
       if (!employee){
         throw new NotFoundException(`employee ${updateHrOperationDto.department_id} not found`)
       }
-      hr_operation.department = employee
+      hr_operation.employee = employee
     }
     await this.historyService.logUpdates(
       id, ChangedTable.OPERATION, hr_operation, updateHrOperationDto
