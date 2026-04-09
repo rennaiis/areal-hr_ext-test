@@ -14,7 +14,7 @@ export class HistoryItem {
     operation_time: Date
 
     @Column({
-        type: 'number'
+        type: 'integer'
     })
     target_id: number
 
