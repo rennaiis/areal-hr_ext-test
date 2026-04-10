@@ -65,7 +65,7 @@ export class FileService {
 
   async remove(id: number) {
     const file = await this.findOne(id);
-    this.historyService.logDeletes(id, ChangedTable.FILE)
+    await this.historyService.logDeletes(id, ChangedTable.FILE)
     return await this.fileRepository.softRemove(file);
   }
 }

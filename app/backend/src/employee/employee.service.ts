@@ -45,7 +45,7 @@ export class EmployeeService {
 
   async remove(id: number) {
     const employee = await this.findOne(id);
-    this.historyService.logDeletes(id, ChangedTable.EMPLOYEE)
+    await this.historyService.logDeletes(id, ChangedTable.EMPLOYEE)
     return await this.employeeRepository.softRemove(employee);
   }
 }

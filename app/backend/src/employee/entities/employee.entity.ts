@@ -51,4 +51,12 @@ export class Employee {
     })
     birth_date: Date
     
+    @CreateDateColumn()
+    created_at: Date
+
+    @DeleteDateColumn()
+    deleted_at: Date
+    
+    @UpdateDateColumn()
+    updated_at: Date
 }
