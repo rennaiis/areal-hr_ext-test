@@ -3,7 +3,7 @@ import { PassportService } from './passport.service';
 import { CreatePassportDto } from './dto/create-passport.dto';
 import { UpdatePassportDto } from './dto/update-passport.dto';
 import { CreatePassportScheme } from './dto/passport-scheme';
-import { UpdatePassportScheme } from '../position/dto/position-scheme';
+import { UpdatePassportScheme } from '../passport/dto/passport-scheme';
 
 @Controller('passport')
 export class PassportController {

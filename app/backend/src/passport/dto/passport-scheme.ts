@@ -8,7 +8,7 @@ export const CreatePassportScheme = Joi.object({
     department_code: Joi.string().pattern(/^\d{3}-\d{3}$/).required()
 })
 
-export const UpdatePassportSchemt = CreatePassportScheme.fork(
+export const UpdatePassportScheme = CreatePassportScheme.fork(
     ['employee_id', 'series', 'number', 'issued_by', 'issue_date', 'department_code'],
     (s)=>s.optional()
 )

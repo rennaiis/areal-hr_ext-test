@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { HistoryItemsService } from './history_items.service';
 import { CreateHistoryItemDto } from './dto/create-history_item.dto';
-import { UpdateHistoryItemDto } from './dto/update-history_item.dto';
-import { CreateHistoryItemScheme, updateHistoryItemScheme } from './dto/history_item-scheme';
+import { CreateHistoryItemScheme} from './dto/history_item-scheme';
 
 @Controller('history-items')
 export class HistoryItemsController {
