@@ -7,10 +7,12 @@
     --header-hover: #3f437e;
     --background: #e0e1f1;
     --letters-light: #f2f2ff;
+    --borders: #80809b;
     --text-col: #1e1f2b;
     --shadow: rgba(12, 5, 109, 0.05);
-
+    --table-background: #fff;
 }
+
 html{
      font-size: 62.5%;
 }
@@ -24,11 +26,24 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem)
 }
+
+main{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+
 h1 {
     font-size: clamp(2rem, 4vw, 4rem);
 }
+
+h1:hover{
+    font-size: clamp(2rem, 4vw, 4rem);
+}
+
 .header{
     justify-items: center;
     background-color: var(--header-back);
@@ -37,12 +52,15 @@ h1 {
     padding: 1%;
     box-shadow: 0 2px 10px var(--shadow);
 }
+
 .nav-panel{
     display: flex;
     flex-direction: row;
 }
+
 .nav-item{
     padding: 10px;
+    border-radius: 5px;
     
 }
 
@@ -53,5 +71,97 @@ h1 {
     text-decoration: none;
 }
 .nav-item:hover{
-    background-color:hsl(from var(--header-back) h s 50%)
+    background-color:hsl(from var(--header-back) h s 30%)
 }
+
+button{
+    background-color: var(--header-back);
+    color: var(--letters-light);
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+}
+button:hover{
+    background-color: hsl(from var(--header-back) h s 30%)
+}
+
+.button-row{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+}
+
+.table-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto ; 
+  gap: 1px; 
+  align-items: center;
+  background: var(--table-background);
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(12, 5, 109, 0.05);
+  border-radius: 2px;
+  overflow-x: auto;
+}
+
+
+.table-header{
+    background-color: var(--header-back);
+    color: var(--letters-light);
+    border:  1px solid var(--letters-light);
+    padding: 10px;
+}
+
+.table-item{
+    padding: 10px;
+}
+.table-item:hover{
+    background-color: hsl(from var(--table-background) h s 90%);
+    border-left: 1px solid var();
+}
+
+.table-header:hover{
+    background-color: hsl(from var(--header-back) h s 30%);
+}
+
+th{
+    background-color: var(--header-back);
+    color: var(--letters-light);
+    border:  1px solid var(--letters-light);
+}
+table{
+    padding: 7px;
+    border-collapse: collapse; 
+    width: 100%;
+}
+td{
+    border: 1px solid var(--grey);
+    padding: 10px;
+}
+
+.first{
+    position: sticky;
+    left: 0;
+    background-color: var(--header-back);
+    z-index: 10;           
+    color: white;
+} 
+th{
+    padding: 10px;
+}
+tr:hover{
+    background-color: var(--table-hover)
+}
+th:hover{
+    background-color: hsl(from var(--header-back) h s 30%);
+}
+
+.table-block {
+  background: #fff;
+  border-radius: 2px;
+  padding: 10px 10px 30px; /* верх, стороны, низ */
+  box-shadow: 0 2px 10px rgba(12, 5, 109, 0.05);
+  width: 100%;
+  overflow-x: auto;
+}
+
