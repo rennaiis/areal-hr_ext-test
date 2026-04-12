@@ -13,22 +13,19 @@ services:
   
   frontend: 
     build: 
-      context: ./app/frontend
-      dockerfile: Dockerfile
+      context: ./app
+      dockerfile: frontend/Dockerfile
     ports: 
       - "5173:5173"
     volumes: 
-      - ./app/frontend:/app
-      - /app/node_modules
-    command: npm run dev -- --host 0.0.0.0
-
+      - ./app:/app
+      - /app/frontend/node_modules
   backend:
     build:
-      context: ./app/backend
-      dockerfile: Dockerfile 
+      context: ./app
+      dockerfile: backend/Dockerfile 
     ports: 
       - "3000:3000"
     volumes: 
-      - ./app/backend:/app
-      - /app/node_modules
-    command: npm run start:dev 
+      - ./app:/app
+      - /app/frontend/node_modules

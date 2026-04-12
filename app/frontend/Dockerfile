@@ -1,8 +1,10 @@
 FROM node:20-alpine
-WORKDIR /app
-COPY package.json package-lock.json ./
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
 RUN npm install
 
-COPY . . 
+COPY backend/ .
+COPY enums/ ../enums
+
 EXPOSE 5173
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

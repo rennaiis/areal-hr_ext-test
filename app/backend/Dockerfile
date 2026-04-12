@@ -1,8 +1,10 @@
 FROM node:20-alpine
-WORKDIR /app
-COPY package.json package-lock.json ./
+WORKDIR /app/backend
+COPY backend/package*.json ./
 RUN npm install
 
-COPY . .
+COPY backend/ .
+COPY enums/ ../enums
+
 EXPOSE 3000
 CMD ["npm", "run", "start:dev"]
