@@ -1,11 +1,9 @@
-import Departments from './pages/Departments.vue';
-import Organizations from './pages/Organizations.vue';
-import Positions from './pages/Positions.vue';
+import Employees from './pages/Employees.vue';
+import History from './pages/History.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
-    {path: '/departments', component: Departments},
-    {path: '/organizations', component: Organizations},
-    {path: '/positions', component: Positions}
+    {path: '/employees', component: Employees, meta: {title: "Сотрудники"}},
+    {path: '/history', component: History, meta: {title: "История"}},
 ]
 
 const router = createRouter({

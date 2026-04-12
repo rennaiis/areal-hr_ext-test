@@ -4,6 +4,7 @@
 }
 :root{
     --header-back: #5964e0;
+    --header-hover: #3f437e;
     --background: #e0e1f1;
     --letters-light: #f2f2ff;
     --text-col: #1e1f2b;
@@ -42,6 +43,14 @@ h1 {
 }
 .nav-item{
     padding: 10px;
+    
+}
+
+.nav-panel a:visited,
+.nav-panel a:hover,
+.nav-panel .nav-item {
+    color: var(--letters-light);
+    text-decoration: none;
 }
 .nav-item:hover{
     background-color:hsl(from var(--header-back) h s 50%)
