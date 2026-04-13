@@ -8,10 +8,10 @@ interface Department {
     children?: Department[]
 }
 
-function toTree(departments: Department[], parentId: number | null): Department[]{
+function toTree(departments: Department[], parentId: number | null, organization_id: number): Department[]{
     const children = departments.filter(dep => {
         const currentParent = dep.parent_department_id || null
-        if (currentParent === parentId){
+        if (currentParent === parentId && dep.organization_id == organization_id){
             return true
         }else{
             return false
@@ -20,17 +20,18 @@ function toTree(departments: Department[], parentId: number | null): Department[
     return children.map((child: Department): Department => {
         return{
             ...child, 
-            children: toTree(departments, child.department_id)
+            children: toTree(departments, child.department_id, organization_id)
         }
     })
 
 }
 
-export async function getAll(organization_id: number) {
-    const res =  await fetch(`${URL}?organization_id=${organization_id}`);
+export async function getAllforOrganization(organization_id: number) {
+    const res =  await fetch(URL);
+    
     if (!res.ok) throw new Error(`can't get departments of organization ${organization_id}`)
     const departments = await res.json()
-    return toTree(departments, null)
+    return toTree(departments, null, organization_id)
 }
 
 
