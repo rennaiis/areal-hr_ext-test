@@ -3,7 +3,7 @@ import { HistoryItemsService } from './history_items.service';
 import { CreateHistoryItemDto } from './dto/create-history_item.dto';
 import { CreateHistoryItemScheme} from './dto/history_item-scheme';
 
-@Controller('history-items')
+@Controller('history')
 export class HistoryItemsController {
   constructor(private readonly historyItemsService: HistoryItemsService) {}
 

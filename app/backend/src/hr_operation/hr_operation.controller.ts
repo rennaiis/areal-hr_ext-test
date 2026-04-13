@@ -4,7 +4,7 @@ import { CreateHrOperationDto } from './dto/create-hr_operation.dto';
 import { UpdateHrOperationDto } from './dto/update-hr_operation.dto';
 import { createHrOperationSchema, updateHrOperationSchema } from './dto/hr_operation-scheme';
 
-@Controller('hr-operation')
+@Controller('hr-operations')
 export class HrOperationController {
   constructor(private readonly hrOperationService: HrOperationService) {}
 
