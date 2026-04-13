@@ -15,6 +15,7 @@ import { useRoute } from 'vue-router';
         <nav class="nav-panel">
             <router-link to="/employees" class="nav-item">Сотрудники</router-link>
             <router-link to="/history" class="nav-item">История операций</router-link>
+            <router-link to="/organizations" class="nav-item">Организации и отделы</router-link>
         </nav>
     </div>
 </template>
