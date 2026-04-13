@@ -1,37 +1,35 @@
-const URL = "http://localhost:3000/employees"
-interface Employee {
-    last_name: string;
-    first_name: string;
-    middle_name?: string;
-    birth_date: Date;
+const URL = "http://localhost:3000/positions"
+
+interface Position {
+    name: string;
 }
 
 export async function getAll(){
     const res =  await fetch(URL)
-    if (!res.ok) throw new Error("can't get employees")
+    if (!res.ok) throw new Error("can't get positions")
     return await res.json()
 }
 
 export async function getOne(id: number) {
     const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find employee ${id}`)
+    if (!res.ok) throw new Error(`can't find position ${id}`)
     return res.json()
 }
 
-export async function create(emp: Employee){
+export async function create(pos: Position){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(emp)
+        body: JSON.stringify(pos)
     })
     return res.json()
 }
 
-export async function update(id: number, emp: Employee) {
+export async function update(id: number, pos: Position) {
     const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(emp)
+        body: JSON.stringify(pos)
     })
     return res.json()
 }
@@ -40,5 +38,5 @@ export async function remove(id: number) {
     const res=await fetch(`${URL}/${id}`, {
         method: 'DELETE'
     })   
-    if (!res.ok) throw new Error(`can't delete employee ${id}`)
+    if (!res.ok) throw new Error(`can't delete position ${id}`)
 }
