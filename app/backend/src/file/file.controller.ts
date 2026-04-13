@@ -4,7 +4,7 @@ import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { createFileSchema, updateFileSchema } from './dto/file-scheme';
 
-@Controller('file')
+@Controller('files')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 

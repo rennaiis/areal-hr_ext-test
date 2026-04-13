@@ -4,7 +4,7 @@ import { CreateAdressDto } from './dto/create-adress.dto';
 import { UpdateAdressDto } from './dto/update-adress.dto';
 import { CreateAdressScheme, updateAdressScheme } from './dto/adress-scheme';
 
-@Controller('adress')
+@Controller('adresses')
 export class AdressController {
   constructor(private readonly adressService: AdressService) {}
 

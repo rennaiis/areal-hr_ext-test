@@ -5,7 +5,7 @@ import { UpdatePassportDto } from './dto/update-passport.dto';
 import { CreatePassportScheme } from './dto/passport-scheme';
 import { UpdatePassportScheme } from '../passport/dto/passport-scheme';
 
-@Controller('passport')
+@Controller('passports')
 export class PassportController {
   constructor(private readonly passportService: PassportService) {}
 
