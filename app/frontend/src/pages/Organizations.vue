@@ -1,9 +1,12 @@
 <script setup lang="ts">
     import { ref } from 'vue';
+    import NewDepartment from '../forms/newDepartment.vue';
     const isDepsOpen = ref(false)
     function change():void{
         isDepsOpen.value = !isDepsOpen.value
     }
+    const addDepForm = ref(false)
+
 </script>
 <template>
     <div class = "block">
@@ -25,7 +28,7 @@
             <ul>
                 <li class="button-row">
                     <h4>Отдел1</h4>
-                    <img src='../assets/add.png' class="icon">
+                    <img src='../assets/add.png' class="icon" @click="addDepForm = true">
                     <img src="../assets/delete.png" class="icon">
                     <img src="../assets/edit.png" class="icon">
                 </li>
@@ -58,12 +61,16 @@
     <form action="" >
         <div class="form-item">
             <label for="org-name">Название организации</label>
-            <input id="org-name" type="text">
+            <input class="window-input" id="org-name" type="text">
         </div>
         <div class="form-item">
             <label for="org-comment">Комментарий</label>
-            <input id="org-comment" type="text">
+            <input class="window-input" id="org-comment" type="text">
         </div>
         <button>Добавить организацию</button>
     </form>
+
+    <div v-if="addDepForm">
+        <NewDepartment></NewDepartment>
+    </div>
 </template>
