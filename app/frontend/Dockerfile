@@ -3,7 +3,7 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
 
-COPY backend/ .
+COPY frontend/ .
 COPY enums/ ../enums
 
 EXPOSE 5173

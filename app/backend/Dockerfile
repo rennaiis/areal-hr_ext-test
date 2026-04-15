@@ -5,7 +5,7 @@ RUN npm install
 
 COPY backend/ .
 COPY enums/ ../enums
-RUN npm run build 
 
 EXPOSE 3000
-CMD ["npm", "run", "start:dev"]
+CMD ["npx", "ts-node", "src/main.ts"]
+#CMD ["npm", "run", "start:dev"]
