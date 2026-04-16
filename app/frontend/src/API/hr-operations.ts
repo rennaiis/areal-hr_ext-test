@@ -2,19 +2,19 @@ import type { HrOperation } from "../interfaces"
 
 const URL = "http://localhost:3000/hr-operations"
 
-export async function getAll(){
+export async function getAllOperations(){
     const res =  await fetch(URL)
     if (!res.ok) throw new Error("can't get operations")
     return await res.json()
 }
 
-export async function getOne(id: number) {
+export async function getOneOperation(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find operation ${id}`)
     return res.json()
 }
 
-export async function create(op: Omit<HrOperation, 'hr_operation_id'>){
+export async function createOperation(op: Omit<HrOperation, 'hr_operation_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},

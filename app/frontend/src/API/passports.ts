@@ -3,19 +3,19 @@ import type { Passport } from "../interfaces"
 const URL = "http://localhost:3000/passports"
 
 
-export async function getAll() {
+export async function getAllPassports() {
     const res =  await fetch(URL)
     if (!res.ok) throw new Error("can't get passports")
     return await res.json()
 }
 
-export async function getOne(id: number) {
+export async function getOnePassport(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find passport ${id}`)
     return res.json()
 }
 
-export async function create(pas: Omit<Passport, 'passport_id'>){
+export async function createPassport(pas: Omit<Passport, 'passport_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -24,7 +24,7 @@ export async function create(pas: Omit<Passport, 'passport_id'>){
     return res.json()
 }
 
-export async function update(pas: Passport) {
+export async function updatePassport(pas: Passport) {
     const res = await fetch(`${URL}/${pas.passport_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
@@ -33,7 +33,7 @@ export async function update(pas: Passport) {
     return res.json()
 }
 
-export async function remove(id: number) {
+export async function removePassport(id: number) {
     const res=await fetch(`${URL}/${id}`, {
         method: 'DELETE'
     })   

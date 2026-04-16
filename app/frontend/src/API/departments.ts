@@ -30,13 +30,13 @@ export async function getAllforOrganization(organization_id: number) {
 }
 
 
-export async function getOne(id: number) {
+export async function getOneDepartment(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find department ${id}`)
     return res.json()
 }
 
-export async function create(dep: Omit<Department, 'department_id'>){
+export async function createDepartment(dep: Omit<Department, 'department_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -45,7 +45,7 @@ export async function create(dep: Omit<Department, 'department_id'>){
     return res.json()
 }
 
-export async function update(id: number, dep: Omit<Department, 'department_id'>) {
+export async function updateDepartment(id: number, dep: Omit<Department, 'department_id'>) {
     const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
@@ -54,7 +54,7 @@ export async function update(id: number, dep: Omit<Department, 'department_id'>)
     return res.json()
 }
 
-export async function remove(id: number) {
+export async function removeDepartment(id: number) {
     const res=await fetch(`${URL}/${id}`, {
         method: 'DELETE'
     })   
