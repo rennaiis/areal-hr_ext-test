@@ -1,11 +1,6 @@
+import type { Organization } from "../interfaces"
+
 const URL = "http://localhost:3000/organizations"
-
-
-interface Organization{
-    name: string;
-    comment?: string;
-}
-
 
 export async function getAll(){
     const res =  await fetch(URL)
@@ -19,7 +14,7 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(org: Organization){
+export async function create(org: Omit<Organization, 'organization_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -28,8 +23,8 @@ export async function create(org: Organization){
     return res.json()
 }
 
-export async function update(id: number, org: Organization) {
-    const res = await fetch(`${URL}/${id}`, {
+export async function update(org: Organization) {
+    const res = await fetch(`${URL}/${org.organization_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(org)

@@ -1,11 +1,6 @@
-const URL = "http://localhost:3000/employees"
-interface Employee {
-    last_name: string;
-    first_name: string;
-    middle_name?: string;
-    birth_date: Date;
-}
+import type { Employee } from "../interfaces"
 
+const URL = "http://localhost:3000/employees"
 export async function getAll(){
     const res =  await fetch(URL)
     if (!res.ok) throw new Error("can't get employees")
@@ -18,7 +13,7 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(emp: Employee){
+export async function create(emp: Omit<Employee, 'employee_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -27,8 +22,8 @@ export async function create(emp: Employee){
     return res.json()
 }
 
-export async function update(id: number, emp: Employee) {
-    const res = await fetch(`${URL}/${id}`, {
+export async function update(emp: Employee) {
+    const res = await fetch(`${URL}/${emp.employee_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(emp)

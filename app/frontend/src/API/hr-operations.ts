@@ -1,12 +1,6 @@
-import type { HrOperationType } from "../../../enums/HrOperationType";
+import type { HrOperation } from "../interfaces"
+
 const URL = "http://localhost:3000/hr-operations"
-interface HrOperation{
-    employee_id: number;
-    department_id: number;
-    position_id: number;
-    salary: number;
-    operation_type: HrOperationType
-}
 
 export async function getAll(){
     const res =  await fetch(URL)
@@ -20,7 +14,7 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(op: HrOperation){
+export async function create(op: Omit<HrOperation, 'hr_operation_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},

@@ -1,12 +1,7 @@
+import type { Department } from "../interfaces"
+
 const URL = "http://localhost:3000/departments"
-interface Department {
-    department_id: number;
-    organization_id: number;
-    parent_department_id?: number;
-    name: string;
-    comment?: string;
-    children?: Department[]
-}
+
 
 function toTree(departments: Department[], parentId: number | null, organization_id: number): Department[]{
     const children = departments.filter(dep => {

@@ -1,9 +1,6 @@
-const URL = "http://localhost:3000/positions"
+import type { Position } from "../interfaces"
 
-interface Position {
-    name: string;
-    comment?: string;
-}
+const URL = "http://localhost:3000/positions"
 
 export async function getAll(){
     const res =  await fetch(URL)
@@ -17,7 +14,7 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(pos: Position){
+export async function create(pos: Omit<Position, 'position_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -26,8 +23,8 @@ export async function create(pos: Position){
     return res.json()
 }
 
-export async function update(id: number, pos: Position) {
-    const res = await fetch(`${URL}/${id}`, {
+export async function update(pos: Position) {
+    const res = await fetch(`${URL}/${pos.position_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(pos)

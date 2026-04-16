@@ -1,14 +1,6 @@
-const URL = "http://localhost:3000/adresses"
+import type { Adress } from "../interfaces"
 
-interface Adress{
-    employee_id: number;
-    region: string;
-    settlement: string;
-    street: string;
-    house: string;
-    apartment?: string;
-    building?: string;
-}
+const URL = "http://localhost:3000/adresses"
 
 export async function getAll() {
     const res =  await fetch(URL)
@@ -22,7 +14,8 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(adr: Adress){
+
+export async function create(adr: Omit<Adress, 'adress_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -31,8 +24,8 @@ export async function create(adr: Adress){
     return res.json()
 }
 
-export async function update(id: number, adr: Adress) {
-    const res = await fetch(`${URL}/${id}`, {
+export async function update(adr: Adress) {
+    const res = await fetch(`${URL}/${adr.adress_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(adr)

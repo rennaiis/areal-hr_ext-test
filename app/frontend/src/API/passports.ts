@@ -1,11 +1,5 @@
-interface Passport{
-    employee_id: number;
-    series: string;
-    number: string;
-    issued_by: string;
-    issue_date: Date;
-    department_code: string;
-}
+import type { Passport } from "../interfaces"
+
 const URL = "http://localhost:3000/passports"
 
 
@@ -21,7 +15,7 @@ export async function getOne(id: number) {
     return res.json()
 }
 
-export async function create(pas: Passport){
+export async function create(pas: Omit<Passport, 'passport_id'>){
     const res = await fetch(URL, {
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
@@ -30,8 +24,8 @@ export async function create(pas: Passport){
     return res.json()
 }
 
-export async function update(id: number, pas: Passport) {
-    const res = await fetch(`${URL}/${id}`, {
+export async function update(pas: Passport) {
+    const res = await fetch(`${URL}/${pas.passport_id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(pas)
