@@ -11,6 +11,6 @@ export const CreateAdressScheme = Joi.object({
 })
 
 export const updateAdressScheme = CreateAdressScheme.fork(
-    ['region', 'settlement', 'street', 'house'],
+    ['region', 'settlement', 'street', 'house', 'employee_id'],
     (s) => s.optional()
 )

@@ -13,7 +13,7 @@ import { Employee } from "../../employee/entities/employee.entity";
 @Entity()
 export class Adress {
     @OneToOne(()=>Employee, (employee)=>employee.adress)
-    @PrimaryColumn()
+    @PrimaryColumn({type: 'int'})
     @JoinColumn({name: 'employee_id'})
     employee: Employee
 

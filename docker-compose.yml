@@ -21,10 +21,15 @@ services:
       - ./app:/app
       - /app/frontend/node_modules
       - /app/frontend/dist
+
   backend:
     build:
       context: ./app
       dockerfile: backend/Dockerfile 
+    env_file: 
+      - .env
+    environment: 
+      - DB_HOST=db
     ports: 
       - "3000:3000"
     volumes: 

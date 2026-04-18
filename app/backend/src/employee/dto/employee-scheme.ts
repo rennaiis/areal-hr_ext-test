@@ -8,6 +8,6 @@ export const CreateEmployeeSchema = Joi.object({
 });
 
 export const UpdateEmployeeSchema = CreateEmployeeSchema.fork(
-    ['passport_data_id', 'adress_data_id', 'last_name', 'first_name', 'birth_date'],
+    ['last_name', 'first_name', 'birth_date'],
     (s) => s.optional()
 );

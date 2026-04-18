@@ -18,7 +18,6 @@ import { HistoryItemsModule } from './history_items/history_items.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
-    envFilePath: '../../.env', 
     isGlobal: true,
   }),
   TypeOrmModule.forRootAsync({
