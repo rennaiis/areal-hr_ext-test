@@ -7,20 +7,18 @@ import { Repository } from 'typeorm';
 import { Passport } from '../passport/entities/passport.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
+import { PassportService } from '../passport/passport.service';
 
 @Injectable()
 export class FileService {
   constructor(
     @InjectRepository(File)
     private readonly fileRepository:Repository<File>,
-    @InjectRepository(Passport)
-    private readonly passportRepository:Repository<Passport>,
+    private readonly passportService: PassportService,
     private readonly historyService: HistoryItemsService
   ){}
   async create(createFileDto: CreateFileDto) {
-    const passport = await this.passportRepository.findOneBy({
-      passport_id: createFileDto.passport_id
-    })
+    const passport = await this.passportService.findOne(createFileDto.passport_id)
     if (!passport){
       throw new NotFoundException(`passport ${createFileDto.passport_id} not found`)
     }
@@ -50,9 +48,7 @@ export class FileService {
   async update(id: number, updateFileDto: UpdateFileDto) {
     const file = await this.findOne(id)
     if (updateFileDto.passport_id) {
-      const passport = await this.passportRepository.findOneBy({ 
-        passport_id: updateFileDto.passport_id 
-      });
+      const passport = await this.passportService.findOne(updateFileDto.passport_id)
       if (!passport) throw new NotFoundException(`passport ${updateFileDto.passport_id} not found`);
       file.passport = passport;
     }

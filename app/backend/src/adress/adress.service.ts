@@ -7,19 +7,20 @@ import { Repository } from 'typeorm';
 import { Employee } from '../employee/entities/employee.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
+import { EmployeeService } from '../employee/employee.service';
 
 @Injectable()
 export class AdressService {
   constructor(
     @InjectRepository(Adress)
     private readonly adressRepository:Repository<Adress>, 
-    @InjectRepository(Employee)
-    private readonly employeeRepository:Repository<Employee>,
+    
+    private readonly employeeService:EmployeeService,
     private readonly historyService: HistoryItemsService
   ){}
 
   async create(employeeId: number, createAdressDto: CreateAdressDto) {
-    const employee = await this.employeeRepository.findOneBy({employee_id: employeeId});
+    const employee = await this.employeeService.findOne(employeeId);
     if (!employee) throw new NotFoundException(`employee №${employeeId} not found`);
     const adress = this.adressRepository.create({
       ...createAdressDto,

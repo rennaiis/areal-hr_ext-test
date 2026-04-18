@@ -9,6 +9,9 @@ import { Department } from '../department/entities/department.entity';
 import { Position } from '../position/entities/position.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
+import { EmployeeService } from '../employee/employee.service';
+import { DepartmentService } from '../department/department.service';
+import { PositionService } from '../position/position.service';
 
 @Injectable()
 export class HrOperationService {
@@ -16,36 +19,27 @@ export class HrOperationService {
     @InjectRepository(HrOperation)
     private readonly HrOperationRepository:Repository<HrOperation>,
 
-    @InjectRepository(Employee)
-    private readonly employeeRepository:Repository<Employee>,
+    private readonly employeeService: EmployeeService,
 
-    @InjectRepository(Department)
-    private readonly departmentRepository:Repository<Department>,
+    private readonly departmentService: DepartmentService,
 
-    @InjectRepository(Position)
-    private readonly positionRepository:Repository<Position>,
+    private readonly positionService: PositionService,
 
     private readonly historyService: HistoryItemsService
   ){}
 
   async create(createHrOperationDto: CreateHrOperationDto) {
-    const employee = await this.employeeRepository.findOneBy({
-      employee_id: createHrOperationDto.employee_id
-    })
+    const employee = await this.employeeService.findOne(createHrOperationDto.employee_id)
     if (!employee){
       throw new NotFoundException(`employee ${createHrOperationDto.employee_id} not found`)
     }
 
-    const department = await this.departmentRepository.findOneBy({
-      department_id: createHrOperationDto.department_id
-    })
+    const department = await this.departmentService.findOne(createHrOperationDto.department_id)
     if (!department){
       throw new NotFoundException(`department ${createHrOperationDto.department_id} not found`)
     }
 
-    const position = await this.positionRepository.findOneBy({
-      position_id: createHrOperationDto.position_id
-    })
+    const position = await this.positionService.findOne(createHrOperationDto.position_id)
     if (!position){
       throw new NotFoundException(`position ${createHrOperationDto.position_id} not found`)
     }
@@ -80,9 +74,7 @@ export class HrOperationService {
   async update(id: number, updateHrOperationDto: UpdateHrOperationDto) {
     const hr_operation = await this.findOne(id)
     if (updateHrOperationDto.department_id){
-      const department = await this.departmentRepository.findOneBy({
-      department_id: updateHrOperationDto.department_id
-      })
+      const department = await this.departmentService.findOne(updateHrOperationDto.department_id)
       if (!department){
         throw new NotFoundException(`department ${updateHrOperationDto.department_id} not found`)
       }
@@ -90,9 +82,7 @@ export class HrOperationService {
     }
     
     if (updateHrOperationDto.position_id){
-      const position = await this.positionRepository.findOneBy({
-        position_id: updateHrOperationDto.position_id
-      })
+      const position = await this.positionService.findOne(updateHrOperationDto.position_id)
       if (!position){
         throw new NotFoundException(`position ${updateHrOperationDto.position_id} not found`)
       }
@@ -100,9 +90,7 @@ export class HrOperationService {
     }
 
     if (updateHrOperationDto.employee_id){
-      const employee = await this.employeeRepository.findOneBy({
-      employee_id: updateHrOperationDto.employee_id
-      })
+      const employee = await this.employeeService.findOne(updateHrOperationDto.employee_id)
       if (!employee){
         throw new NotFoundException(`employee ${updateHrOperationDto.employee_id} not found`)
       }

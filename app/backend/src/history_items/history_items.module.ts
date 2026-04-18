@@ -8,5 +8,6 @@ import { HistoryItem } from './entities/history_item.entity';
   imports: [TypeOrmModule.forFeature([HistoryItem])],
   controllers: [HistoryItemsController],
   providers: [HistoryItemsService],
+  exports: [HistoryItemsService]
 })
 export class HistoryItemsModule {}

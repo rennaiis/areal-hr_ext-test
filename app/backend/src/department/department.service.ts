@@ -7,22 +7,19 @@ import { ChangeStream, Repository, TreeRepository } from 'typeorm';
 import { Organization } from '../organization/entities/organization.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
+import { OrganizationService } from '../organization/organization.service';
 
 @Injectable()
 export class DepartmentService {
   constructor(
     @InjectRepository(Department)
     private readonly departmentRepository:TreeRepository<Department>,
-
-    @InjectRepository(Organization)
-    private readonly organizationRepository:Repository<Organization>,
-
+    private readonly organizationService:OrganizationService,
     private readonly historyService: HistoryItemsService
   ){}
 
   async create(createDepartmentDto: CreateDepartmentDto) {
-    const organization = await this.organizationRepository.findOneBy({
-      organization_id: createDepartmentDto.organization_id})
+    const organization = await this.organizationService.findOne(createDepartmentDto.organization_id)
     if (!organization){
       throw new NotFoundException()
     }
@@ -62,9 +59,7 @@ export class DepartmentService {
   async update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
     const dep = await this.findOne(id)
     if (updateDepartmentDto.organization_id){
-      const organization = await this.organizationRepository.findOneBy({
-        organization_id: updateDepartmentDto.organization_id
-      })
+      const organization = await this.organizationService.findOne(updateDepartmentDto.organization_id)
       if(!organization) throw new NotFoundException(`organization ${id} not found`);
       dep.organization = organization
     }
