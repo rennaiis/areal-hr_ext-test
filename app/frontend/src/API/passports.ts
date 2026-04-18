@@ -1,6 +1,6 @@
 import type { Passport } from "../interfaces"
 
-const URL = "http://localhost:3000/passports"
+const URL = "http://localhost:3000/api/passports"
 
 
 export async function getAllPassports() {

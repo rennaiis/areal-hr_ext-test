@@ -1,5 +1,5 @@
 import type { HistoryItem } from "../interfaces";
-const URL = "http://localhost:3000/history"
+const URL = "http://localhost:3000/api/history"
 
 
 export async function getAllHistory(){

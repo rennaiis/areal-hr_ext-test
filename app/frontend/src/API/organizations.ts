@@ -1,6 +1,6 @@
 import type { Organization } from "../interfaces"
 
-const URL = "http://localhost:3000/organizations"
+const URL = "http://localhost:3000/api/organizations"
 
 export async function getAllOrganizations(){
     const res =  await fetch(URL)

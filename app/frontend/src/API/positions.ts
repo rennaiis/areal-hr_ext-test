@@ -1,6 +1,6 @@
 import type { Position } from "../interfaces"
 
-const URL = "http://localhost:3000/positions"
+const URL = "http://localhost:3000/api/positions"
 
 export async function getAllPositions(){
     const res =  await fetch(URL)

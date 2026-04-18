@@ -1,6 +1,6 @@
 import type { HrOperation } from "../interfaces"
 
-const URL = "http://localhost:3000/hr-operations"
+const URL = "http://localhost:3000/api/hr-operations"
 
 export async function getAllOperations(){
     const res =  await fetch(URL)

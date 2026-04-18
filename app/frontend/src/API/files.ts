@@ -1,4 +1,4 @@
-const URL = "http://localhost:3000/files"
+const URL = "http://localhost:3000/api/files"
 import type { File } from "../interfaces"
 
 export async function getAllFiles() {

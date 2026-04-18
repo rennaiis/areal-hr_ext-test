@@ -1,6 +1,6 @@
 import type { Employee } from "../interfaces"
 
-const URL = "http://localhost:3000/employees"
+const URL = "http://localhost:3000/api/employees"
 export async function getAllEmployees(){
     const res =  await fetch(URL)
     if (!res.ok) throw new Error("can't get employees")

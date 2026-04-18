@@ -1,6 +1,6 @@
 import type { Adress } from "../interfaces"
 
-const URL = "http://localhost:3000/adresses"
+const URL = "http://localhost:3000/api/adresses"
 
 export async function getAllAdresses() {
     const res =  await fetch(URL)

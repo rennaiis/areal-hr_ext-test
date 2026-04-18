@@ -1,6 +1,6 @@
 import type { Department } from "../interfaces"
 
-const URL = "http://localhost:3000/departments"
+const URL = "http://localhost:3000/api/departments"
 
 
 function toTree(departments: Department[], parentId: number | null, organization_id: number): Department[]{
