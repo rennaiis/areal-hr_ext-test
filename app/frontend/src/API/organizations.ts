@@ -23,8 +23,8 @@ export async function createOrganization(org: Omit<Organization, 'organization_i
     return res.json()
 }
 
-export async function updateOrganization(org: Organization) {
-    const res = await fetch(`${URL}/${org.organization_id}`, {
+export async function updateOrganization(org: Omit<Organization, 'organization_id'>, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(org)

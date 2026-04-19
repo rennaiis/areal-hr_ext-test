@@ -8,8 +8,7 @@ import { HistoryItemsModule } from '../history_items/history_items.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Organization]), HistoryItemsModule],
   controllers: [OrganizationController],
-  providers: [OrganizationService],
-  exports: [OrganizationService]
+W  exports: [OrganizationService]
   
 })
 export class OrganizationModule {}
