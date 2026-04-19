@@ -33,21 +33,27 @@ export class DepartmentService {
       if (parent) department.parent_department = parent
     }
     const savedDepartment = await this.departmentRepository.save(department)
-    await this.historyService.logCreates((await savedDepartment).department_id, ChangedTable.DEPARTMENT)
+    await this.historyService.logCreates(
+      savedDepartment.department_id,
+      ChangedTable.DEPARTMENT
+    );    
     return savedDepartment
-  }
-  async findAllTree() {
-    return await this.departmentRepository.findTrees();
   }
 
   async findAll() {
-    return await 
-      this.departmentRepository.find({
-      relations: ['organization', 'parent_department']
-    });
+    const trees =await this.departmentRepository.findTrees()
+    return this.filterDeleted(trees)
   }
-
- async findOne(id: number) {
+  
+  filterDeleted(tree: Department[]) {
+  return tree
+    .filter(n => n.deleted_at == null)
+    .map(n => ({
+      ...n,
+      children: n.children ? this.filterDeleted(n.children) : [],
+    }));
+}
+  async findOne(id: number) {
     const dep = await this.departmentRepository.findOne({
       where: {department_id: id},
       relations: ['organization', 'parent_department']
@@ -57,35 +63,21 @@ export class DepartmentService {
   }
 
   async update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
-    const dep = await this.findOne(id)
-    if (updateDepartmentDto.organization_id){
-      const organization = await this.organizationService.findOne(updateDepartmentDto.organization_id)
-      if(!organization) throw new NotFoundException(`organization ${id} not found`);
-      dep.organization = organization
-    }
-
-    if (updateDepartmentDto.parent_department_id !== undefined){
-      if (updateDepartmentDto.parent_department_id === null){
-        dep.parent_department = null;
-      }else{
-        const parent =  await this.departmentRepository.findOneBy({ 
-            department_id: updateDepartmentDto.parent_department_id 
-        })
-         if (!parent) throw new NotFoundException('Parent not found');
-        dep.parent_department = parent;
-      }
-    }
-    await this.historyService.logUpdates(
-      id, ChangedTable.DEPARTMENT, dep, updateDepartmentDto
-    )
+    const dep = await this.findOne(id);
     const updated = Object.assign(dep, updateDepartmentDto)
-    return await this.departmentRepository.save(updated)
+    await this.historyService.logUpdates(id, ChangedTable.DEPARTMENT, dep, updateDepartmentDto)
+    return  await this.departmentRepository.save(updated)
   }
   
   async remove(id: number) {
-    const dep = await this.findOne(id);
-    this.historyService.logDeletes(id, ChangedTable.DEPARTMENT)
-    return await this.departmentRepository.softRemove(dep);
-
+    const dep = await this.findOne(id)
+    if (!dep){
+      throw new NotFoundException()
+    }
+    const children = await this.departmentRepository.findDescendants(dep)
+    await this.historyService.logDeletes(id, ChangedTable.DEPARTMENT)
+    return await this.departmentRepository.softRemove(children)
+    
   }
+
 }
