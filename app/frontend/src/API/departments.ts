@@ -3,37 +3,16 @@ import type { Department } from "../interfaces"
 const URL = "http://localhost:3000/api/departments"
 
 
-function toTree(departments: Department[], parentId: number | null, organization_id: number): Department[]{
-    const children = departments.filter(dep => {
-        const currentParent = dep.parent_department_id || null
-        if (currentParent === parentId && dep.organization_id == organization_id){
-            return true
-        }else{
-            return false
-        }
-    })
-    return children.map((child: Department): Department => {
-        return{
-            ...child, 
-            children: toTree(departments, child.department_id, organization_id)
-        }
-    })
-
-}
-
 export async function getAllforOrganization(organization_id: number) {
-    const res =  await fetch(URL);
-    
-    if (!res.ok) throw new Error(`can't get departments of organization ${organization_id}`)
-    const departments = await res.json()
-    return toTree(departments, null, organization_id)
+    const res =  await fetch(`${URL}/${organization_id}`);
+    if (!res.ok) throw new Error(`can't get departments`)
+    return await res.json()
 }
 
 
 export async function getOneDepartment(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find department ${id}`)
-    return res.json()
 }
 
 export async function createDepartment(dep: Omit<Department, 'department_id'>){
@@ -45,7 +24,7 @@ export async function createDepartment(dep: Omit<Department, 'department_id'>){
     return res.json()
 }
 
-export async function updateDepartment(id: number, dep: Omit<Department, 'department_id'>) {
+export async function updateDepartment( dep: Omit<Department, 'department_id'>, id: number) {
     const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},

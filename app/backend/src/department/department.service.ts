@@ -40,9 +40,10 @@ export class DepartmentService {
     return savedDepartment
   }
 
-  async findAll() {
+  async findAllByOrganization(organization_id: number) {
     const trees =await this.departmentRepository.findTrees()
-    return this.filterDeleted(trees)
+    const filteredByOrganization = trees.filter(n => n.organization?.organization_id === organization_id)
+    return this.filterDeleted(filteredByOrganization)
   }
   
   filterDeleted(tree: Department[]) {

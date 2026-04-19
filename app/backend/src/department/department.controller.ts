@@ -16,9 +16,9 @@ export class DepartmentController {
     return this.departmentService.create(value);
   }
 
-  @Get()
-  findAll() {
-    return this.departmentService.findAll();
+  @Get(':organization_id')
+  findAll(@Param('organization_id') organization_id: string) {
+    return this.departmentService.findAllByOrganization(+organization_id);
   }
 
   @Get(':id')

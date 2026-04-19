@@ -6,7 +6,7 @@ export const CreateDepartmentScheme = Joi.object({
     comment: Joi.string().max(1000).optional()
 })
 
- Joi.object({
+export const UpdateDepartmentScheme = Joi.object({
     name: Joi.string().max(150).optional(),
     comment: Joi.string().max(1000).optional()
 })
