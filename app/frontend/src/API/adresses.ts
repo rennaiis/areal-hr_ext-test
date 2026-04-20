@@ -24,8 +24,8 @@ export async function createAdress(adr: Omit<Adress, 'adress_id'>){
     return res.json()
 }
 
-export async function updateAdress(adr: Adress) {
-    const res = await fetch(`${URL}/${adr.adress_id}`, {
+export async function updateAdress(adr: Omit<Adress, 'adress_id'>, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(adr)
