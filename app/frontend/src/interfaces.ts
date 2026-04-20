@@ -11,14 +11,7 @@ export interface Adress{
     apartment?: string;
     building?: string;
 }
-export interface Department {
-    department_id: number;
-    organization_id: number;
-    parent_department_id?: number;
-    name: string;
-    comment?: string;
-    children?: Department[]
-}
+
 
 export interface Employee {
     employee_id: number;
@@ -51,6 +44,14 @@ export interface HrOperation{
     position_id: number;
     salary: number;
     operation_type: HrOperationType
+}
+export interface Department {
+    department_id: number;
+    organization_id: number;
+    parent_department_id?: number;
+    name: string;
+    comment?: string;
+    children?: Department[]
 }
 
 export interface Organization{

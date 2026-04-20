@@ -4,9 +4,10 @@ const URL = "http://localhost:3000/api/departments"
 
 
 export async function getAllforOrganization(organization_id: number) {
-    const res =  await fetch(`${URL}/${organization_id}`);
+    const res =  await fetch(`${URL}/org/${organization_id}`);
+    console.log(`${URL}/org/${organization_id}`);
     if (!res.ok) throw new Error(`can't get departments`)
-    return await res.json()
+    return res.json()
 }
 
 
