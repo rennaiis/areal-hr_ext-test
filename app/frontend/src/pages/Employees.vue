@@ -8,7 +8,7 @@
     </div>
     
 
-    <div class="table-grid">
+    <div class="table-grid table-employees">
         <div class="table-header">ФИО</div>
         <div class="table-header">Организация</div>
         <div class="table-header">Отдел</div>

@@ -151,8 +151,7 @@ button:hover{
     height: 1.7rem;
 }
 .table-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto ; 
+  display: grid; 
   gap: 1px; 
   align-items: center;
   background: var(--table-background);
@@ -162,6 +161,12 @@ button:hover{
   overflow-x: auto;
 }
 
+.table-employees{
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto ;
+}
+.table-history{
+    grid-template-columns: 2fr 1fr 1fr 1fr auto ;
+}
 
 .table-header{
     background-color: var(--header-back);
