@@ -41,8 +41,11 @@ export class DepartmentService {
   }
 
   async findAllByOrganization(organization_id: number) {
-    const trees =await this.departmentRepository.findTrees()
-    const filteredByOrganization = trees.filter(n => n.organization?.organization_id === organization_id)
+    const trees =await this.departmentRepository.findTrees({
+      relations: ['organization']
+    })
+    console.log(trees);
+    const filteredByOrganization = trees.filter(n => n.organization.organization_id === organization_id)
     return this.filterDeleted(filteredByOrganization)
   }
   
