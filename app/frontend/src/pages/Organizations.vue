@@ -6,7 +6,7 @@
     import DepartmentNode from './DepartmentNode.vue';
     import type { Department, Organization } from '../interfaces';
     import { createOrganization, getAllOrganizations, removeOrganization, updateOrganization } from '../API/organizations';
-    import { getAllforOrganization } from '../API/departments';
+    import { getAllforOrganization, removeDepartment } from '../API/departments';
 
     const isDepsOpen = ref(false)
     function change():void{
@@ -23,7 +23,7 @@
         }
     }
     const newDepartment = ref<Omit<Department, 'department_id'> | null>(null)
-
+    
     const organizationsList = ref<Organization[]>([])
     const departmentsList = ref<Record<number,Department[]>>({})
     const newOrganization = ref<Omit<Organization, 'organization_id'>>({
@@ -72,7 +72,14 @@
         }
         
     }
-
+    async function deleteDepartment(id: number) {
+        try{
+            await removeDepartment(id)
+        }catch(err){
+            console.error('cant delete department')
+        }
+        await refresh()
+    }
     async function refresh() {
         try{
             organizationsList.value = await getAllOrganizations()
@@ -133,6 +140,7 @@
                     :dep="dep"   
                     :add="openDepForm"
                     :orgId="organization.organization_id"
+                    :delete="deleteDepartment"
                 />
                 </template> 
             </ul>
