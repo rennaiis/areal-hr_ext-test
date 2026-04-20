@@ -23,8 +23,8 @@ export async function createPosition(pos: Omit<Position, 'position_id'>){
     return res.json()
 }
 
-export async function updatePosition(pos: Position) {
-    const res = await fetch(`${URL}/${pos.position_id}`, {
+export async function updatePosition(pos: Omit<Position, 'position_id'>, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(pos)

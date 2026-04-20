@@ -24,8 +24,8 @@ export async function createPassport(pas: Omit<Passport, 'passport_id'>){
     return res.json()
 }
 
-export async function updatePassport(pas: Passport) {
-    const res = await fetch(`${URL}/${pas.passport_id}`, {
+export async function updatePassport(pas:  Omit<Passport, 'passport_id'>, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(pas)

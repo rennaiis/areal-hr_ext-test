@@ -22,8 +22,8 @@ export async function createEmployee(emp: Omit<Employee, 'employee_id'>){
     return res.json()
 }
 
-export async function updateEmployee(emp: Employee) {
-    const res = await fetch(`${URL}/${emp.employee_id}`, {
+export async function updateEmployee(emp: Omit<Employee, 'employee_id'>, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(emp)

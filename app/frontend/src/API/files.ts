@@ -22,8 +22,8 @@ export async function createFile(file: Omit<File, "file_id">){
     return res.json()
 }
 
-export async function updateFile(file: File) {
-    const res = await fetch(`${URL}/${file.file_id}`, {
+export async function updateFile(file: Omit<File, "file_id">, id: number) {
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(file)
