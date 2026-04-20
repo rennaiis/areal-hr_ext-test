@@ -54,6 +54,11 @@ export interface Department {
     children?: Department[]
 }
 
+export interface DepartmentEdit{
+    name: string;
+    comment?: string
+}
+
 export interface Organization{
     organization_id: number;
     name: string;

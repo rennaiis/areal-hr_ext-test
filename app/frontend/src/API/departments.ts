@@ -1,4 +1,4 @@
-import type { Department } from "../interfaces"
+import type { Department, DepartmentEdit } from "../interfaces"
 
 const URL = "http://localhost:3000/api/departments"
 
@@ -25,7 +25,7 @@ export async function createDepartment(dep: Omit<Department, 'department_id'>){
     return res.json()
 }
 
-export async function updateDepartment( dep: Omit<Department, 'department_id'>, id: number) {
+export async function updateDepartment( dep: DepartmentEdit, id: number) {
     const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},

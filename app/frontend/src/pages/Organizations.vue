@@ -4,9 +4,9 @@
     import { onMounted, ref} from 'vue';
     import NewDepartment from '../forms/newDepartment.vue';
     import DepartmentNode from './DepartmentNode.vue';
-    import type { Department, Organization } from '../interfaces';
+    import type { Department, DepartmentEdit, Organization } from '../interfaces';
     import { createOrganization, getAllOrganizations, removeOrganization, updateOrganization } from '../API/organizations';
-    import { getAllforOrganization, removeDepartment } from '../API/departments';
+    import { getAllforOrganization, removeDepartment, updateDepartment } from '../API/departments';
 
     const isDepsOpen = ref(false)
     function change():void{
@@ -38,6 +38,29 @@
         editedOrganizationId.value = org.organization_id
         editedOrganization.value.name = org.name
         editedOrganization.value.comment = org.comment
+    }
+    const editedDepartmentId = ref<number | null>(null)
+    const editedDepartment=ref<DepartmentEdit>({
+        name: '', 
+        comment: ''
+    })
+    function choseEditDepartment(dep: Department){
+        editedDepartmentId.value = dep.department_id
+        editedDepartment.value.name = dep.name
+        editedDepartment.value.comment = dep.comment
+    }
+    async function editDepartment(){
+        try{
+            if(editedDepartment.value){
+                if (editedDepartmentId.value !== null){
+                    await updateDepartment(editedDepartment.value, editedDepartmentId.value)
+                    editedDepartmentId.value = null
+                    refresh()
+                }
+            }
+        }catch(err){
+            console.error('cane edit department')
+        }
     }
     const editedOrganizationId = ref<number|null>(null)
     async function deleteOrganization(id: number) {
@@ -135,13 +158,17 @@
             <ul>
                 <template v-if="departmentsList && departmentsList[organization.organization_id]">
                     <DepartmentNode
-                    v-for="dep in departmentsList[Number(organization.organization_id)]"
-                    :key="dep.department_id" 
-                    :dep="dep"   
-                    :add="openDepForm"
-                    :orgId="organization.organization_id"
-                    :delete="deleteDepartment"
-                />
+                        v-for="dep in departmentsList[Number(organization.organization_id)]"
+                        :key="dep.department_id" 
+                        :dep="dep"   
+                        :add="openDepForm"
+                        :orgId="organization.organization_id"
+                        :delete="deleteDepartment"
+                        :editedDepartmentId="editedDepartmentId"
+                        :editedDepartment="editedDepartment"
+                        :choseEditDepartment="choseEditDepartment"
+                        :editDepartment="editDepartment"
+                    />
                 </template> 
             </ul>
         </div>  
