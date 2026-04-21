@@ -48,6 +48,16 @@ export class DepartmentService {
     const filteredByOrganization = trees.filter(n => n.organization.organization_id === organization_id)
     return this.filterDeleted(filteredByOrganization)
   }
+
+  async findAllFlat(organization_id: number){
+    return await this.departmentRepository.find(
+      {
+        where:{
+          organization:{organization_id: organization_id}
+        }
+      }
+    )
+  }
   
   filterDeleted(tree: Department[]) {
   return tree
