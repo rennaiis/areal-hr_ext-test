@@ -14,7 +14,7 @@
         :close="closePositions"/>
     </div>
     <div class="button-row">
-        <button>Нанять сотрудника</button>
+        <button><router-link to="/hireEmployee">Нанять сотрудника</router-link></button>
         <button @click.prevent="isPosOpen = true">Должности</button>
     </div>
     

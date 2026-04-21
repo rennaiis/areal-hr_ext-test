@@ -54,8 +54,17 @@ h1:hover{
     font-size: clamp(2rem, 4vw, 4rem);
 }
 
-
 input{
+    height: 30px;
+    border: none;
+    outline: none;
+    width: 100%;
+    background:var(--background);
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px;
+}
+select{
     height: 30px;
     border: none;
     outline: none;
