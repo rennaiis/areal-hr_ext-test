@@ -12,8 +12,12 @@ import { Employee } from "../../employee/entities/employee.entity";
 
 @Entity()
 export class Adress {
-    @OneToOne(()=>Employee, (employee)=>employee.adress)
+
     @PrimaryColumn({type: 'int'})
+    adress_id: number
+
+    @OneToOne(()=>Employee, (employee)=>employee.adress)
+    @JoinColumn({name: 'adress_id'})
     employee: Employee
 
     @Column({

@@ -20,7 +20,10 @@ export class Employee {
 
     @OneToOne(()=>Passport, (passport)=>passport.employee)
     @JoinColumn({name: 'passport_id'})
-    passport: Passport
+    passport: Passport 
+
+    @Column()
+    passport_id: number
 
     @OneToOne(()=>Adress, (adress)=>adress.employee)
     adress: Adress

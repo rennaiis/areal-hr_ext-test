@@ -3,7 +3,7 @@ import { CreatePassportDto } from './dto/create-passport.dto';
 import { UpdatePassportDto } from './dto/update-passport.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Passport } from './entities/passport.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
 
@@ -14,10 +14,11 @@ export class PassportService {
     private readonly passportRepository: Repository<Passport>,
     private readonly historyService: HistoryItemsService
   ){}
-  async create(createPassportDto: CreatePassportDto) {
-    const passport = this.passportRepository.create(createPassportDto)
-    const savedPassport = this.passportRepository.save(passport)
-    await this.historyService.logCreates((await savedPassport).passport_id, ChangedTable.PASSPORT)
+  async create(createPassportDto: CreatePassportDto, manager?: EntityManager ) {
+    const repository = manager ? manager.getRepository(Passport) : this.passportRepository
+    const passport = repository.create(createPassportDto)
+    const savedPassport = await repository.save(passport)
+    await this.historyService.logCreates(savedPassport.passport_id, ChangedTable.PASSPORT)
     return savedPassport
   }
 

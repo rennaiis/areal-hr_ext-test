@@ -3,7 +3,7 @@ import { CreateAdressDto } from './dto/create-adress.dto';
 import { UpdateAdressDto } from './dto/update-adress.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Adress } from './entities/adress.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Employee } from '../employee/entities/employee.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
@@ -14,21 +14,21 @@ export class AdressService {
   constructor(
     @InjectRepository(Adress)
     private readonly adressRepository:Repository<Adress>, 
-    
     private readonly employeeService:EmployeeService,
     private readonly historyService: HistoryItemsService
   ){}
 
-  async create(employeeId: number, createAdressDto: CreateAdressDto) {
+  async create(employeeId: number, createAdressDto: CreateAdressDto, manager?: EntityManager) {
+    const repository = manager ? manager.getRepository(Adress) : this.adressRepository
     const employee = await this.employeeService.findOne(employeeId);
     if (!employee) throw new NotFoundException(`employee №${employeeId} not found`);
-    const adress = this.adressRepository.create({
+    const adress = repository.create({
       ...createAdressDto,
       employee: employee
   });
 
-  const savedAdress = this.adressRepository.save(adress)
-  await this.historyService.logCreates((await savedAdress).employee.employee_id, ChangedTable.ADRESS)
+  const savedAdress = await repository.save(adress)
+  await this.historyService.logCreates(savedAdress.employee.employee_id, ChangedTable.ADRESS)
   return savedAdress
 
   }

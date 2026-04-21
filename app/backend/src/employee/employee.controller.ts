@@ -3,10 +3,21 @@ import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { CreateEmployeeSchema, UpdateEmployeeSchema } from './dto/employee-scheme';
+import { HireEmployeeDto } from './dto/hire-employee.dto';
+import { HireEmployeeScheme } from './dto/hire-employee-scheme';
 
 @Controller('employees')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
+  
+  @Post('hire')
+  async hireEmployee(@Body() hireEmployeeDto: HireEmployeeDto){
+    const {error, value} = HireEmployeeScheme.validate(hireEmployeeDto)
+    if (error){
+         throw new BadRequestException(`Data mistake: ${error.message}`)
+    }
+    return await this.employeeService.createFullEmployee(value)
+  }
 
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
