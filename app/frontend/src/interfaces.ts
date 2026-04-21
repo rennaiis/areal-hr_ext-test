@@ -15,6 +15,7 @@ export interface Adress{
 
 export interface Employee {
     employee_id: number;
+    passport_id: number;
     last_name: string;
     first_name: string;
     middle_name?: string;
@@ -67,7 +68,6 @@ export interface Organization{
 
 export interface Passport{
     passport_id: number;
-    employee_id: number;
     series: string;
     number: string;
     issued_by: string;

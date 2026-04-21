@@ -1,6 +1,5 @@
 import * as Joi from 'joi'
-export const CreatePassportScheme = Joi.object({
-    employee_id: Joi.number().integer().positive().required(), 
+export const CreatePassportScheme = Joi.object({ 
     series: Joi.string().pattern(/^\d{4}$/).required(),
     number: Joi.string().pattern(/^\d{6}$/).required(), 
     issued_by: Joi.string().max(500).required(),
@@ -9,6 +8,6 @@ export const CreatePassportScheme = Joi.object({
 })
 
 export const UpdatePassportScheme = CreatePassportScheme.fork(
-    ['employee_id', 'series', 'number', 'issued_by', 'issue_date', 'department_code'],
+    ['series', 'number', 'issued_by', 'issue_date', 'department_code'],
     (s)=>s.optional()
 )
