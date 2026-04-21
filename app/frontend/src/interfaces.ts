@@ -79,5 +79,4 @@ export interface Passport{
 export interface Position {
     position_id: number;
     name: string;
-    comment?: string;
 }

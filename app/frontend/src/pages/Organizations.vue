@@ -8,7 +8,7 @@
     import { createOrganization, getAllOrganizations, removeOrganization, updateOrganization } from '../API/organizations';
     import { getAllforOrganization, removeDepartment, updateDepartment } from '../API/departments';
 
-    const isDepsOpen = ref(false)
+    const isDepsOpen = ref(true)
     function change():void{
         isDepsOpen.value = !isDepsOpen.value
     }
@@ -168,7 +168,7 @@
                         :editedDepartment="editedDepartment"
                         :choseEditDepartment="choseEditDepartment"
                         :editDepartment="editDepartment"
-                    />
+                />
                 </template> 
             </ul>
         </div>  

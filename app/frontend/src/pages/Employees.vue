@@ -1,10 +1,21 @@
 <script setup lang="ts">
+    import {ref} from 'vue'
+    import Positions from './Positions.vue';
+    const isPosOpen = ref<boolean>(false)
+    function closePositions(){
+        isPosOpen.value = false
+    }
+
 </script>
 
 <template>
+    <div v-if="isPosOpen">
+        <Positions
+        :close="closePositions"/>
+    </div>
     <div class="button-row">
         <button>Нанять сотрудника</button>
-        <button>Должности</button>
+        <button @click.prevent="isPosOpen = true">Должности</button>
     </div>
     
 
@@ -27,5 +38,7 @@
             <button>Уволить</button>
         </div>
     </div>
+    
+    
 
 </template>
