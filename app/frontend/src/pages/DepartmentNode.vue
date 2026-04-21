@@ -1,5 +1,4 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
     import type { Department, DepartmentEdit } from '../interfaces';
     const props = defineProps<{
         dep: Department,
@@ -21,7 +20,7 @@
             <img src="../assets/delete.png" class="icon" @click="props.delete(props.dep.department_id)">
             <img src="../assets/edit.png" class="icon" @click="props.choseEditDepartment(dep)">
         </li>
-        <p>{{ dep.comment }}</p>
+        <p v-if="dep.comment">{{ dep.comment }}</p>
     </div>
     
     <div v-if="dep.department_id === props.editedDepartmentId">

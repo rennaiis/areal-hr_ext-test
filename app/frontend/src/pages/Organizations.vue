@@ -52,8 +52,12 @@
     async function editDepartment(){
         try{
             if(editedDepartment.value){
+                const payload: DepartmentEdit = {
+                    name: editedDepartment.value.name,
+                    comment: editedDepartment.value.comment?.trim() || undefined
+                }   
                 if (editedDepartmentId.value !== null){
-                    await updateDepartment(editedDepartment.value, editedDepartmentId.value)
+                    await updateDepartment(payload, editedDepartmentId.value)
                     editedDepartmentId.value = null
                     refresh()
                 }
@@ -73,7 +77,11 @@
     }
     async function addNewOrganization(){
         try{
-            await createOrganization(newOrganization.value);
+            const payload: Omit<Organization, 'organization_id'> = {
+                name: newOrganization.value.name, 
+                comment: newOrganization.value.comment?.trim() || undefined
+            }
+            await createOrganization(payload);
             newOrganization.value = {
                 name: '',
                 comment: ''
@@ -86,7 +94,11 @@
     async function editOrganization() {
         try{
             if (editedOrganizationId.value){
-                await updateOrganization(editedOrganization.value, editedOrganizationId.value)
+                const payload:  Omit<Organization, 'organization_id'> = {
+                    name: editedOrganization.value.name,
+                    comment: editedOrganization.value.comment?.trim() || undefined
+                }   
+                await updateOrganization(payload, editedOrganizationId.value)
                 editedOrganizationId.value = null
                 await refresh()
             }
@@ -127,7 +139,7 @@
             <div class = "org-header">
                 <h3>{{organization.name}}</h3>
             </div>
-            <p>{{ organization.comment }}</p>
+            <p v-if="organization.comment">{{ organization.comment }}</p>
         </div>
         <div v-if="editedOrganizationId == organization.organization_id">
             <form action="" >

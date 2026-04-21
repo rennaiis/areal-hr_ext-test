@@ -200,6 +200,9 @@ button:hover{
   gap: 5px;
 }
 
+.modal{
+    max-height: 70vh;
+}
 .org-header{
     display: flex;
     flex-direction: row;

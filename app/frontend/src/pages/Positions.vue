@@ -48,6 +48,7 @@
         }catch(err){
             console.error('cant delete position')
         }
+        refresh()
     }
     async function refresh() {
         try{
@@ -62,7 +63,7 @@
 </script>
 <template>
     <div class="overlay">
-        <div class="block">
+        <div class="block modal">
             <h3>Должности</h3>
             <template v-for="pos in positionsList">
                 <div v-if="editedPositionId !== pos.position_id" class='button-row'>

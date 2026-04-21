@@ -7,7 +7,11 @@
     const form = ref({...props})
     async function addNewDepartment(){
         try{
-            await createDepartment(form.value)
+            const payload: Omit<Department, 'department_id'> = {
+                ...form.value,
+                comment: form.value.comment?.trim() || undefined
+            }
+            await createDepartment(payload)
             emit('refresh')
             emit('close')
         }catch{
