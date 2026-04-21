@@ -3,5 +3,5 @@ export class CreateEmployeeDto {
     first_name: string;
     middle_name?: string;
     birth_date: Date;
-    passport_id: number;
+    passport_id?: number;
 }

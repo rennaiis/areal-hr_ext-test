@@ -14,17 +14,14 @@ export class AdressService {
   constructor(
     @InjectRepository(Adress)
     private readonly adressRepository:Repository<Adress>, 
-    private readonly employeeService:EmployeeService,
     private readonly historyService: HistoryItemsService
   ){}
 
-  async create(employeeId: number, createAdressDto: CreateAdressDto, manager?: EntityManager) {
+  async create(createAdressDto: CreateAdressDto, employeeId: number, manager?: EntityManager) {
     const repository = manager ? manager.getRepository(Adress) : this.adressRepository
-    const employee = await this.employeeService.findOne(employeeId);
-    if (!employee) throw new NotFoundException(`employee №${employeeId} not found`);
     const adress = repository.create({
       ...createAdressDto,
-      employee: employee
+      employee: {employee_id: employeeId}
   });
 
   const savedAdress = await repository.save(adress)

@@ -40,7 +40,7 @@ export class EmployeeService {
     try{
       const pas = await this.passportService.create(hireEmployeeDto.passport, queryRunner.manager)
       const emp = await this.create(hireEmployeeDto.employee,  pas.passport_id, queryRunner.manager)
-      const adr = await this.adressService.create( emp.employee_id, hireEmployeeDto.adress, queryRunner.manager)
+      const adr = await this.adressService.create(hireEmployeeDto.adress, emp.employee_id, queryRunner.manager)
       await queryRunner.commitTransaction()
     }catch(err){
       await queryRunner.rollbackTransaction()
