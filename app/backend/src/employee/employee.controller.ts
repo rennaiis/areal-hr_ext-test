@@ -19,14 +19,14 @@ export class EmployeeController {
     return await this.employeeService.createFullEmployee(value)
   }
 
-  @Post()
+  /*@Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     const {error, value} = CreateEmployeeSchema.validate(createEmployeeDto);
     if (error){
       throw new BadRequestException(`Data mistake: ${error.message}`)
     }
     return this.employeeService.create(value);
-  }
+  }*/
 
   @Get()
   findAll() {

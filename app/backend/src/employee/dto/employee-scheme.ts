@@ -3,9 +3,9 @@ import * as Joi from 'joi';
 export const CreateEmployeeSchema = Joi.object({
     last_name: Joi.string().max(100).required(),
     first_name: Joi.string().max(100).required(),
-    middle_name: Joi.string().max(100).optional(),
+    middle_name: Joi.string().max(100).optional().allow(),
     birth_date: Joi.date().iso().required(),
-    passport_id:  Joi.number().integer().positive().required()
+    passport_id:  Joi.number().integer().positive().optional()
 });
 
 export const UpdateEmployeeSchema = CreateEmployeeSchema.fork(

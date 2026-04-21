@@ -8,7 +8,7 @@ import { CreateAdressScheme, updateAdressScheme } from './dto/adress-scheme';
 export class AdressController {
   constructor(private readonly adressService: AdressService) {}
 
-  @Post(":id")
+ /* @Post(":id")
   create(
     @Param("id") employee_id: string, 
     @Body() createAdressDto: CreateAdressDto) {
@@ -17,7 +17,7 @@ export class AdressController {
       throw new BadRequestException(`Data mistake: ${error.message}`)
     }
      return this.adressService.create(+employee_id, value);
-  }
+  }*/
 
   @Get()
   findAll() {

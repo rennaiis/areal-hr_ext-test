@@ -9,14 +9,14 @@ import { UpdatePassportScheme } from '../passport/dto/passport-scheme';
 export class PassportController {
   constructor(private readonly passportService: PassportService) {}
 
-  @Post()
+ /* @Post()
   create(@Body() createPassportDto: CreatePassportDto) {
     const {error, value} = CreatePassportScheme.validate(createPassportDto);
         if (error){
           throw new BadRequestException(`Data mistake: ${error.message}`)
         }
     return this.passportService.create(value);
-  }
+  }*/
 
   @Get()
   findAll() {
