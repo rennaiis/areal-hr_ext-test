@@ -3,7 +3,6 @@ import type { HrOperationType } from "../../enums/HrOperationType";
 
 export interface Adress{
     adress_id: number;
-    employee_id: number;
     region: string;
     settlement: string;
     street: string;
