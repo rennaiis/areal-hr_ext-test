@@ -11,6 +11,12 @@ export interface Adress{
     building?: string;
 }
 
+export interface HireEmployee{
+    employee: Omit<Employee, 'employee_id'|'passport_id'>
+    passport: Omit<Passport, 'passport_id'>
+    adress: Omit<Adress, 'adress_id'>
+}
+
 
 export interface Employee {
     employee_id: number;
@@ -18,7 +24,7 @@ export interface Employee {
     last_name: string;
     first_name: string;
     middle_name?: string;
-    birth_date: Date;
+    birth_date: string;
 }
 
 export interface File{
@@ -70,7 +76,7 @@ export interface Passport{
     series: string;
     number: string;
     issued_by: string;
-    issue_date: Date;
+    issue_date: string;
     department_code: string;
 }
 

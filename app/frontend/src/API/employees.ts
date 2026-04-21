@@ -1,4 +1,4 @@
-import type { Employee } from "../interfaces"
+import type { Employee, HireEmployee } from "../interfaces"
 
 const URL = "http://localhost:3000/api/employees"
 export async function getAllEmployees(){
@@ -7,6 +7,14 @@ export async function getAllEmployees(){
     return await res.json()
 }
 
+export async function hireEmployee(emp: HireEmployee) {
+    const res = await fetch(`${URL}/hire`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(emp)
+    })
+    return res.json()
+}
 export async function getOneEmployee(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find employee ${id}`)
