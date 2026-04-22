@@ -79,7 +79,7 @@
                
             <form action="" class='button-row'>
                 <label for="newPositionName">Название</label>
-                <input type="text" id="newPositionName" v-model="newPosition.name">
+                <input type="text" id="newPositionName" v-model="newPosition.name" required maxlength="300">
                 <div class="button-row">
                     <button @click.prevent="addPosition">Добавить должность</button>
                     <button @click.prevent="props.close">Закрыть</button>

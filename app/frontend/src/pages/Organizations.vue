@@ -134,6 +134,18 @@
 
 </script>
 <template>
+    <form class="form-inline" @submit.prevent="addNewOrganization">
+        <div class="form-item">
+            <label for="org-name">Название организации</label>
+            <input class="window-input" id="org-name" type="text" v-model="newOrganization.name" maxlength="300" required>
+        </div>
+        <div class="form-item">
+            <label for="org-comment">Комментарий</label>
+            <input class="window-input" id="org-comment" type="text" v-model="newOrganization.comment" maxlength="1000">
+        </div>
+        <button>Добавить</button>
+    </form>
+    
     <div class = "block" v-for="organization in organizationsList" :key="organization.organization_id" :value="organization">
         <div v-if="editedOrganizationId != organization.organization_id">
             <div class = "org-header">
@@ -189,17 +201,7 @@
         
     </div>
     
-    <form action="" class="form-inline">
-        <div class="form-item">
-            <label for="org-name">Название организации</label>
-            <input class="window-input" id="org-name" type="text" v-model="newOrganization.name">
-        </div>
-        <div class="form-item">
-            <label for="org-comment">Комментарий</label>
-            <input class="window-input" id="org-comment" type="text" v-model="newOrganization.comment">
-        </div>
-        <button @click.prevent="addNewOrganization">Добавить организацию</button>
-    </form>
+    
     <div v-if="addDepForm">
         <NewDepartment
             v-if="newDepartment"

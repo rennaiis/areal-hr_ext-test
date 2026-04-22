@@ -22,18 +22,18 @@
 </script>
 <template>
     <div class="overlay">
-        <form class="block" action="">
+        <form class="block" @submit.prevent="addNewDepartment">
             <p>
                 <label for="depName">Название</label>
-                <input id="depName" type="text" v-model="form.name">
+                <input id="depName" type="text" v-model="form.name" maxlength="150" required>
             </p>
             <p>
                 <label for="depComment">Комментарий</label>
-                <input id="depComment" type="text" v-model="form.comment">
+                <textarea  id="depComment"  v-model="form.comment" maxlength="1000"></textarea>
             </p>
             <div class="button-row">
-                <button @click.prevent="addNewDepartment">Добавить</button>
-                <button @click.prevent="$emit('close')">Отмена</button>
+                <button type="submit">Добавить</button>
+                <button @click.prevent="$emit('close')" type="button">Отмена</button>
             </div>
         </form>
     </div>
