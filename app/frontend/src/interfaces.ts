@@ -25,6 +25,7 @@ export interface Employee {
     first_name: string;
     middle_name?: string;
     birth_date: string;
+    last_operation?: fullHrOperation;
 }
 
 export interface File{
@@ -41,6 +42,7 @@ export interface HistoryItem{
     field_name: string;
     old_value?: string;
     new_value?: string;
+     created_at: string;
 }
 
 export interface HrOperation{
@@ -58,7 +60,8 @@ export interface fullHrOperation{
     department: fullDepartment;
     position: Position;
     salary: number;
-    operation_type: HrOperationType
+    operation_type: HrOperationType;
+    created_at: string
 }
 export interface fullDepartment{
     department_id: number;

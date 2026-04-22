@@ -57,7 +57,7 @@ export class HrOperationService {
   async findAll() {
     return await
     this.HrOperationRepository.find({
-      relations: ['department', 'position', 'employee']
+      relations: ['department', 'position', 'employee', 'department.organization']
     })
   }
 

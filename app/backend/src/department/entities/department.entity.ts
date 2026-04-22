@@ -45,6 +45,7 @@ export class Department {
     @ManyToOne(() => Organization, (organization) => organization.departments, {
         onDelete: 'CASCADE'
     })
+    @JoinColumn({name: 'organization_id'})
     organization: Organization;
 
     @OneToMany(()=>HrOperation, (operation)=>operation.department)

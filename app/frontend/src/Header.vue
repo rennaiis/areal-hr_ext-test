@@ -13,10 +13,10 @@ import { useRoute } from 'vue-router';
     <div class="header">
         <h1>{{ pageTitle }}</h1>
         <nav class="nav-panel">
-            <router-link to="/employees" class="nav-item">Сотрудники</router-link>
-            <router-link to="/history" class="nav-item">История операций</router-link>
+            <router-link to="/" class="nav-item">Сотрудники</router-link>
             <router-link to="/organizations" class="nav-item">Организации и отделы</router-link>
             <router-link to="/hr-operations" class="nav-item">Кадровые операции</router-link>
+            <router-link to="/history" class="nav-item">История операций</router-link>
         </nav>
     </div>
 </template>

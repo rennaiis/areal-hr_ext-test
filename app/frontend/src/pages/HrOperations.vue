@@ -17,14 +17,16 @@ import { getAllOperations } from '../API/hr-operations';
 </script>
 
 <template>
-    <div class="table-grid table-history">
+    <div class="table-grid table-operations">
     <div class="table-header">Сотрудник</div>
+    <div class="table-header">Дата</div>
     <div class="table-header">Отдел</div>
     <div class="table-header">Должность</div>
     <div class="table-header">Зарплата</div>
     <div class="table-header">Тип операции</div>
     <template v-for="op in operationsList">
         <div class="table-item">{{op.employee.last_name}}{{ op.employee.first_name }}</div>
+        <div class="table-item">{{(op.created_at).slice(0,10)}}</div>
         <div class="table-item">{{op.department.name}}</div>
         <div class="table-item">{{op.position.name}}</div>
         <div class="table-item">{{op.salary}}</div>

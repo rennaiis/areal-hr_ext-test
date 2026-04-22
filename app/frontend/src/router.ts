@@ -6,7 +6,7 @@ import AboutEmployee from './pages/AboutEmployee.vue';
 import NewEmployee from './pages/NewEmployee.vue';
 import HrOperations from './pages/HrOperations.vue';
 const routes = [
-    {path: '/employees', component: Employees, meta: {title: "Сотрудники"}},
+    {path: '/', component: Employees, meta: {title: "Сотрудники"}},
     {path: '/history', component: History, meta: {title: "История"}},
     {path: '/organizations', component: Organizations, meta: {title: "Организации и отделы"}},
     {path: '/employee/:employeeId', props:true, component: AboutEmployee, meta: {title: "Информация о сотруднике"}},

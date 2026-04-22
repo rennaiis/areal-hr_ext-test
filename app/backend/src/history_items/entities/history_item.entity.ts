@@ -43,4 +43,7 @@ export class HistoryItem {
         nullable: true
     })
     new_value: string
+
+    @CreateDateColumn()
+    created_at: Date
 }

@@ -6,10 +6,10 @@ import type { HistoryItem } from '../interfaces';
     async function refresh(){
         try{
             historyList.value = await getAllHistory()
+            historyList.value = historyList.value.reverse()
         }catch(err){
             console.error("cant load history")
         }
-        console.log(historyList);
     }
     onMounted(
         refresh
@@ -25,12 +25,15 @@ import type { HistoryItem } from '../interfaces';
         <div class="table-header">Поле</div>
         <div class="table-header">Старое значение</div>
         <div class="table-header">Новое значение</div>
+        <div class="table-header">Дата</div>
         <template v-for="item in historyList">
             <div class="table-item">{{ item.target_id }}</div>
             <div class="table-item">{{ item.operation_object }}</div>
             <div class="table-item">{{item.field_name}}</div>
             <div class="table-item">{{item.old_value}}</div>
             <div class="table-item">{{ item.new_value }}</div>
+            <div class="table-item">{{ item.created_at }}</div>
+
         </template>
     </div>
 </template>
