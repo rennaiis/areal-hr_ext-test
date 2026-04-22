@@ -1,10 +1,23 @@
 <script setup lang="ts">
-    import {ref} from 'vue'
+    import {onMounted, ref} from 'vue'
     import Positions from './Positions.vue';
+    import type { Employee } from '../interfaces';
+    import { getAllEmployees } from '../API/employees';
     const isPosOpen = ref<boolean>(false)
     function closePositions(){
         isPosOpen.value = false
     }
+    const employeesList = ref<Employee[]>([])
+    async function refresh(){
+        try{
+            employeesList.value = await getAllEmployees()
+        }catch(err){
+            console.error('cant load  page')
+        }
+    }
+    onMounted(
+        refresh
+    )
 
 </script>
 
@@ -14,7 +27,7 @@
         :close="closePositions"/>
     </div>
     <div class="button-row">
-        <button><router-link to="/hireEmployee">Нанять сотрудника</router-link></button>
+        <router-link to="/hireEmployee"><button>Нанять сотрудника</button></router-link>
         <button @click.prevent="isPosOpen = true">Должности</button>
     </div>
     
@@ -27,16 +40,20 @@
         <div class="table-header">Зарплата</div>
         <div class="table-header">Действия</div>
         
-
-        <div class="table-item">Иван Иванов</div>
-        <div class="table-item">ООО "Компания"</div>
-        <div class="table-item">it</div>
-        <div class="table-item">Программист</div>
-        <div class="table-item">50 000 ₽</div>
-        <div class="button-row table-item" >
-            <button>Изменить</button>
-            <button>Уволить</button>
-        </div>
+        <template v-for="emp in employeesList">
+            <div class="table-item">{{ emp.last_name }} {{emp.first_name }} {{ emp.middle_name }}</div>
+            <div class="table-item">ООО "Компания"</div>
+            <div class="table-item">it</div>
+            <div class="table-item">Программист</div>
+            <div class="table-item">50 000 ₽</div>
+            <div class="button-row table-item" >
+                <button>Изменить</button>
+                <button>Уволить</button>
+                <router-link :to="`/employee/${emp.employee_id}`"><button>Информация</button></router-link>
+                
+            </div>
+        </template>
+        
     </div>
     
     

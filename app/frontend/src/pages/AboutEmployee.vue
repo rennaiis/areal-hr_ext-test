@@ -3,19 +3,20 @@ import { getOneAdress } from '../API/adresses';
 import { getOneEmployee } from '../API/employees';
 import { getOnePassport } from '../API/passports';
 import type { Adress, Employee, Passport } from '../interfaces';
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 
     const props = defineProps<{
-        employeeId: number;
+        employeeId: string;
     }>()
+    const id = +props.employeeId
     const currentEmployee = ref<Employee>()
     const currentPasspost = ref<Passport>()
     const currentAdress = ref<Adress>()
     
     async function refresh(){
         try{
-            currentEmployee.value = await getOneEmployee(props.employeeId)
-            currentAdress.value = await getOneAdress(props.employeeId)
+            currentEmployee.value = await getOneEmployee(id)
+            currentAdress.value = await getOneAdress(id)
             if (currentEmployee.value){
                 currentPasspost.value = await getOnePassport(currentEmployee.value.passport_id)
             }
@@ -23,25 +24,28 @@ import {ref} from 'vue'
             console.error("cant load page")
         }
     }
+    onMounted(
+        refresh
+    )
 
 </script>
 <template>
     <div class="block">
         <div class = "button-row">
             <h3>Фамилия:</h3>
-            <p>Иванов</p>
+            <p>{{ currentEmployee?.last_name }}</p>
         </div>
         <div class = "button-row">
-            <h3>Имя::</h3>
-            <p>Иван</p>
+            <h3>Имя:</h3>
+            <p>{{currentEmployee?.first_name}}</p>
         </div>
         <div class = "button-row">
             <h3>Отчество:</h3>
-            <p>Иванович</p>
+            <p>{{currentEmployee?.middle_name}}</p>
         </div>
         <div class = "button-row">
             <h3>Дата рождения</h3>
-            <p>{{ new Date().getDay()}}.{{ new Date().getMonth() }}.{{ new Date().getFullYear() }}</p>
+            <p>{{currentEmployee?.birth_date}}</p>
         </div>
         <button>Редактировать</button>
     </div>
@@ -50,23 +54,23 @@ import {ref} from 'vue'
         <h2>Паспортные данные</h2>
         <div class = "button-row">
             <h3>Серия</h3>
-            <p>1234</p>
+            <p>{{currentPasspost?.series}}</p>
         </div>
         <div class = "button-row">
             <h3>Номер:</h3>
-            <p>123456</p>
+            <p>{{ currentPasspost?.number }}</p>
         </div>
         <div class = "button-row">
             <h3>Кем выдан:</h3>
-            <p>лыовлдоыфдловчшщкобыщвшзьсеаовклцщуыбдвчьстапекрошущцлзы</p>
+            <p>{{currentPasspost?.issued_by}}</p>
         </div>
         <div class = "button-row">
             <h3>Дата выдачи:</h3>
-            <p>{{ new Date().getDay()}}.{{ new Date().getMonth() }}.{{ new Date().getFullYear() }}</p>
+            <p>{{currentPasspost?.issue_date}}</p>
         </div>
         <div class = "button-row">
             <h3>Код подразделения:</h3>
-            <p>123-282</p>
+            <p>{{ currentPasspost?.department_code }}</p>
         </div>
         <button>Редактировать</button>
     </div>
@@ -75,27 +79,27 @@ import {ref} from 'vue'
         <h2>Адрес</h2>
         <div class = "button-row">
             <h3>Регион:</h3>
-            <p>Ярославская область</p>
+            <p>{{ currentAdress?.region }}</p>
         </div>
         <div class = "button-row">
             <h3>Населённый пункт:</h3>
-            <p>город Ярославль</p>
+            <p>{{ currentAdress?.settlement }}</p>
         </div>
         <div class = "button-row">
             <h3>Улица:</h3>
-            <p>Первомайская</p>
+            <p>{{ currentAdress?.street }}</p>
         </div>
         <div class = "button-row">
             <h3>Дом:</h3>
-            <p>34</p>
+            <p>{{currentAdress?.house}}</p>
         </div>
         <div class = "button-row">
             <h3>Квартира:</h3>
-            <p>34</p>
+            <p>{{ currentAdress?.apartment }}</p>
         </div>
         <div class = "button-row">
             <h3>Корпус:</h3>
-            <p>5</p>
+            <p>{{ currentAdress?.building }}</p>
         </div>
         <button>Редактировать</button>
     </div>

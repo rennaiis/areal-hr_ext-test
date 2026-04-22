@@ -124,7 +124,7 @@
             }
             console.log(departmentsList.value);
         }catch(err){
-            console.error('Ошибка при загрузке страницы')
+            console.error('cant load  page')
         }   
     }
 
