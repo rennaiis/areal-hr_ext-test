@@ -38,14 +38,12 @@ import { createOperation } from '../API/hr-operations';
             department_code: ''
         }
     })
+
     async function hireNewEmployee() {
-        try{
-            
-            const payload =structuredClone(toRaw(newEmployee.value))
-            console.log(payload);
-            payload.employee.birth_date = new Date(payload.employee.birth_date).toISOString().split('T')[0]
-            payload.passport.issue_date = new Date(payload.passport.issue_date).toISOString().split('T')[0]
-            
+        try{ 
+            const payload: HireEmployee  = structuredClone(toRaw(newEmployee.value)) 
+            payload.employee.birth_date = new Date(payload.employee.birth_date).toISOString().slice(0, 10)
+            payload.passport.issue_date = new Date(payload.passport.issue_date).toISOString().slice(0, 10)
             await hireEmployee(payload)
             step.value = 'hire'
         }catch(err){
