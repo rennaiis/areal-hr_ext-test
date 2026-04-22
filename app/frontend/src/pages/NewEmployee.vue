@@ -1,20 +1,26 @@
 <script setup lang="ts">
     import { onMounted, ref, toRaw, watch } from 'vue';
-    import type { Adress, Employee, Passport, Organization, Department, Position, HireEmployee } from '../interfaces';
+    import { type Organization, type Department, type Position, type HireEmployee, type HrOperation, type Employee } from '../interfaces';
     import { getAllOrganizations } from '../API/organizations';
-    import { getAllforOrganization, getAllForOrgFlat } from '../API/departments';
+    import { getAllForOrgFlat } from '../API/departments';
     import { getAllPositions } from '../API/positions';
-import { hireEmployee } from '../API/employees';
-import { createOperation } from '../API/hr-operations';
-
+    import { hireEmployee } from '../API/employees';
+    import { HrOperationType } from '../../../enums/HrOperationType';
+    import { createOperation } from '../API/hr-operations';
+    import { useRouter } from 'vue-router';
+    const router = useRouter()
     const organizationsList = ref<Organization[]>([])
     const departmentsList = ref<Department[]>([])
     const positionsList = ref<Position[]>([]) 
     const chosenOrganizationId = ref<number|null>(null)
-    const chosenPositionId = ref<number|null>(null)
-    const chosenDepartmentId = ref<number|null>(null)
     const step = ref<'add'|'hire'>('add')
-    
+    const newOperation = ref<Omit<HrOperation, 'hr_operation_id'>>({
+        employee_id: 0,
+        department_id: 0,
+        position_id: 0,
+        salary: 0,      
+        operation_type: HrOperationType.HIRE
+    })
     const newEmployee = ref<HireEmployee>({
         employee: {
             last_name: '',
@@ -38,13 +44,21 @@ import { createOperation } from '../API/hr-operations';
             department_code: ''
         }
     })
-
     async function hireNewEmployee() {
+        try{
+            await createOperation(newOperation.value)
+            router.push('/employees')
+        }catch(err){
+            console.error('cant add hire operation')
+        }        
+    }
+    async function addNewEmployee() {
         try{ 
             const payload: HireEmployee  = structuredClone(toRaw(newEmployee.value)) 
             payload.employee.birth_date = new Date(payload.employee.birth_date).toISOString().slice(0, 10)
             payload.passport.issue_date = new Date(payload.passport.issue_date).toISOString().slice(0, 10)
-            await hireEmployee(payload)
+            const e: Employee= await hireEmployee(payload)
+            newOperation.value.employee_id = e.employee_id
             step.value = 'hire'
         }catch(err){
             console.error('cant hire employee ', err)
@@ -72,7 +86,7 @@ import { createOperation } from '../API/hr-operations';
 <template>
     <template v-if="step === 'add'">
         <h2>Введите персональные данные сотрудника</h2>
-        <form  class="block" @submit.prevent="hireNewEmployee">
+        <form  class="block" @submit.prevent="addNewEmployee">
         <label for="last_name">Фамилия:</label>
         <input type="text" id="last_name" maxlength="100" required v-model="newEmployee.employee.last_name">
 
@@ -125,7 +139,7 @@ import { createOperation } from '../API/hr-operations';
     
     <template v-if="step=='hire'">   
         <h2>Введите данные о работе сотрудника</h2>
-        <form action="" class="block">
+        <form class="block" @submit.prevent="hireNewEmployee">
             <label for="organization_id">Организация:</label>
             <select v-model="chosenOrganizationId" id="organization_id" name="organization_id" required>
                 <option value="" disabled selected>Выберите организацию</option>
@@ -136,7 +150,7 @@ import { createOperation } from '../API/hr-operations';
             </select>
 
             <label for="department_id">Отдел:</label>
-            <select id="department_id" name="department_id" required>
+            <select v-model="newOperation.department_id" id="department_id" name="department_id" required>
                 <option value="" disabled selected>Выберите отдел</option>
                 <option 
                     v-for="dep in departmentsList"
@@ -144,8 +158,8 @@ import { createOperation } from '../API/hr-operations';
                     :value="dep.department_id"
                 >{{ dep.name }}</option>
             </select>
-            <label for="position_id">Должность:</label>
-            <select id="position_id" name="position_id" required>
+            <label  for="position_id">Должность:</label>
+            <select v-model="newOperation.position_id" id="position_id" name="position_id" required>
                 <option value="" disabled selected>Выберите должность</option>
                 <option 
                 v-for="pos in positionsList"
@@ -153,11 +167,10 @@ import { createOperation } from '../API/hr-operations';
                 :value="pos.position_id"
                 >{{ pos.name }}</option>
             </select>
-            
-
+    
             <label for="salary">Зарплата:</label>
-            <input type="number" id="salary"  required>
-            <button>Далее</button>
+            <input v-model="newOperation.salary" type="number" id="salary" required>
+            <button>Нанять</button>
         </form>
     </template>
         

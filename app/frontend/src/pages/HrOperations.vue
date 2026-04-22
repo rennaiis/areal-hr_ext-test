@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import {onMounted, ref} from 'vue'
-    import type { HrOperation } from '../interfaces';
+    import type { fullHrOperation} from '../interfaces';
 import { getAllOperations } from '../API/hr-operations';
-    const operationsList = ref<HrOperation[]>([])
+    const operationsList = ref<fullHrOperation[]>([])
     async function refresh(){
         try{
             operationsList.value = await getAllOperations()
@@ -18,15 +18,15 @@ import { getAllOperations } from '../API/hr-operations';
 
 <template>
     <div class="table-grid table-history">
-    <div class="table-header">id сотрудника</div>
-    <div class="table-header">id отдела</div>
-    <div class="table-header">id должности</div>
+    <div class="table-header">Сотрудник</div>
+    <div class="table-header">Отдел</div>
+    <div class="table-header">Должность</div>
     <div class="table-header">Зарплата</div>
     <div class="table-header">Тип операции</div>
     <template v-for="op in operationsList">
-        <div class="table-item">{{op.employee_id}}</div>
-        <div class="table-item">{{op.department_id}}</div>
-        <div class="table-item">{{op.position_id}}</div>
+        <div class="table-item">{{op.employee.last_name}}{{ op.employee.first_name }}</div>
+        <div class="table-item">{{op.department.name}}</div>
+        <div class="table-item">{{op.position.name}}</div>
         <div class="table-item">{{op.salary}}</div>
         <div class="table-item">{{op.operation_type}}</div>
     </template>

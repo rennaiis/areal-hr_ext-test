@@ -51,6 +51,23 @@ export interface HrOperation{
     salary: number;
     operation_type: HrOperationType
 }
+
+export interface fullHrOperation{
+    hr_operation_id: number;
+    employee: Employee;
+    department: fullDepartment;
+    position: Position;
+    salary: number;
+    operation_type: HrOperationType
+}
+export interface fullDepartment{
+    department_id: number;
+    organization: Organization;
+    parent_department: Department;
+    name: string;
+    comment?: string;
+    children?: Department[]
+}
 export interface Department {
     department_id: number;
     organization_id: number;
