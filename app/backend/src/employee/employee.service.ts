@@ -42,10 +42,12 @@ export class EmployeeService {
       const emp = await this.create(hireEmployeeDto.employee,  pas.passport_id, queryRunner.manager)
       const adr = await this.adressService.create(hireEmployeeDto.adress, emp.employee_id, queryRunner.manager)
       await queryRunner.commitTransaction()
+      return emp
     }catch(err){
       await queryRunner.rollbackTransaction()
+      throw err 
     }finally{
-      await queryRunner.release
+      await queryRunner.release()
     }
   }
   async findAll() {
