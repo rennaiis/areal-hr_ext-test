@@ -6,5 +6,7 @@ export const CreateHistoryItemScheme = Joi.object({
   operation_object: Joi.string().valid(...Object.values(ChangedTable)).required(),
   field_name: Joi.string().max(50).required(),
   old_value: Joi.string().max(300).allow(null, '').optional(),
-  new_value: Joi.string().max(300).allow(null, '').optional()
+  new_value: Joi.string().max(300).allow(null, '').optional(),
+  user_id: Joi.number().integer().positive().required()
+
 });

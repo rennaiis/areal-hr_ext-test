@@ -12,6 +12,7 @@ import {
 import { Passport } from "../../passport/entities/passport.entity";
 import { Adress } from "../../adress/entities/adress.entity";
 import { HrOperation } from "../../hr_operation/entities/hr_operation.entity";
+import { User } from "../../user/entities/user.entity";
 
 @Entity()
 export class Employee {
@@ -30,6 +31,13 @@ export class Employee {
 
     @OneToMany(()=>HrOperation, (operation)=>operation.employee)
     hr_operations: HrOperation[]
+
+    @OneToOne(() => User, (user) => user.employee)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
+
+    @Column({ nullable: true })
+    user_id: number;
 
     @Column({
         type: 'varchar',

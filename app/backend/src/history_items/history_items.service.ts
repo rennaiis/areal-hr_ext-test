@@ -36,6 +36,7 @@ export class HistoryItemsService {
       const newValue = updateDto[key]
       if (String(oldValue) !== String(newValue)){
         await this.create({
+          user_id: 1,
           target_id: targetId, 
           operation_object: operation_object,
           field_name: key, 
@@ -49,6 +50,7 @@ export class HistoryItemsService {
   async logCreates(
     targetId: number, operation_object: ChangedTable){
       await this.create({
+        user_id: 1,
         target_id: targetId, 
         operation_object: operation_object,
         field_name: 'all', 
@@ -59,6 +61,7 @@ export class HistoryItemsService {
   async logDeletes(
     targetId: number, operation_object: ChangedTable){
     await this.create({
+      user_id: 1,
       target_id: targetId, 
       operation_object: operation_object,
       field_name: 'all',

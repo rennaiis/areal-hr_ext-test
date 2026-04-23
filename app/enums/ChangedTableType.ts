@@ -6,5 +6,6 @@ export enum ChangedTable{
     OPERATION = "operation", 
     FILE = "file", 
     PASSPORT = "passport", 
-    ADRESS = "adress"
+    ADRESS = "adress",
+    USER="user"
 }

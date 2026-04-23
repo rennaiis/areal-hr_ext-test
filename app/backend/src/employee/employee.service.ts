@@ -10,6 +10,7 @@ import { HireEmployeeDto } from './dto/hire-employee.dto';
 import { PassportService } from '../passport/passport.service';
 import { AdressService } from '../adress/adress.service';
 import { FileService } from '../file/file.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class EmployeeService {
@@ -20,7 +21,8 @@ export class EmployeeService {
     private readonly passportService: PassportService,
     private readonly adressService: AdressService,
     private readonly fileService: FileService,
-    private readonly dataSource: DataSource
+    private readonly dataSource: DataSource,
+    private readonly userService: UserService
 
 
   ){}
@@ -63,7 +65,7 @@ export class EmployeeService {
   async findOne(id: number) {
     const employee = await this.employeeRepository.findOne({
       where: {employee_id: id}, 
-      relations: ['passport', 'adress', 'hr_operations']
+      relations: ['passport', 'adress', 'hr_operations', 'user']
     })
     if (!employee) throw new NotFoundException(`employee ${id} not found`)
     return employee

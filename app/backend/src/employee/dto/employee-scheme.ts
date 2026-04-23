@@ -5,7 +5,8 @@ export const CreateEmployeeSchema = Joi.object({
     first_name: Joi.string().max(100).required(),
     middle_name: Joi.string().max(100).optional().allow(''),
     birth_date: Joi.date().iso().required(),
-    passport_id:  Joi.number().integer().positive().optional()
+    passport_id:  Joi.number().integer().positive().optional(),
+    user_id:  Joi.number().integer().positive().optional().allow('')
 });
 
 export const UpdateEmployeeSchema = CreateEmployeeSchema.fork(

@@ -4,4 +4,5 @@ export class CreateEmployeeDto {
     middle_name?: string;
     birth_date: Date;
     passport_id?: number;
+     user_id?: number;
 }
