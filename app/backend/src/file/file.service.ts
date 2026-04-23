@@ -3,11 +3,12 @@ import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { File } from './entities/file.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Passport } from '../passport/entities/passport.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
 import { PassportService } from '../passport/passport.service';
+import { Express } from 'express';
 
 @Injectable()
 export class FileService {
@@ -28,7 +29,23 @@ export class FileService {
     await this.historyService.logCreates((await savedFile).file_id, ChangedTable.FILE)
     return savedFile
   }
-
+  async createMany(
+    files: Express.Multer.File[], 
+    passportId: number,
+    ){
+      const pas = await this.passportService.findOne(passportId)
+      if (!pas) throw new NotFoundException()
+      const savedFiles = await Promise.all(files.map(async(file)=>{
+        const newFile = this.fileRepository.create({
+          name: file.originalname, 
+          file_path: file.path,
+          passport: pas
+        })
+        return await this.fileRepository.save(newFile)
+      }))
+      return savedFiles
+    }
+  
   async findAll() {
     return await 
       this.fileRepository.find({

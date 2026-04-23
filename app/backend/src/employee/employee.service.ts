@@ -9,6 +9,7 @@ import { ChangedTable } from '../../../enums/ChangedTableType';
 import { HireEmployeeDto } from './dto/hire-employee.dto';
 import { PassportService } from '../passport/passport.service';
 import { AdressService } from '../adress/adress.service';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class EmployeeService {
@@ -18,6 +19,7 @@ export class EmployeeService {
     private readonly historyService: HistoryItemsService,
     private readonly passportService: PassportService,
     private readonly adressService: AdressService,
+    private readonly fileService: FileService,
     private readonly dataSource: DataSource
 
 
@@ -32,15 +34,19 @@ export class EmployeeService {
     await this.historyService.logCreates(await savedEmployee.employee_id, ChangedTable.EMPLOYEE)
     return savedEmployee
   }
-  async createFullEmployee(hireEmployeeDto: HireEmployeeDto){
+  async createFullEmployee(hireEmployeeDto: HireEmployeeDto, files: Express.Multer.File[]){
     
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
     try{
       const pas = await this.passportService.create(hireEmployeeDto.passport, queryRunner.manager)
+      if (files && files.length > 0){
+        await this.fileService.createMany(files, pas.passport_id)
+      }
       const emp = await this.create(hireEmployeeDto.employee,  pas.passport_id, queryRunner.manager)
       const adr = await this.adressService.create(hireEmployeeDto.adress, emp.employee_id, queryRunner.manager)
+    
       await queryRunner.commitTransaction()
       return emp
     }catch(err){

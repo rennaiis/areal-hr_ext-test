@@ -1,12 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { createFileSchema, updateFileSchema } from './dto/file-scheme';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { HireEmployeeDto } from '../employee/dto/hire-employee.dto';
 
 @Controller('files')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
+
 
   @Post()
   create(@Body() createFileDto: CreateFileDto) {

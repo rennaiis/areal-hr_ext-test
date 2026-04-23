@@ -6,9 +6,10 @@ import { Employee } from './entities/employee.entity';
 import { HistoryItemsModule } from '../history_items/history_items.module';
 import { PassportModule } from '../passport/passport.module';
 import { AdressModule } from '../adress/adress.module';
+import { FileModule } from '../file/file.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Employee]), HistoryItemsModule, PassportModule, AdressModule],
+  imports:[TypeOrmModule.forFeature([Employee]), HistoryItemsModule, PassportModule, AdressModule, FileModule],
   controllers: [EmployeeController],
   providers: [EmployeeService],
   exports: [EmployeeService]

@@ -1,22 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { CreateEmployeeSchema, UpdateEmployeeSchema } from './dto/employee-scheme';
 import { HireEmployeeDto } from './dto/hire-employee.dto';
 import { HireEmployeeScheme } from './dto/hire-employee-scheme';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('employees')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
   
   @Post('hire')
-  async hireEmployee(@Body() hireEmployeeDto: HireEmployeeDto){
+  @UseInterceptors(FilesInterceptor('files', 10, {dest: './passportFiles'}))
+  async hireEmployee(@Body() hireEmployeeDto: HireEmployeeDto, 
+  @UploadedFiles() files: Express.Multer.File[]
+  ){
     const {error, value} = HireEmployeeScheme.validate(hireEmployeeDto)
     if (error){
          throw new BadRequestException(`Data mistake: ${error.message}`)
     }
-    return await this.employeeService.createFullEmployee(value)
+    return await this.employeeService.createFullEmployee(value, files)
   }
 
   /*@Post()
