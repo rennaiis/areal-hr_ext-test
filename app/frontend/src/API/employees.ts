@@ -7,11 +7,17 @@ export async function getAllEmployees(){
     return await res.json()
 }
 
-export async function hireEmployee(emp: HireEmployee) {
+export async function hireEmployee(emp: HireEmployee, files: File[]) {
+    const formData = new FormData()
+    formData.append('employee', JSON.stringify(emp.employee))
+    formData.append('adress', JSON.stringify(emp.adress))
+    formData.append('passport', JSON.stringify(emp.passport))
+    files.forEach(f =>{
+        formData.append('files', f)
+    })
     const res = await fetch(`${URL}/hire`, {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(emp)
+        body: formData
     })
     return res.json()
 }

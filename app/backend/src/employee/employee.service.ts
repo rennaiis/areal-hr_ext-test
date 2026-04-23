@@ -11,6 +11,7 @@ import { PassportService } from '../passport/passport.service';
 import { AdressService } from '../adress/adress.service';
 import { FileService } from '../file/file.service';
 import { UserService } from '../user/user.service';
+import * as fs from 'fs/promises'
 
 @Injectable()
 export class EmployeeService {
@@ -43,7 +44,7 @@ export class EmployeeService {
     try{
       const pas = await this.passportService.create(hireEmployeeDto.passport, queryRunner.manager)
       if (files && files.length > 0){
-        await this.fileService.createMany(files, pas.passport_id)
+        await this.fileService.createMany(files, pas.passport_id, queryRunner.manager)
       }
       const emp = await this.create(hireEmployeeDto.employee,  pas.passport_id, queryRunner.manager)
       const adr = await this.adressService.create(hireEmployeeDto.adress, emp.employee_id, queryRunner.manager)
@@ -52,6 +53,12 @@ export class EmployeeService {
       return emp
     }catch(err){
       await queryRunner.rollbackTransaction()
+      if (files?.length) {
+      await Promise.allSettled(
+        files.map(f => fs.unlink(f.path))
+      )
+    }
+
       throw err 
     }finally{
       await queryRunner.release()

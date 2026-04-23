@@ -14,6 +14,13 @@
     const positionsList = ref<Position[]>([]) 
     const chosenOrganizationId = ref<number|null>(null)
     const step = ref<'add'|'hire'>('add')
+    const selectedFiles = ref<File[]>([])
+    function choseFiles(event: Event){
+         const target  = event.target as HTMLInputElement
+         if (target.files){
+            selectedFiles.value = Array.from(target.files)
+         }
+    }
     const newOperation = ref<Omit<HrOperation, 'hr_operation_id'>>({
         employee_id: 0,
         department_id: 0,
@@ -57,7 +64,7 @@
             const payload: HireEmployee  = structuredClone(toRaw(newEmployee.value)) 
             payload.employee.birth_date = new Date(payload.employee.birth_date).toISOString().slice(0, 10)
             payload.passport.issue_date = new Date(payload.passport.issue_date).toISOString().slice(0, 10)
-            const e: Employee= await hireEmployee(payload)
+            const e: Employee= await hireEmployee(payload, selectedFiles.value)
             newOperation.value.employee_id = e.employee_id
             step.value = 'hire'
         }catch(err){
@@ -115,6 +122,8 @@
         <label for="department_code">Код подразделения:</label>
         <input id="department_code" type="text" pattern="\d{3}-\d{3}" maxlength="7" placeholder="000-000" required v-model="newEmployee.passport.department_code">
 
+        <label for="scans">Сканы паспорта</label>
+        <input type="file" @change="choseFiles" multiple>
         <h2>Адрес:</h2>
         <label for="region">Регион:</label>
         <input type="text" id="region" maxlength="150" required v-model="newEmployee.adress.region">
@@ -151,7 +160,7 @@
 
             <label for="department_id">Отдел:</label>
             <select v-model="newOperation.department_id" id="department_id" name="department_id" required>
-                <option value="" disabled selected>Выберите отдел</option>
+                <option value="" disabled>Выберите отдел</option>
                 <option 
                     v-for="dep in departmentsList"
                     :key="dep.department_id"
@@ -160,7 +169,7 @@
             </select>
             <label  for="position_id">Должность:</label>
             <select v-model="newOperation.position_id" id="position_id" name="position_id" required>
-                <option value="" disabled selected>Выберите должность</option>
+                <option value="" disabled>Выберите должность</option>
                 <option 
                 v-for="pos in positionsList"
                 :key="pos.position_id"

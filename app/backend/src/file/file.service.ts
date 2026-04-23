@@ -26,23 +26,29 @@ export class FileService {
     }
     const file = this.fileRepository.create(createFileDto)
     file.passport = passport
-    const savedFile = this.fileRepository.save(file);
-    await this.historyService.logCreates((await savedFile).file_id, ChangedTable.FILE)
+    const savedFile = await this.fileRepository.save(file);
+    await this.historyService.logCreates(savedFile.file_id, ChangedTable.FILE)
     return savedFile
   }
   async createMany(
     files: Express.Multer.File[], 
     passportId: number,
+    manager?: EntityManager
     ){
-      const pas = await this.passportService.findOne(passportId)
+      const repository = manager ? manager.getRepository(File) : this.fileRepository
+      const pas = manager
+      ? await manager.getRepository(Passport).findOneBy({ passport_id: passportId })
+      : await this.passportService.findOne(passportId)
       if (!pas) throw new NotFoundException()
       const savedFiles = await Promise.all(files.map(async(file)=>{
-        const newFile = this.fileRepository.create({
+        const newFile = repository.create({
           name: file.originalname, 
           file_path: file.path,
           passport: pas
         })
-        return await this.fileRepository.save(newFile)
+        const saved = repository.save(newFile)
+        await this.historyService.logCreates(newFile.file_id, ChangedTable.FILE)
+        return saved
       }))
       return savedFiles
     }

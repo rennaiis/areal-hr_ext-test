@@ -15,8 +15,12 @@ export class File {
     @PrimaryGeneratedColumn()
     file_id: number
 
-    @ManyToOne(()=>Passport, (passport)=>passport.files)
+    @ManyToOne(()=>Passport, (passport)=>passport.files, {
+        onDelete: 'CASCADE'
+    })
+    @JoinColumn({name: 'passport_id'})
     passport: Passport
+
 
     @Column({
         type: 'varchar',
