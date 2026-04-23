@@ -22,7 +22,6 @@ export class EmployeeService {
     private readonly adressService: AdressService,
     private readonly fileService: FileService,
     private readonly dataSource: DataSource,
-    private readonly userService: UserService
 
 
   ){}

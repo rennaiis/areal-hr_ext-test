@@ -10,5 +10,6 @@ import { HistoryItemsModule } from '../history_items/history_items.module';
   imports: [TypeOrmModule.forFeature([File]), PassportModule, HistoryItemsModule],
   controllers: [FileController],
   providers: [FileService],
+  exports:[FileService]
 })
 export class FileModule {}

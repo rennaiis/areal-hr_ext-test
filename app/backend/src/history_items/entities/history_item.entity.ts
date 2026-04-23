@@ -26,13 +26,13 @@ export class HistoryItem {
         enum: ChangedTable,
     })
     operation_object: ChangedTable
+   
+    @Column({ name: 'user_id', nullable: true })
+    userId: number;
 
-    @ManyToOne(() => User, (user) => user.history_items)
+    @ManyToOne(() => User, (user) => user.history_items, { nullable: true })
     @JoinColumn({ name: 'user_id' })
     user: User;
-
-    @Column()
-    user_id: number;
 
 
     @Column({

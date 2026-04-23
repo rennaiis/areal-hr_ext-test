@@ -8,7 +8,8 @@ import { Passport } from '../passport/entities/passport.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
 import { PassportService } from '../passport/passport.service';
-import { Express } from 'express';
+import { Multer } from 'multer';
+
 
 @Injectable()
 export class FileService {
