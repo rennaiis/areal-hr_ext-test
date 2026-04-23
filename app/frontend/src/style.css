@@ -190,11 +190,13 @@ button:hover{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto ;
 }
 .table-users{
-    grid-template-columns: 1fr 1fr 1fr 1fr auto ;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 .table-operations{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto ;
 }
+
+
 
 .table-header{
     background-color: var(--header-back);

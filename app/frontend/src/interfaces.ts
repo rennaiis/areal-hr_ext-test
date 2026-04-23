@@ -1,5 +1,6 @@
 import type { ChangedTable } from "../../enums/ChangedTableType";
 import type { HrOperationType } from "../../enums/HrOperationType";
+import type { UserRoles } from "../../enums/UserRoles";
 
 export interface Adress{
     adress_id: number;
@@ -105,3 +106,15 @@ export interface Position {
     position_id: number;
     name: string;
 }
+
+export interface User {
+    user_id: number;
+    employee_id?: number;
+    last_name: string;
+    first_name: string;
+    middle_name: string;
+    login: string;
+    password_hash: string;
+    role?: UserRoles;
+}
+

@@ -34,7 +34,7 @@ export class User {
 
     @Column({
         type: 'enum',
-        enum: ['Admin', 'hr_manager'],
+        enum: ['admin', 'hr_manager'],
         default: 'hr_manager'
     })
     role: string;

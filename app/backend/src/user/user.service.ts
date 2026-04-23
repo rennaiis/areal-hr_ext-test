@@ -23,7 +23,7 @@ export class UserService {
 
   async findAll() {
     return await this.userRepository.find({
-      relations: ['employee', 'hr_operations'], 
+      relations: ['employee'], 
     });
   }
 
