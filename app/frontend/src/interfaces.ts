@@ -118,3 +118,8 @@ export interface User {
     role?: UserRoles;
 }
 
+export interface editUser {
+    login: string;
+    password_hash: string;
+    role?: UserRoles;
+}

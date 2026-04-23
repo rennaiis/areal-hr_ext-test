@@ -1,4 +1,4 @@
-import type {  User } from "../interfaces"
+import type {  editUser, User } from "../interfaces"
 
 const URL = "http://localhost:3000/api/user"
 export async function getAllUsers(){
@@ -22,7 +22,7 @@ export async function createUser(user: Omit<User, 'user_id'>){
     return res.json()
 }
 
-export async function updateUser(user: Omit<User, 'user_id'>, id: number) {
+export async function updateUser(user: editUser, id: number) {
     const res = await fetch(`${URL}/${id}`, {
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
