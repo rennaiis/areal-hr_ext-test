@@ -1,4 +1,4 @@
 export enum UserRoles{
     ADMIN = "admin",
-    HR = "hr-manager"
+    HR = "hr_manager"
 }
