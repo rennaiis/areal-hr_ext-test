@@ -43,10 +43,10 @@ export class FileService {
       const savedFiles = await Promise.all(files.map(async(file)=>{
         const newFile = repository.create({
           name: file.originalname, 
-          file_path: file.path,
+          file_path: file.filename,
           passport: pas
         })
-        const saved = repository.save(newFile)
+        const saved = await repository.save(newFile)
         await this.historyService.logCreates(newFile.file_id, ChangedTable.FILE)
         return saved
       }))

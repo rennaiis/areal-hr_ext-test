@@ -23,8 +23,6 @@ export class EmployeeService {
     private readonly adressService: AdressService,
     private readonly fileService: FileService,
     private readonly dataSource: DataSource,
-
-
   ){}
   async create(createEmployeeDto: CreateEmployeeDto, passportId: number, manager?: EntityManager) {
     const repository = manager ? manager.getRepository(Employee) : this.employeeRepository

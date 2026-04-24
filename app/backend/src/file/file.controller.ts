@@ -13,27 +13,39 @@ export class FileController {
   constructor(private readonly fileService: FileService) {}
 
 
-  @Post()
-  create(@Body() createFileDto: CreateFileDto) {
-    const {error, value} = createFileSchema.validate(createFileDto)
-    if (error){
-      throw new BadRequestException(`Data mistake: ${error.message}`)
+  @Post('uploadFiles/:passportId')
+    @UseInterceptors(FilesInterceptor('files', 15, {
+      storage: diskStorage({
+        destination: './passportFiles', 
+        filename: (req, file, cb)=>{
+          const uniqueName = Date.now() + Math.random()
+          const ext = extname(file.originalname)
+          cb(null, `${uniqueName}${ext}`)
+        }
+      })
+    }))
+    async uploadFiles(@Param('passportId') passportId: string,
+    @UploadedFiles() files: Express.Multer.File[]
+    ){
+      if (!files || files.length == 0){
+        throw new BadRequestException('no files uploaded')
+      }
+      return await this.fileService.createMany(files, +passportId)
     }
-    return this.fileService.create(value);
-  }
+
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.fileService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.fileService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
+  async update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
     const {error, value} = updateFileSchema.validate(updateFileDto)
     if (error){
       throw new BadRequestException(`Data mistake: ${error.message}`)

@@ -7,3 +7,9 @@ export class HireEmployeeDto{
     passport: CreatePassportDto
     adress: CreateAdressDto
 }
+
+export class HireEmployeeRawDto{
+    employee: string
+    passport: string
+    adress: string
+}

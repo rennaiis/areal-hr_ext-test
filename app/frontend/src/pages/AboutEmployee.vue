@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { getOneAdress, updateAdress } from '../API/adresses';
 import { getOneEmployee, updateEmployee } from '../API/employees';
+import { createFiles, removeFile } from '../API/files';
 import { getOnePassport, updatePassport } from '../API/passports';
-import type { Adress, Employee, Passport } from '../interfaces';
+import type { Adress, Employee, fullPassport, Passport } from '../interfaces';
 import {onMounted, ref} from 'vue'
-
+    const picUrl = "http://localhost:3000/passportFiles/"
     const props = defineProps<{
         employeeId: string;
     }>()
     const id = +props.employeeId
 
     const currentEmployee = ref<Employee>()
-    const currentPasspost = ref<Passport>()
+    const currentPasspost = ref<fullPassport>()
     const currentAdress = ref<Adress>()
     const isEdited = ref<'info'|'adress'|'passport'|null>(null)
     
@@ -83,6 +84,30 @@ import {onMounted, ref} from 'vue'
             }
         }catch(err){
             console.error('cant edit employee')
+        }
+    }
+    async function deleteFile(id: number) {
+        try{
+            await removeFile(id)
+            refresh()
+        }catch(err){
+            console.error(err)
+        }
+    }
+    const selectedFiles = ref<File[]>([])
+    function choseFiles(event: Event){
+         const target  = event.target as HTMLInputElement
+         if (target.files){
+            selectedFiles.value = Array.from(target.files)
+         }
+    }
+    async function addFiles() {
+        try{
+            if (currentPasspost.value)
+                await createFiles(currentPasspost.value?.passport_id, selectedFiles.value)
+                refresh()
+        }catch(err){
+            console.error(err)
         }
     }
     async function refresh(){
@@ -178,6 +203,16 @@ import {onMounted, ref} from 'vue'
             <h3>Код подразделения:</h3>
             <p>{{ currentPasspost?.department_code }}</p>
         </div>
+        <h3>Сканы паспорта</h3>
+        <div class = "passport-imgs" v-for="file in currentPasspost?.files">
+            <a :href="picUrl + file.file_path"><img :src="picUrl + file.file_path" class="passport-img" alt="паспорт"></a>
+            <img src="../assets/delete.png" class="icon" @click="deleteFile(file.file_id)">
+        </div> 
+        <div class="button-row">
+            <input type="file" @change="choseFiles" multiple>
+            <button @click="addFiles">Добавить</button>
+        </div>
+        
         <button @click="isEdited = 'passport'">Редактировать</button>
     </div>
 

@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 import { UserRoles } from '../../../../enums/UserRoles';
 
 export const CreateUserSchema = Joi.object({
+  employee_id: Joi.number().integer().positive().required(),
   last_name: Joi.string().max(100).required(),
   first_name: Joi.string().max(100).required(),
   middle_name: Joi.string().max(100).allow(''),

@@ -101,6 +101,15 @@ export interface Passport{
     department_code: string;
 }
 
+export interface fullPassport{
+    passport_id: number;
+    series: string;
+    number: string;
+    issued_by: string;
+    issue_date: string;
+    department_code: string;
+    files: File[]
+}
 
 export interface Position {
     position_id: number;

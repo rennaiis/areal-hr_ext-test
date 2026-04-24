@@ -1,5 +1,16 @@
 const URL = "http://localhost:3000/api/files"
-import type { File } from "../interfaces"
+
+export async function createFiles(passport_id: number, files: File[]) {
+    const formData = new FormData()
+    files.forEach(f =>{
+        formData.append('files', f)
+    })
+    const res = await fetch(`${URL}/uploadFiles/${passport_id}`, {
+        method: 'POST',
+        body: formData
+    })
+    return res.json()
+}
 
 export async function getAllFiles() {
     const res =  await fetch(URL)
@@ -7,27 +18,11 @@ export async function getAllFiles() {
     return await res.json()
 }
 
+
+
 export async function getOneFile(id: number) {
     const res =  await fetch(`${URL}/${id}`)
     if (!res.ok) throw new Error(`can't find file ${id}`)
-    return res.json()
-}
-
-export async function createFile(file: Omit<File, "file_id">){
-    const res = await fetch(URL, {
-        method: 'POST', 
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(file)
-    })
-    return res.json()
-}
-
-export async function updateFile(file: Omit<File, "file_id">, id: number) {
-    const res = await fetch(`${URL}/${id}`, {
-        method: 'PATCH', 
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(file)
-    })
     return res.json()
 }
 
