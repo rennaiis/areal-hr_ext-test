@@ -7,6 +7,11 @@ import { CreateDepartmentScheme, UpdateDepartmentScheme } from './dto/department
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
+  @Get()
+  findAllDepartments() {
+    return this.departmentService.findAll();
+  }
+
   @Post()
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
     const {error, value} = CreateDepartmentScheme.validate(createDepartmentDto);

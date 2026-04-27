@@ -49,6 +49,10 @@ export class DepartmentService {
     return this.filterDeleted(filteredByOrganization)
   }
 
+  async findAll(){
+    return await this.departmentRepository.find()
+  }
+  
   async findAllFlat(organization_id: number){
     return await this.departmentRepository.find(
       {

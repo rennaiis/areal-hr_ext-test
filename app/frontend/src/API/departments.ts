@@ -2,6 +2,12 @@ import type { Department, DepartmentEdit } from "../interfaces"
 
 const URL = "http://localhost:3000/api/departments"
 
+export async function getAllDepartments() {
+     const res =  await fetch(URL);
+    if (!res.ok) throw new Error(`can't get departments`)
+    return res.json()
+}
+
 export async function getAllforOrganization(organization_id: number) {
     const res =  await fetch(`${URL}/org/${organization_id}`);
     if (!res.ok) throw new Error(`can't get departments`)
