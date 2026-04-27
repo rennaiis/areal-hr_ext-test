@@ -106,11 +106,7 @@
             employeesList.value = await getAllEmployees()
             operationsList.value = await getAllOperations()
             organizationsList.value = await getAllOrganizations()
-            
-            if (filterEmployees.chosenFilterOrganization != 'all'){
-                
-            }
-            
+                   
         }catch(err){
             console.error('cant load  page')
         }

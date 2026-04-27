@@ -3,7 +3,7 @@
     import { getAllEmployees } from '../API/employees';
     import { createUser, getAllUsers, removeUser, updateUser } from '../API/users';
     import { type editUser, type Employee, type User } from '../interfaces';
-    import {onMounted, ref} from 'vue'
+    import {onMounted, ref, watch} from 'vue'
     const usersList = ref<User[]>([])
     const employeesList = ref<Employee[]>([])
     const newUser = ref<Omit<User, 'user_id'>>({
@@ -21,6 +21,8 @@
         password_hash: '',
         role: undefined
     })
+
+    const filterUsers = ref<UserRoles.ADMIN | UserRoles.HR | "all">("all")
     
     function choseUserToEdit(user: User) {
         console.log(user);
@@ -76,6 +78,9 @@
         try{
             employeesList.value = await getAllEmployees()
             usersList.value = await getAllUsers()
+            if (filterUsers.value != 'all'){
+                usersList.value = usersList.value.filter(user => user.role == filterUsers.value)
+            }
         }catch(err){
             console.error("cant load users")
         }
@@ -83,6 +88,9 @@
     onMounted(
         refresh
     )
+    watch(filterUsers, ()=>{
+        refresh()
+    })
     
     
 
@@ -139,9 +147,13 @@
 
     <div class="table-grid table-users">
         <div class="table-header">ФИО</div>
-        <div class="table-header">Роль</div>
-        <div class="table-header">Пароль</div>
         <div class="table-header">Логин</div>
+        <div class="table-header">Пароль</div>
+        <select class="filter-header" v-model="filterUsers">
+            <option value="all">Все роли</option>
+            <option :value="UserRoles.HR">{{ UserRoles.HR }}</option>
+            <option :value="UserRoles.ADMIN">{{ UserRoles.ADMIN }}</option>
+        </select>
         <div class="table-header">Действия</div>
         
         <template v-for="user in usersList">
