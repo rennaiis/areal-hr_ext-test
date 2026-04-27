@@ -218,6 +218,17 @@ button:hover{
     padding: 10px;
 }
 
+.filter-header{
+    background-color: var(--header-back);
+    color: var(--letters-light);
+    border:  1px solid var(--letters-light);
+    padding: 10px;
+    border-radius: 0px;
+    box-sizing: border-box;
+    height: max-content;
+    
+}
+
 .table-item{
     padding: 10px;
     border-bottom: 1px solid rgba(110, 110, 110, 0.2);

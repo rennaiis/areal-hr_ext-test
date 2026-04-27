@@ -29,6 +29,13 @@ export interface Employee {
     last_operation?: fullHrOperation;
 }
 
+export interface FilterEmployees {
+    chosenFilterOrganization: number | 'all';
+    chosenFilterPosition: number | 'all';
+    chosenFilterDepartment: number | 'all';
+}
+
+
 export interface File{
     file_id: number;
     passport_id: number;

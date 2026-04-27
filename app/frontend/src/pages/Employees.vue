@@ -1,12 +1,13 @@
 <script setup lang="ts">
-    import {onMounted, ref, computed} from 'vue'
+    import {onMounted, ref, computed, reactive, watch} from 'vue'
     import Positions from './Positions.vue';
-    import { type Department, type Position, type Employee, type fullHrOperation, type HrOperation, type Organization} from '../interfaces';
+    import { type Department, type Position, type Employee, type fullHrOperation, type HrOperation, type Organization, type FilterEmployees} from '../interfaces';
     import { getAllEmployees } from '../API/employees';
     import { createOperation, getAllOperations } from '../API/hr-operations';
     import { getAllPositions } from '../API/positions';
-    import { getAllForOrgFlat } from '../API/departments';
+    import { getAllDepartments, getAllForOrgFlat } from '../API/departments';
     import { HrOperationType } from '../../../enums/HrOperationType';
+    import { getAllOrganizations } from '../API/organizations';
     const isPosOpen = ref<boolean>(false)
     function closePositions(){
         isPosOpen.value = false
@@ -17,7 +18,7 @@
     const employeesLastOperations = computed<Employee[]>(() => {
         let emps: Employee[] = employeesList.value
         let ops: fullHrOperation[] = operationsList.value
-        return emps.map(emp =>{
+        emps = emps.map(emp =>{
             const lastOp = [...ops].reverse().find(op=>
                 op.employee.employee_id == emp.employee_id
             )
@@ -25,7 +26,18 @@
                 ...emp, 
                 last_operation: lastOp
             }
-        }) 
+        })
+        let filtered = emps
+        if (filterEmployees.chosenFilterOrganization != 'all'){
+            filtered = emps.filter ( emp => emp.last_operation?.department.organization.organization_id == filterEmployees.chosenFilterOrganization)
+        }
+        if (filterEmployees.chosenFilterDepartment != 'all'){
+            filtered = filtered.filter(emp => emp.last_operation?.department.department_id == filterEmployees.chosenFilterDepartment)
+        }
+        if (filterEmployees.chosenFilterPosition != 'all'){
+            filtered = filtered.filter(emp => emp.last_operation?.position.position_id == filterEmployees.chosenFilterPosition)
+        }
+        return filtered
     })
     
     
@@ -69,8 +81,16 @@
         operation_type: HrOperationType.FIRE
     })
     const editedEmployeeOrganizationId = ref<number>(0)
+    const departmentsListFilter = ref<Department[]>([])
     const departmentsList = ref<Department[]>([])
     const positionsList = ref<Position[]>([])
+    const organizationsList = ref<Organization[]>([])
+    
+    const filterEmployees: FilterEmployees = reactive({
+        chosenFilterOrganization: 'all',
+        chosenFilterPosition: "all", 
+        chosenFilterDepartment: "all"
+    })
 
     async function refresh(){
         try{
@@ -78,8 +98,19 @@
             if(editedEmployeeOrganizationId.value){
                 departmentsList.value = await getAllForOrgFlat(editedEmployeeOrganizationId.value)
             }
+            if (filterEmployees.chosenFilterOrganization != "all"){
+                departmentsListFilter.value = await getAllForOrgFlat(filterEmployees.chosenFilterOrganization)
+            }else{
+                departmentsListFilter.value = await getAllDepartments()
+            }
             employeesList.value = await getAllEmployees()
             operationsList.value = await getAllOperations()
+            organizationsList.value = await getAllOrganizations()
+            
+            if (filterEmployees.chosenFilterOrganization != 'all'){
+                
+            }
+            
         }catch(err){
             console.error('cant load  page')
         }
@@ -87,6 +118,9 @@
     onMounted(
         refresh
     )
+    watch(filterEmployees, ()=>{
+        refresh()
+    })
 
 </script>
 
@@ -103,9 +137,27 @@
 
     <div class="table-grid table-employees">
         <div class="table-header">ФИО</div>
-        <div class="table-header">Организация</div>
-        <div class="table-header">Отдел</div>
-        <div class="table-header">Должность</div>
+        <select class="filter-header" v-model="filterEmployees.chosenFilterOrganization">
+            <option value="all">Все организации</option> 
+            <option v-for="org in organizationsList"
+            :key="org.organization_id"
+            :value="org.organization_id"
+            >{{ org.name }}</option>    
+        </select>
+        <select class="filter-header" v-model="filterEmployees.chosenFilterDepartment">
+            <option value="all">Все отделы</option>
+            <option v-for="dep in departmentsListFilter"
+            :key="dep.department_id"
+            :value="dep.department_id">{{ dep.name }}</option>
+        </select>
+
+        <select class="filter-header" v-model="filterEmployees.chosenFilterPosition">
+            <option value="all" selected>Все должности</option>
+            <option v-for="pos in positionsList"
+            :key="pos.position_id"
+            :value="pos.position_id">{{ pos.name }}</option>
+        </select>
+
         <div class="table-header">Зарплата</div>
         <div class="table-header">Действия</div>
         
