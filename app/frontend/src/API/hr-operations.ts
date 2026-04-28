@@ -8,11 +8,6 @@ export async function getAllOperations(){
     return await res.json()
 }
 
-export async function getOneOperation(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find operation ${id}`)
-    return res.json()
-}
 
 export async function createOperation(op: Omit<HrOperation, 'hr_operation_id'>){
     const res = await fetch(URL, {

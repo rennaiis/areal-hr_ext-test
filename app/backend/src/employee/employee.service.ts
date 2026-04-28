@@ -10,7 +10,6 @@ import { HireEmployeeDto } from './dto/hire-employee.dto';
 import { PassportService } from '../passport/passport.service';
 import { AdressService } from '../adress/adress.service';
 import { FileService } from '../file/file.service';
-import { UserService } from '../user/user.service';
 import * as fs from 'fs/promises'
 
 @Injectable()

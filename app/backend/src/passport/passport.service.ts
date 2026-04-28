@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePassportDto } from './dto/create-passport.dto';
 import { UpdatePassportDto } from './dto/update-passport.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,12 +22,6 @@ export class PassportService {
     return savedPassport
   }
 
-  async findAll() {
-    return await this.passportRepository.find({
-      relations: ['files']
-    })
-  }
-
   async findOne(id: number) {
     const passport = await this.passportRepository.findOne({
       where:{passport_id: id},
@@ -44,11 +38,5 @@ export class PassportService {
     )
     const updated = Object.assign(passport, updatePassportDto)
     return await this.passportRepository.save(updated);
-  }
-
-  async remove(id: number) {
-    const passport = await this.findOne(id)
-    this.historyService.logDeletes(id, ChangedTable.PASSPORT)
-    return await this.passportRepository.softRemove(passport);
   }
 }

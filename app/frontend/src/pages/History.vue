@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { getAllHistory } from '../API/history';
-import type { HistoryItem } from '../interfaces';
+    import type { HistoryItem } from '../interfaces';
     import {onMounted, ref} from 'vue'
     const historyList = ref<HistoryItem[]>([])
     async function refresh(){

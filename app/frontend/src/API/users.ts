@@ -7,12 +7,6 @@ export async function getAllUsers(){
     return await res.json()
 }
 
-export async function getOneUser(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find employee ${id}`)
-    return res.json()
-}
-
 export async function createUser(user: Omit<User, 'user_id'>){
     const res = await fetch(URL, {
         method: 'POST', 

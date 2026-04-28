@@ -1,12 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller,  Post, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { FileService } from './file.service';
-import { CreateFileDto } from './dto/create-file.dto';
-import { UpdateFileDto } from './dto/update-file.dto';
-import { createFileSchema, updateFileSchema } from './dto/file-scheme';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { HireEmployeeDto } from '../employee/dto/hire-employee.dto';
 
 @Controller('files')
 export class FileController {
@@ -32,27 +28,7 @@ export class FileController {
       }
       return await this.fileService.createMany(files, +passportId)
     }
-
-
-  @Get()
-  async findAll() {
-    return this.fileService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.fileService.findOne(+id);
-  }
-
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
-    const {error, value} = updateFileSchema.validate(updateFileDto)
-    if (error){
-      throw new BadRequestException(`Data mistake: ${error.message}`)
-    }
-    return this.fileService.update(+id, value);
-  }
-
+    
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.fileService.remove(+id);

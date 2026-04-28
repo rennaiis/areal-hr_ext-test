@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable} from '@nestjs/common';
 import { CreateHistoryItemDto } from './dto/create-history_item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HistoryItem } from './entities/history_item.entity';
@@ -18,14 +18,6 @@ export class HistoryItemsService {
 
   async findAll() {
     return await this.historyRepository.find();
-  }
-
-  async findOne(id: number) {
-    const hist = await this.historyRepository.findOne({
-      where:{history_item_id: id}
-    })
-    if (!hist) throw new NotFoundException(`Item ${id} not found`)
-    return hist
   }
 
   async logUpdates(

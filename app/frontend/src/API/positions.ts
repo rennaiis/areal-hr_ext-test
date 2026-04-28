@@ -8,11 +8,6 @@ export async function getAllPositions(){
     return await res.json()
 }
 
-export async function getOnePosition(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find position ${id}`)
-    return res.json()
-}
 
 export async function createPosition(pos: Omit<Position, 'position_id'>){
     const res = await fetch(URL, {

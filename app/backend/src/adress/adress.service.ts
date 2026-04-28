@@ -30,10 +30,6 @@ export class AdressService {
 
   }
 
-  async findAll() {
-    return await this.adressRepository.find()
-  }
-
   async findOne(id: number) {
     const adress = await this.adressRepository.findOne({
       where: {employee: {employee_id: id}},
@@ -50,11 +46,5 @@ export class AdressService {
     )
     const updated = Object.assign(adress, updateAdressDto)
     return this.adressRepository.save(updated);
-  }
-
-  async remove(id: number) {
-    const adress = await this.findOne(id);
-    this.historyService.logDeletes(id, ChangedTable.ADRESS)
-    return this.adressRepository.softRemove(adress)
   }
 }

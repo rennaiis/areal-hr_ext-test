@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import {onMounted, ref} from 'vue'
     import type { fullHrOperation} from '../interfaces';
-import { getAllOperations } from '../API/hr-operations';
+    import { getAllOperations } from '../API/hr-operations';
     const operationsList = ref<fullHrOperation[]>([])
     async function refresh(){
         try{

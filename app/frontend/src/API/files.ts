@@ -12,20 +12,6 @@ export async function createFiles(passport_id: number, files: File[]) {
     return res.json()
 }
 
-export async function getAllFiles() {
-    const res =  await fetch(URL)
-    if (!res.ok) throw new Error("can't get files")
-    return await res.json()
-}
-
-
-
-export async function getOneFile(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find file ${id}`)
-    return res.json()
-}
-
 export async function removeFile(id: number) {
     const res=await fetch(`${URL}/${id}`, {
         method: 'DELETE'

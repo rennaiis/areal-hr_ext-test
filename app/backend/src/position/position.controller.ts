@@ -21,11 +21,6 @@ export class PositionController {
     return this.positionService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.positionService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePositionDto: UpdatePositionDto) {
     const {error, value} = UpdatePositionScheme.validate(updatePositionDto);

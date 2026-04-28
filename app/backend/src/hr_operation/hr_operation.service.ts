@@ -1,12 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateHrOperationDto } from './dto/create-hr_operation.dto';
-import { UpdateHrOperationDto } from './dto/update-hr_operation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HrOperation } from './entities/hr_operation.entity';
 import { Repository } from 'typeorm';
-import { Employee } from '../employee/entities/employee.entity';
-import { Department } from '../department/entities/department.entity';
-import { Position } from '../position/entities/position.entity';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
 import { EmployeeService } from '../employee/employee.service';
@@ -59,53 +55,5 @@ export class HrOperationService {
     this.HrOperationRepository.find({
       relations: ['department', 'position', 'employee', 'department.organization']
     })
-  }
-
-  async findOne(id: number) {
-    
-    const hr_operation = await this.HrOperationRepository.findOne({
-      where: {operation_id: id},
-      relations: ['department', 'position', 'employee']
-    })
-    if (!hr_operation) throw new NotFoundException(`hr_operation ${id} not found`)
-    return hr_operation
-  }
-
-  async update(id: number, updateHrOperationDto: UpdateHrOperationDto) {
-    const hr_operation = await this.findOne(id)
-    if (updateHrOperationDto.department_id){
-      const department = await this.departmentService.findOne(updateHrOperationDto.department_id)
-      if (!department){
-        throw new NotFoundException(`department ${updateHrOperationDto.department_id} not found`)
-      }
-      hr_operation.department = department
-    }
-    
-    if (updateHrOperationDto.position_id){
-      const position = await this.positionService.findOne(updateHrOperationDto.position_id)
-      if (!position){
-        throw new NotFoundException(`position ${updateHrOperationDto.position_id} not found`)
-      }
-      hr_operation.position = position
-    }
-
-    if (updateHrOperationDto.employee_id){
-      const employee = await this.employeeService.findOne(updateHrOperationDto.employee_id)
-      if (!employee){
-        throw new NotFoundException(`employee ${updateHrOperationDto.employee_id} not found`)
-      }
-      hr_operation.employee = employee
-    }
-    await this.historyService.logUpdates(
-      id, ChangedTable.OPERATION, hr_operation, updateHrOperationDto
-    )
-    const updated = Object.assign(hr_operation, updateHrOperationDto)
-    return await this.HrOperationRepository.save(updated)
-  }
-
-  async remove(id: number) {
-    const hr_operation = await this.findOne(id);
-    await this.historyService.logDeletes(id, ChangedTable.OPERATION)
-    return await this.HrOperationRepository.softRemove(hr_operation);
   }
 }

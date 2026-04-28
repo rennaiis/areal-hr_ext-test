@@ -8,22 +8,6 @@ import { CreateAdressScheme, updateAdressScheme } from './dto/adress-scheme';
 export class AdressController {
   constructor(private readonly adressService: AdressService) {}
 
- /* @Post(":id")
-  create(
-    @Param("id") employee_id: string, 
-    @Body() createAdressDto: CreateAdressDto) {
-    const {error, value} = CreateAdressScheme.validate(createAdressDto)
-    if (error){
-      throw new BadRequestException(`Data mistake: ${error.message}`)
-    }
-     return this.adressService.create(+employee_id, value);
-  }*/
-
-  @Get()
-  findAll() {
-    return this.adressService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adressService.findOne(+id);
@@ -36,10 +20,5 @@ export class AdressController {
       throw new BadRequestException(`Data mistake: ${error.message}`)
     }
     return this.adressService.update(+id, updateAdressDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.adressService.remove(+id);
   }
 }

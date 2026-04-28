@@ -1,12 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
+
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { CreateEmployeeSchema, UpdateEmployeeSchema } from './dto/employee-scheme';
+import { UpdateEmployeeSchema } from './dto/employee-scheme';
 import { HireEmployeeDto, HireEmployeeRawDto } from './dto/hire-employee.dto';
 import { HireEmployeeScheme } from './dto/hire-employee-scheme';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { Employee } from './entities/employee.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -39,15 +38,6 @@ export class EmployeeController {
     }
     return await this.employeeService.createFullEmployee(value, files)
   }
-
-  /*@Post()
-  create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    const {error, value} = CreateEmployeeSchema.validate(createEmployeeDto);
-    if (error){
-      throw new BadRequestException(`Data mistake: ${error.message}`)
-    }
-    return this.employeeService.create(value);
-  }*/
 
   @Get()
   findAll() {

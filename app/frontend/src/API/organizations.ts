@@ -8,11 +8,6 @@ export async function getAllOrganizations(){
     return await res.json()
 }
 
-export async function getOneOrganization(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
-    if (!res.ok) throw new Error(`can't find organizations ${id}`)
-    return res.json()
-}
 
 export async function createOrganization(org: Omit<Organization, 'organization_id'>){
     const res = await fetch(URL, {
@@ -37,5 +32,4 @@ export async function removeOrganization(id: number) {
         method: 'DELETE'
     })   
     if (!res.ok) throw new Error(`can't delete organization ${id}`)
-
 }

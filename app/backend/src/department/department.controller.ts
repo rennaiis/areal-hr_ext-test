@@ -25,15 +25,9 @@ export class DepartmentController {
     return this.departmentService.findAllFlat(+organization_id)
   }
   
-
   @Get('org/:organization_id')
   findAll(@Param('organization_id') organization_id: string) {
     return this.departmentService.findAllByOrganization(+organization_id);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.departmentService.findOne(+id);
   }
 
   @Patch(':id')

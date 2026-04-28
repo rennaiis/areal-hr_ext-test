@@ -21,11 +21,6 @@ export class OrganizationController {
     return this.organizationService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.organizationService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrganizationDto: UpdateOrganizationDto) {
     const {error, value} = UpdateOrganisationScheme.validate(updateOrganizationDto);
