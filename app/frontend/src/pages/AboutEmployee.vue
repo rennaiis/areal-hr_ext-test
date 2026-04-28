@@ -117,6 +117,28 @@ import {onMounted, ref} from 'vue'
             if (currentEmployee.value){
                 currentPasspost.value = await getOnePassport(currentEmployee.value.passport_id)
             }
+            editedEmployee.value = {
+                last_name: currentEmployee.value ? currentEmployee.value.last_name : '', 
+                first_name: currentEmployee.value ? currentEmployee.value.first_name : '', 
+                middle_name:currentEmployee.value ? currentEmployee.value.middle_name : '', 
+                birth_date: currentEmployee.value ? currentEmployee.value.birth_date : '',
+            }
+            editedAdress.value = {
+                region: currentAdress.value ? currentAdress.value.region : '',
+                settlement: currentAdress.value ? currentAdress.value.settlement : '',
+                street: currentAdress.value ? currentAdress.value.street : '',
+                house: currentAdress.value ? currentAdress.value.house : '',
+                apartment: currentAdress.value  ? currentAdress.value.apartment : '',
+                building: currentAdress.value ? currentAdress.value.building : ''
+            }
+            editedPassport.value = {
+                series: currentPasspost.value ? currentPasspost.value.series : '',
+                number: currentPasspost.value ? currentPasspost.value.number : '',
+                issued_by: currentPasspost.value ? currentPasspost.value.issued_by : '',
+                issue_date: currentPasspost.value ? currentPasspost.value.issue_date : '',
+                department_code: currentPasspost.value ? currentPasspost.value.department_code : ''
+            }
+
         }catch(err){
             console.error("cant load page")
         }
