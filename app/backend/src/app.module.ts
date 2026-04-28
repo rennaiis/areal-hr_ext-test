@@ -16,6 +16,7 @@ import { FileModule } from './file/file.module';
 import { HrOperationModule } from './hr_operation/hr_operation.module';
 import { HistoryItemsModule } from './history_items/history_items.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -46,7 +47,8 @@ import { UserModule } from './user/user.module';
   FileModule,
   HrOperationModule,
   HistoryItemsModule,
-  UserModule
+  UserModule,
+  AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

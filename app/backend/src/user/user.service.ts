@@ -35,7 +35,7 @@ export class UserService {
     if (!user) throw new NotFoundException()
     return user
   }
-
+  
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
     const updated = Object.assign(user, updateUserDto)
