@@ -36,6 +36,14 @@ export class UserService {
     return user
   }
   
+  async findByLogin(login: string){
+    const user = await this.userRepository.findOne({
+      where: {login: login},
+      relations: ['employee']
+    })
+    return user
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
     const updated = Object.assign(user, updateUserDto)
