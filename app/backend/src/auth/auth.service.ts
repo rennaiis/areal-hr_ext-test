@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
         return argon2.verify(hash, password)
     }
     
-    async validateUser(login: string, password: string){
+    async validateUser(login: string, password: string): Promise<User|null> {
         const user = await this.userService.findByLogin(login)
         if (!user){
             return null

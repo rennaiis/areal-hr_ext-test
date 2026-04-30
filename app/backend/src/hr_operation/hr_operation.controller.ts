@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, BadRequestException, UseGuards } from '@nestjs/common';
 import { HrOperationService } from './hr_operation.service';
 import { CreateHrOperationDto } from './dto/create-hr_operation.dto';
 import { createHrOperationSchema } from './dto/hr_operation-scheme';
-
+import { AuthGuard } from '@nestjs/passport';
+@UseGuards(AuthGuard('session'))
 @Controller('hr-operations')
 export class HrOperationController {
   constructor(private readonly hrOperationService: HrOperationService) {}

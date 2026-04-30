@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseGuards} from '@nestjs/common';
 import { PositionService } from './position.service';
 import { CreatePositionDto } from './dto/create-position.dto';
 import { UpdatePositionDto } from './dto/update-position.dto';
 import { CreatePositionScheme, UpdatePositionScheme } from './dto/position-scheme';
+import { AuthGuard } from '@nestjs/passport';
+
+@UseGuards(AuthGuard('session'))
 @Controller('positions')
 export class PositionController {
   constructor(private readonly positionService: PositionService) {}

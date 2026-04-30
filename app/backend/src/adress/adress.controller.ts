@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadGatewayException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadGatewayException, BadRequestException, UseGuards } from '@nestjs/common';
 import { AdressService } from './adress.service';
-import { CreateAdressDto } from './dto/create-adress.dto';
 import { UpdateAdressDto } from './dto/update-adress.dto';
-import { CreateAdressScheme, updateAdressScheme } from './dto/adress-scheme';
-
+import { updateAdressScheme } from './dto/adress-scheme';
+import { AuthGuard } from '@nestjs/passport';
+@UseGuards(AuthGuard('session'))
 @Controller('adresses')
 export class AdressController {
   constructor(private readonly adressService: AdressService) {}
