@@ -20,6 +20,7 @@ export async function createOrganization(org: Omit<Organization, 'organization_i
 
 export async function updateOrganization(org: Omit<Organization, 'organization_id'>, id: number) {
     const res = await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(org)
@@ -29,6 +30,7 @@ export async function updateOrganization(org: Omit<Organization, 'organization_i
 
 export async function removeOrganization(id: number) {
     const res=await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'DELETE'
     })   
     if (!res.ok) throw new Error(`can't delete organization ${id}`)

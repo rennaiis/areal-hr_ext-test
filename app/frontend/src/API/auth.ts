@@ -1,5 +1,3 @@
-import type { User } from "../interfaces"
-
 const URL = "http://localhost:3000/api/auth"
 export async function login(login: string, password: string){
     await fetch(`${URL}/login`, {
@@ -26,12 +24,17 @@ export async function logout() {
 }
 
 export async function getMe() {
-    const res = await fetch(`${URL}/me`, {
+    try{
+        const res = await fetch(`${URL}/me`, {
         credentials: 'include', 
-    })
-    if (!res.ok) {
+        })
+        if (!res.ok) {
+            return null
+        }
+        const user = await res.json()
+        return user
+    }catch{
         return null
     }
-    const user = await res.json()
-    return user
+    
 }

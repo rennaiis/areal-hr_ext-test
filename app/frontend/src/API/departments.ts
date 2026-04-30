@@ -3,19 +3,25 @@ import type { Department, DepartmentEdit } from "../interfaces"
 const URL = "http://localhost:3000/api/departments"
 
 export async function getAllDepartments() {
-     const res =  await fetch(URL);
+     const res =  await fetch(URL, {
+        credentials: 'include',
+     });
     if (!res.ok) throw new Error(`can't get departments`)
     return res.json()
 }
 
 export async function getAllforOrganization(organization_id: number) {
-    const res =  await fetch(`${URL}/org/${organization_id}`);
+    const res =  await fetch(`${URL}/org/${organization_id}`, {
+        credentials: 'include',
+    });
     if (!res.ok) throw new Error(`can't get departments`)
     return res.json()
 }
 
 export async function getAllForOrgFlat(organization_id: number) {
-    const res = await fetch(`${URL}/org/flat/${organization_id}`)
+    const res = await fetch(`${URL}/org/flat/${organization_id}`, {
+        credentials: 'include',
+    })
     if (!res.ok) throw new Error(`can't get departments`)
     return res.json()
 

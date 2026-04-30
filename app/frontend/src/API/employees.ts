@@ -17,18 +17,22 @@ export async function hireEmployee(emp: HireEmployee, files: File[]) {
     })
     const res = await fetch(`${URL}/hire`, {
         method: 'POST',
-        body: formData
+        body: formData, 
+        credentials: 'include'
     })
     return res.json()
 }
 export async function getOneEmployee(id: number) {
-    const res =  await fetch(`${URL}/${id}`)
+    const res =  await fetch(`${URL}/${id}`, {
+        credentials: 'include',
+    })
     if (!res.ok) throw new Error(`can't find employee ${id}`)
     return res.json()
 }
 
 export async function updateEmployee(emp: Omit<Employee, 'employee_id'>, id: number) {
     const res = await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(emp)
@@ -38,6 +42,7 @@ export async function updateEmployee(emp: Omit<Employee, 'employee_id'>, id: num
 
 export async function removeEmployee(id: number) {
     const res=await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'DELETE'
     })   
     if (!res.ok) throw new Error(`can't delete employee ${id}`)
