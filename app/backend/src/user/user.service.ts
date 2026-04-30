@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { HistoryItemsService } from '../history_items/history_items.service';
 import { ChangedTable } from '../../../enums/ChangedTableType';
+import { hash } from '../hashVerifyFuncs';
 
 @Injectable()
 export class UserService {
@@ -15,9 +16,13 @@ export class UserService {
     private readonly historyService: HistoryItemsService,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto)
-    const savedUser = this.userRepository.save(user)
-    await this.historyService.logCreates((await savedUser).user_id, ChangedTable.ORGANIZATION)
+    const hashedPass = await hash(createUserDto.password_hash)
+    const user = this.userRepository.create({
+      ...createUserDto, 
+      password_hash: hashedPass
+    })
+    const savedUser = await this.userRepository.save(user)
+    await this.historyService.logCreates(savedUser.user_id, ChangedTable.ORGANIZATION)
     return savedUser  
   }
 

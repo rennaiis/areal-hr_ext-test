@@ -10,21 +10,6 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { AuthGuard } from '@nestjs/passport';
 import type { RequestWithUser } from '../types';
-import { UserRoles } from '../../../enums/UserRoles';
-
-function isUserHr(req: RequestWithUser){
-  if( req.user.role !== UserRoles.HR){
-    console.log('user is not Admin')
-    throw new ForbiddenException()
-  }
-}
-function hasReqUser(req: RequestWithUser){
-  if (!req.user || !req.user.role){
-    console.log("no req.user");
-    throw new UnauthorizedException()
-  }
-}
-
 
 @UseGuards(AuthGuard('session'))
 @Controller('employees')
@@ -46,8 +31,6 @@ export class EmployeeController {
   @UploadedFiles() files: Express.Multer.File[],
   @Req() req: RequestWithUser
   ){
-    hasReqUser(req)
-    isUserHr(req)
     const hireEmployeeDto: HireEmployeeDto = {
       employee: JSON.parse(payload.employee),
       adress: JSON.parse(payload.adress),
@@ -71,9 +54,7 @@ export class EmployeeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto, @Req() req: RequestWithUser) {
-    hasReqUser(req)
-    isUserHr(req)
+  update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
     const {error, value} = UpdateEmployeeSchema.validate(updateEmployeeDto);
     if (error){
       throw new BadRequestException(`Data mistake: ${error.message}`)
@@ -83,8 +64,6 @@ export class EmployeeController {
 
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req: RequestWithUser) {
-    hasReqUser(req)
-    isUserHr(req)
     return this.employeeService.remove(+id);
   }
 }
