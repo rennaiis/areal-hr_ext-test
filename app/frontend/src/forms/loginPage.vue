@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import { ref } from 'vue'
-    import { login } from '../API/auth';
+    import { getMe, login } from '../API/auth';
 import router from '../router';
+import { currentUser } from '../currentUser';
     const currentLogin = ref<string>('')
     const currentPassword = ref<string>('')
 
@@ -9,6 +10,7 @@ import router from '../router';
         try{
             await login(currentLogin.value, currentPassword.value)
             router.push('/')
+            currentUser.value = await getMe()
         }catch(e){
             console.log(e);
         }
@@ -19,7 +21,7 @@ import router from '../router';
         <form class="block" @submit.prevent="loginToSystem">
             <p>
                 <label for="depName">Логин</label>
-                <input id="depName" type="text" maxlength="150" required v-model="currentPassword">
+                <input id="depName" type="text" maxlength="150" required v-model="currentLogin">
             </p>
             <p>
                 <label for="depComment">Пароль</label>

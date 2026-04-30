@@ -8,10 +8,12 @@ export class SessionSerializer extends PassportSerializer{
         super()
     }
     serializeUser(user: any, done: Function) {
+        console.log('SERIALIZE', user)
         done(null, user.user_id)
     }
     async deserializeUser(user_id: number, done: Function) {
-    const user = await this.userService.findOne(user_id)
-    done(null, user)
+        console.log('DESERIALIZE')
+        const user = await this.userService.findOne(user_id)
+        done(null, user)
   }
 }

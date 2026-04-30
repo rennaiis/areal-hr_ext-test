@@ -21,8 +21,9 @@ import router from './router';
     <Header></Header>
     <main>
         <RouterView></RouterView>
+        <button @click="logoutFromSystem">Выйти</button>
     </main>
-    <button @click="logoutFromSystem">Выйти</button>
+    
 
 
 </template>

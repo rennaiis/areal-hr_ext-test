@@ -128,7 +128,7 @@ import { UserRoles } from '../../../enums/UserRoles';
         :close="closePositions"/>
     </div>
     <div class="button-row">
-        <router-link to="/hireEmployee" v-if="currentUser?.role == UserRoles.HR"><button>Нанять сотрудника</button></router-link>
+        <router-link to="/hireEmployee"><button>Нанять сотрудника</button></router-link>
         <button @click.prevent="isPosOpen = true">Должности</button>
     </div>
     

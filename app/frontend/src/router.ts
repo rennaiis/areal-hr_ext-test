@@ -27,26 +27,14 @@ const router = createRouter({
     history: createWebHistory(),
     routes: routes,
 })
-let checked = false
-router.beforeEach(async(to)=>{
-    if (!checked) {
-    currentUser.value = await getMe().catch(() => null)
-    checked = true
-    }
+router.beforeEach(async (to) => {
+    const user = await getMe().catch(() => null)
+    currentUser.value = user
 
-    if (currentUser.value === null){
-        currentUser.value = await getMe()
-    }
-    const isAuth = Boolean(currentUser.value)
-    if (!isAuth && to.path !== '/login') {
-        return '/login'
-    }
-    if (isAuth && to.path === '/login') {
-        return '/'
-    }
-    if (to.path === '/users' && currentUser.value?.role !== UserRoles.ADMIN){
-        return '/'
-    }
+    const isAuth = !!user
+
+    if (!isAuth && to.path !== '/login') return '/login'
+    if (isAuth && to.path === '/login') return '/'
 })
 export default router
     
