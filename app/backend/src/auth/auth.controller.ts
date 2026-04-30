@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Request } from '@nestjs/common'
+import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common'
 import { LocalGuard } from './local-auth.guard'
 
 @Controller('auth')
@@ -13,5 +13,10 @@ export class AuthController {
   logout(@Request() req) {
     req.logout(() => {})
     return { message: 'ok' }
+  }
+
+  @Get('me')
+  getMe(@Request() req) {
+    return req.user
   }
 }
