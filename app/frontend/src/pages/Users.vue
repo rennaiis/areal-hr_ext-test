@@ -123,7 +123,7 @@
         </div>
         <div class="form-item">
             <label for="middlename">Отчество</label>
-            <input class="window-input" id="middlename" type="text" v-model="newUser.middle_name" maxlength="100" required>
+            <input class="window-input" id="middlename" type="text" v-model="newUser.middle_name" maxlength="100">
         </div>
          <div class="form-item">
             <label for="login">Логин</label>
