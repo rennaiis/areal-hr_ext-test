@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { currentUser } from './currentUser';
+import { UserRoles } from '../../enums/UserRoles';
 
     const route = useRoute()
     const pageTitle = computed(()=>{
@@ -17,7 +19,8 @@ import { useRoute } from 'vue-router';
             <router-link to="/organizations" class="nav-item">Организации и отделы</router-link>
             <router-link to="/hr-operations" class="nav-item">Кадровые операции</router-link>
             <router-link to="/history" class="nav-item">История операций</router-link>
-            <router-link to="/users" class="nav-item">Пользователи</router-link>
+            
+            <router-link to="/users" class="nav-item" v-if="currentUser?.role == UserRoles.ADMIN">Пользователи</router-link>
         </nav>
     </div>
 </template>

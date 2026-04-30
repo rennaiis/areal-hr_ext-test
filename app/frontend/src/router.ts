@@ -6,6 +6,10 @@ import AboutEmployee from './pages/AboutEmployee.vue';
 import NewEmployee from './pages/NewEmployee.vue';
 import HrOperations from './pages/HrOperations.vue';
 import Users from './pages/Users.vue';
+import LoginPage from './forms/loginPage.vue';
+import { currentUser } from './currentUser';
+import { getMe } from './API/auth';
+import { UserRoles } from '../../enums/UserRoles';
 const routes = [
     {path: '/', component: Employees, meta: {title: "Сотрудники"}},
     {path: '/history', component: History, meta: {title: "История"}},
@@ -13,13 +17,36 @@ const routes = [
     {path: '/employee/:employeeId', props:true, component: AboutEmployee, meta: {title: "Информация о сотруднике"}},
     {path: '/hireEmployee', component: NewEmployee, meta:{title: "Найм нового сотрудника"}},
     {path: '/hr-operations', component: HrOperations, meta:{title:"Кадровые операции"}}, 
-    {path: '/users', component: Users, meta:{title:"Пользователи"}}
+    {path: '/users', component: Users, meta:{title:"Пользователи"}}, 
+    {path: '/login', component: LoginPage}
 ]
+
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes: routes,
 })
+let checked = false
+router.beforeEach(async(to)=>{
+    if (!checked) {
+    currentUser.value = await getMe().catch(() => null)
+    checked = true
+    }
 
+    if (currentUser.value === null){
+        currentUser.value = await getMe()
+    }
+    const isAuth = Boolean(currentUser.value)
+    if (!isAuth && to.path !== '/login') {
+        return '/login'
+    }
+    if (isAuth && to.path === '/login') {
+        return '/'
+    }
+    if (to.path === '/users' && currentUser.value?.role !== UserRoles.ADMIN){
+        return '/'
+    }
+})
 export default router
     
