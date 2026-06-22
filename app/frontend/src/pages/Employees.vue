@@ -8,8 +8,7 @@
     import { getAllDepartments, getAllForOrgFlat } from '../API/departments';
     import { HrOperationType } from '../../../enums/HrOperationType';
     import { getAllOrganizations } from '../API/organizations';
-import { currentUser } from '../currentUser';
-import { UserRoles } from '../../../enums/UserRoles';
+
     const isPosOpen = ref<boolean>(false)
     function closePositions(){
         isPosOpen.value = false
@@ -41,8 +40,7 @@ import { UserRoles } from '../../../enums/UserRoles';
         }
         return filtered
     })
-    
-    
+        
     function chooseEditedEmployee(emp: Employee, type: HrOperationType){
         refresh()
         editOperation.value.employee_id = emp.employee_id

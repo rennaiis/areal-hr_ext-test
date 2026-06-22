@@ -159,7 +159,7 @@
             <template v-if="editedUserId !== user.user_id">
                 <div class="table-item">{{ user.first_name }} {{ user.last_name }} {{ user.middle_name }}</div>
                 <div class="table-item">{{user.login}}</div>
-                <div class="table-item">{{user.password_hash}}</div>
+                <div class="table-item">***</div>
                 <div class="table-item">{{ user.role }}</div>
                 <div class="table-item button-row">
                     <button @click.prevent="choseUserToEdit(user)">Изменить</button>

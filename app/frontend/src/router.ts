@@ -9,7 +9,6 @@ import Users from './pages/Users.vue';
 import LoginPage from './forms/loginPage.vue';
 import { currentUser } from './currentUser';
 import { getMe } from './API/auth';
-import { UserRoles } from '../../enums/UserRoles';
 const routes = [
     {path: '/', component: Employees, meta: {title: "Сотрудники"}},
     {path: '/history', component: History, meta: {title: "История"}},
