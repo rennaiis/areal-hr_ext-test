@@ -4,7 +4,8 @@ import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { CreateDepartmentScheme, UpdateDepartmentScheme } from './dto/department-scheme';
 import { AuthGuard } from '@nestjs/passport';
-@UseGuards(AuthGuard('session'))
+import { SessionGuard } from '../auth/session.guard';
+@UseGuards(SessionGuard)
 @Controller('departments')
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}

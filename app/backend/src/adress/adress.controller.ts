@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, BadGatewayException,
 import { AdressService } from './adress.service';
 import { UpdateAdressDto } from './dto/update-adress.dto';
 import { updateAdressScheme } from './dto/adress-scheme';
-import { AuthGuard } from '@nestjs/passport';
-@UseGuards(AuthGuard('session'))
+import { SessionGuard } from '../auth/session.guard';
+@UseGuards(SessionGuard)
 @Controller('adresses')
 export class AdressController {
   constructor(private readonly adressService: AdressService) {}

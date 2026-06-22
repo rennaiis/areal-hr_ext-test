@@ -2,7 +2,9 @@ import type { Employee, HireEmployee } from "../interfaces"
 
 const URL = "http://localhost:3000/api/employees"
 export async function getAllEmployees(){
-    const res =  await fetch(URL)
+    const res =  await fetch(URL, {
+        credentials: 'include'
+    })
     if (!res.ok) throw new Error("can't get employees")
     return await res.json()
 }

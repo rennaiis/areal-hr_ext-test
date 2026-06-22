@@ -3,7 +3,9 @@ import type { Organization } from "../interfaces"
 const URL = "http://localhost:3000/api/organizations"
 
 export async function getAllOrganizations(){
-    const res =  await fetch(URL)
+    const res =  await fetch(URL, {
+        credentials: 'include',
+    })
     if (!res.ok) throw new Error("can't get organizations")
     return await res.json()
 }
@@ -11,6 +13,7 @@ export async function getAllOrganizations(){
 
 export async function createOrganization(org: Omit<Organization, 'organization_id'>){
     const res = await fetch(URL, {
+        credentials: 'include',
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(org)

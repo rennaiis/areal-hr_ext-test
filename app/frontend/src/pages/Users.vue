@@ -25,7 +25,6 @@
     const filterUsers = ref<UserRoles.ADMIN | UserRoles.HR | "all">("all")
     
     function choseUserToEdit(user: User) {
-        console.log(user);
         editedUserId.value = user.user_id
         editedUser.value.login = user.login
         editedUser.value.password_hash = user.password_hash
@@ -63,7 +62,6 @@
 
     async function editUser() {
         try{
-            console.log(editedUser.value);
             if(editedUserId.value){
                 await updateUser(editedUser.value, editedUserId.value)
                 editedUserId.value = undefined

@@ -44,7 +44,6 @@ export class DepartmentService {
     const trees =await this.departmentRepository.findTrees({
       relations: ['organization']
     })
-    console.log(trees);
     const filteredByOrganization = trees.filter(n => n.organization.organization_id === organization_id)
     return this.filterDeleted(filteredByOrganization)
   }

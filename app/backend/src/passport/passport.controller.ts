@@ -2,8 +2,8 @@ import { Controller, Get,  Body, Patch, Param,  BadRequestException, UseGuards }
 import { PassportService } from './passport.service';
 import { UpdatePassportDto } from './dto/update-passport.dto';
 import { UpdatePassportScheme } from '../passport/dto/passport-scheme';
-import { AuthGuard } from '@nestjs/passport';
-@UseGuards(AuthGuard('session'))
+import { SessionGuard } from '../auth/session.guard';
+@UseGuards(SessionGuard)
 @Controller('passports')
 export class PassportController {
   constructor(private readonly passportService: PassportService) {}

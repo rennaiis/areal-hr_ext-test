@@ -122,7 +122,6 @@
                 const tree = await getAllforOrganization(org.organization_id)
                 departmentsList.value[org.organization_id] = tree
             }
-            console.log(departmentsList.value);
         }catch(err){
             console.error('cant load  page')
         }   

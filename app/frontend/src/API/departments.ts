@@ -29,6 +29,7 @@ export async function getAllForOrgFlat(organization_id: number) {
 
 export async function createDepartment(dep: Omit<Department, 'department_id'>){
     const res = await fetch(URL, {
+        credentials: 'include',
         method: 'POST', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(dep)
@@ -38,6 +39,7 @@ export async function createDepartment(dep: Omit<Department, 'department_id'>){
 
 export async function updateDepartment( dep: DepartmentEdit, id: number) {
     const res = await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'PATCH', 
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(dep)
@@ -47,6 +49,7 @@ export async function updateDepartment( dep: DepartmentEdit, id: number) {
 
 export async function removeDepartment(id: number) {
     const res=await fetch(`${URL}/${id}`, {
+        credentials: 'include',
         method: 'DELETE'
     })   
     if (!res.ok) throw new Error(`can't delete department ${id}`)

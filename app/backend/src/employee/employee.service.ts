@@ -33,6 +33,7 @@ export class EmployeeService {
     await this.historyService.logCreates(await savedEmployee.employee_id, ChangedTable.EMPLOYEE)
     return savedEmployee
   }
+  
   async createFullEmployee(hireEmployeeDto: HireEmployeeDto, files: Express.Multer.File[]){
     
     const queryRunner = this.dataSource.createQueryRunner()

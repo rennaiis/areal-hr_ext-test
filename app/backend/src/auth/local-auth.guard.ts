@@ -1,6 +1,5 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport'
-import { bool, boolean } from 'joi';
 
 @Injectable()
 export class LocalGuard extends AuthGuard('local'){

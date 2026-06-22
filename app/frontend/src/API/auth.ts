@@ -1,16 +1,20 @@
 const URL = "http://localhost:3000/api/auth"
 export async function login(login: string, password: string){
-    await fetch(`${URL}/login`, {
-        method: 'POST', 
-        credentials: 'include', 
+    const res = await fetch(`${URL}/login`, {
+        method: 'POST',
+        credentials: 'include',
         headers:{
             'Content-Type': 'application/json'
-        }, 
+        },
         body: JSON.stringify({
-            login: login, 
-            password:password
+            login,
+            password
         })
     })
+    if (!res.ok){
+        throw new Error(await res.text())
+    }
+    return await res.json()
 }
 
 export async function logout() {

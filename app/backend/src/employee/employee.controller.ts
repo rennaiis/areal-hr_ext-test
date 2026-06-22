@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles, UseGuards, Req, ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFiles, UseGuards, Req } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -8,10 +8,10 @@ import { HireEmployeeScheme } from './dto/hire-employee-scheme';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { AuthGuard } from '@nestjs/passport';
 import type { RequestWithUser } from '../types';
+import { SessionGuard } from '../auth/session.guard';
 
-@UseGuards(AuthGuard('session'))
+@UseGuards(SessionGuard)
 @Controller('employees')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
