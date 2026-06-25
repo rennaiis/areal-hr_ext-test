@@ -15,10 +15,10 @@
 ### Скриншоты
 Вход в приложение
 <img width="1908" height="858" alt="Screenshot 2026-06-24 133127" src="https://github.com/user-attachments/assets/70e1c124-d0d1-4814-b061-cc5086451c76" />
-Редактирование списка должностей
+Редактирование списка профессий
 <img width="1895" height="848" alt="Screenshot 2026-06-24 131316" src="https://github.com/user-attachments/assets/79807718-efd0-4797-8032-3a7b4c2b3a98" />
-
-
+Список организаций 
+<img width="1901" height="824" alt="image" src="https://github.com/user-attachments/assets/d7c047b9-b8b9-4723-8a83-c0e932f7331a" />
 
 ### Cхема базы данных 
 <img width="1569" height="690" alt="image" src="https://github.com/user-attachments/assets/68ccda86-3d0b-4932-b638-503519c264aa" />
